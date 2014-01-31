@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Response;
 
 class Sitemap
 {
-	protected $sitemaps = [];
+	protected $sitemaps = array();
 
-	protected $tags = [];
+	protected $tags = array();
 
 	/**
 	 * Add new sitemap to the sitemaps index.
@@ -43,7 +43,7 @@ class Sitemap
 	 */
 	public function renderSitemapIndex()
 	{
-		return Response::view('sitemap::sitemaps', ['sitemaps' => $this->sitemaps], 200, ['Content-type' => 'text/xml']);
+		return Response::view('sitemap::sitemaps', array('sitemaps' => $this->sitemaps), 200, array('Content-type' => 'text/xml'));
 	}
 
 	/**
@@ -82,6 +82,6 @@ class Sitemap
 	 */
 	public function renderSitemap()
 	{
-		return Response::view('sitemap::sitemap', ['tags' => $this->tags], 200, ['Content-type' => 'text/xml']);
+		return Response::view('sitemap::sitemap', array('tags' => $this->tags), 200, array('Content-type' => 'text/xml'));
 	}
 }

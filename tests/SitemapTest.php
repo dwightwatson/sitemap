@@ -17,12 +17,12 @@ class SitemapTest extends PHPUnit_Framework_TestCase
 
         $this->sitemap->addSitemap('foo', '2014-01-01 00:00:00');
 
-        $this->assertEquals([
-            [
+        $this->assertEquals(array(
+            array(
                 'loc'     => 'foo',
                 'lastmod' => '2014-01-01 00:00:00'
-            ]
-        ], $this->sitemap->getSitemaps());
+            )
+        ), $this->sitemap->getSitemaps());
     }
 
     public function testSitemapIsAddedWithoutLastMod()
@@ -31,38 +31,38 @@ class SitemapTest extends PHPUnit_Framework_TestCase
 
         $this->sitemap->addSitemap('foo');
 
-        $this->assertEquals([
-            [
+        $this->assertEquals(array(
+            array(
                 'loc'     => 'foo',
                 'lastmod' => null
-            ]
-        ], $this->sitemap->getSitemaps());
+            )
+        ), $this->sitemap->getSitemaps());
     }
 
     public function testSitemapIsAddedWithFormattedTimestamp()
     {
         $this->sitemap->addSitemap('foo', '1st January 2014');
 
-        $this->assertEquals([
-            [
+        $this->assertEquals(array(
+            array(
                 'loc'     => 'foo', 
                 'lastmod' => '2014-01-01 00:00:00'
-            ]
-        ], $this->sitemap->getSitemaps());
+            )
+        ), $this->sitemap->getSitemaps());
     }
 
     public function testGetSitemapsWorks()
     {
-        $this->assertEquals($this->sitemap->getSitemaps(), []);
+        $this->assertEquals($this->sitemap->getSitemaps(), array());
 
         $this->sitemap->addSitemap('foo');
 
-        $this->assertEquals($this->sitemap->getSitemaps(), [
-            [
+        $this->assertEquals($this->sitemap->getSitemaps(), array(
+            array(
                 'loc'     => 'foo',
                 'lastmod' => null
-            ]
-        ]);
+            )
+        ));
     }
 
     public function testRenderSiteMapIndexWorks()
@@ -76,14 +76,14 @@ class SitemapTest extends PHPUnit_Framework_TestCase
 
         $this->sitemap->addTag('foo', '2014-01-01 00:00:00', 'daily', '0.9');
 
-        $this->assertEquals([
-            [
+        $this->assertEquals(array(
+            array(
                 'loc'        => 'foo',
                 'lastmod'    => '2014-01-01 00:00:00',
                 'changefreq' => 'daily',
                 'priority'   => '0.9'
-            ]
-        ], $this->sitemap->getTags());
+            )
+        ), $this->sitemap->getTags());
     }
 
     public function testTagIsAddedWithOnlyLoc()
@@ -92,44 +92,44 @@ class SitemapTest extends PHPUnit_Framework_TestCase
 
         $this->sitemap->addTag('foo');
 
-        $this->assertEquals([
-            [
+        $this->assertEquals(array(
+            array(
                 'loc'        => 'foo',
                 'lastmod'    => null,
                 'changefreq' => null,
                 'priority'   => null
-            ]
-        ], $this->sitemap->getTags());
+            )
+        ), $this->sitemap->getTags());
     }
 
     public function testTagIsAddedWithFormattedTimestamp()
     {
         $this->sitemap->addTag('foo', '1st January 2014');
 
-        $this->assertEquals([
-            [
+        $this->assertEquals(array(
+            array(
                 'loc'        => 'foo', 
                 'lastmod'    => '2014-01-01 00:00:00',
                 'changefreq' => null,
                 'priority'   => null
-            ]
-        ], $this->sitemap->getTags());
+            )
+        ), $this->sitemap->getTags());
     }
 
     public function testGetTagsWorks()
     {
-        $this->assertEquals($this->sitemap->getTags(), []);
+        $this->assertEquals($this->sitemap->getTags(), array());
 
         $this->sitemap->addTag('foo');
 
-        $this->assertEquals([
-            [
+        $this->assertEquals(array(
+            array(
                 'loc'        => 'foo',
                 'lastmod'    => null,
                 'changefreq' => null,
                 'priority'   => null
-            ]
-        ], $this->sitemap->getTags());
+            )
+        ), $this->sitemap->getTags());
     }
 
     public function testRenderSitemapWorks()
