@@ -11,13 +11,11 @@ Read more about sitemaps and how to use them efficiently on [Google Webmaster To
 
 Simply pop this in your `composer.json` file and run `composer update` (however your Composer is installed).
 
-```
-"studious/sitemap": "dev-master"
-```
+    "studious/sitemap": "dev-master"
 
 Now, add the service provider to your `app/config/app.php` file.
 
-`'Studious\Sitemap\SitemapServiceProvider'`
+    'Studious\Sitemap\SitemapServiceProvider'
 
 ## Usage
 
