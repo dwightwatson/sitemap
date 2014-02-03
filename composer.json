@@ -1,6 +1,8 @@
 {
     "name": "studious/sitemap",
     "description": "Generate Google Sitemaps in Laravel 4",
+    "keywords": ["laravel", "sitemaps"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Dwight Watson",
