@@ -1,4 +1,4 @@
-<?php namespace Studious\Sitemap;
+<?php namespace Watson\Sitemap;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;

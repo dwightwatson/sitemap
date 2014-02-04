@@ -8,7 +8,7 @@ class SitemapTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->sitemap = new Studious\Sitemap\Sitemap;
+        $this->sitemap = new Watson\Sitemap\Sitemap;
     }
 
 	public function testSitemapIsAdded()

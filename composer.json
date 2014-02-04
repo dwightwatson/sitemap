@@ -1,5 +1,5 @@
 {
-    "name": "studious/sitemap",
+    "name": "watson/sitemap",
     "description": "Generate Google Sitemaps in Laravel 4",
     "keywords": ["laravel", "sitemaps"],
     "license": "MIT",
@@ -19,8 +19,8 @@
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
-        "psr-0": {
-            "Studious\\Sitemap": "src/"
+        "psr-4": {
+            "Watson\\": "src/Watson"
         }
     },
     "minimum-stability": "dev"

@@ -1,4 +1,4 @@
-<?php namespace Studious\Sitemap;
+<?php namespace Watson\Sitemap;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -20,7 +20,7 @@ class SitemapServiceProvider extends ServiceProvider {
 	{
 		$this->app->bind('sitemap', function()
 		{
-			return new \Studious\Sitemap\Sitemap;
+			return new Sitemap;
 		});
 	}
 
@@ -31,7 +31,7 @@ class SitemapServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('studious/sitemap');
+		$this->package('watson/sitemap');
 	}
 
 	/**
@@ -41,7 +41,7 @@ class SitemapServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array();
+		return array('sitemap');
 	}
 
 }
