@@ -11,7 +11,7 @@ Read more about sitemaps and how to use them efficiently on [Google Webmaster To
 
 Simply pop this in your `composer.json` file and run `composer update` (however your Composer is installed).
 
-    "watson/sitemap": "dev-master"
+    "watson/sitemap": "1.0.*"
 
 Now, add the service provider to your `app/config/app.php` file.
 
