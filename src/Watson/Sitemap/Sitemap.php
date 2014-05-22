@@ -1,13 +1,55 @@
 <?php namespace Watson\Sitemap;
 
 use Carbon\Carbon;
+use Illuminate\Config\Repository as Config;
+use Illuminate\Cache\Repository as Cache;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 
 class Sitemap
 {
+	/**
+	 * Collection of sitemaps being used.
+	 *
+	 * @var array
+	 */
 	protected $sitemaps = array();
 
+	/**
+	 * Collection of tags being used in a sitemap.
+	 *
+	 * @var array
+	 */
 	protected $tags = array();
+
+	/**
+	 * Laravel config repository.
+	 *
+	 * @var \Illuminate\Config\Repository
+	 */
+	protected $config;
+
+	/**
+	 * Laravel cache repository.
+	 *
+	 * @var \Illuminate\Cache\Repository
+	 */
+	protected $cache;
+
+	/**
+	 * Laravel request instance.
+	 *
+	 * @var \Illuminate\Http\Request
+	 */
+	protected $request;
+
+	public function __construct(Config $config, Cache $cache, Request $request)
+	{
+		$this->config = $config;
+		$this->cache = $cache;
+		$this->request = $request;
+	}
 
 	/**
 	 * Add new sitemap to the sitemaps index.
@@ -43,7 +85,13 @@ class Sitemap
 	 */
 	public function renderSitemapIndex()
 	{
-		return Response::view('sitemap::sitemaps', array('sitemaps' => $this->sitemaps), 200, array('Content-type' => 'text/xml'));
+		if ($cachedView = $this->getCachedView()) return $cachedView;
+
+		$sitemapIndex = Response::view('sitemap::sitemaps', array('sitemaps' => $this->sitemaps), 200, array('Content-type' => 'text/xml'));
+
+		$this->saveCachedView($sitemapIndex);
+
+		return $sitemap;
 	}
 
 	/**
@@ -82,6 +130,57 @@ class Sitemap
 	 */
 	public function renderSitemap()
 	{
-		return Response::view('sitemap::sitemap', array('tags' => $this->tags), 200, array('Content-type' => 'text/xml'));
+		if ($cachedView = $this->getCachedView()) return $cachedView;
+
+		$sitemap = Response::view('sitemap::sitemap', array('tags' => $this->tags), 200, array('Content-type' => 'text/xml'));
+
+		$this->saveCachedView($sitemap);
+
+		return $sitemap;
+	}
+
+	/**
+	 * Check to see whether a view has already been cached for the current
+	 * route and if so, return it.
+	 *
+	 * @return mixed
+	 */
+	protected function getCachedView()
+	{
+		if ($this->config->get('sitemap::cache_enabled'))
+		{
+			$key = $this->getCacheKey();
+
+			if ($this->cache->has($key)) return $this->cache->get($key);
+		}
+
+		return false;
+	}
+
+	/**
+	 * Save a cached view if caching is enabled.
+	 *
+	 * @param  Response  $view
+	 * @return void
+	 */
+	protected function saveCachedView($view)
+	{
+		if ($this->config->get('sitemap::cache_enabled'))
+		{
+			$key = $this->getCacheKey();
+
+			if ( ! $this->cache->get($key)) $this->cache->put($view, $this->config->get('cache_length'));
+		}
+	}
+
+	/**
+	 * Get the cache key that will be used for saving cached sitemaps
+	 * to storage.
+	 *
+	 * @return string
+	 */
+	protected function getCacheKey()
+	{
+		return 'sitemap_' . Str::slug($this->request->url());
 	}
 }

@@ -8,7 +8,15 @@ class SitemapTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->sitemap = new Watson\Sitemap\Sitemap;
+        $this->config = Mockery::mock('Illuminate\Config\Repository');
+        $this->cache = Mockery::mock('Illuminate\Cache\Repository');
+        $this->request = Mockery::mock('Illuminate\Http\Request');
+
+        $this->sitemap = new Watson\Sitemap\Sitemap(
+            $this->config,
+            $this->cache,
+            $this->request
+        );
     }
 
 	public function testSitemapIsAdded()

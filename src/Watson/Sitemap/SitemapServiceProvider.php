@@ -18,9 +18,9 @@ class SitemapServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app->bind('sitemap', function()
+		$this->app->bind('sitemap', function($app)
 		{
-			return new Sitemap;
+			return new Sitemap($app['config'], $app['cache'], $app['request']);
 		});
 	}
 

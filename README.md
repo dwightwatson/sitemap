@@ -63,3 +63,15 @@ class SitemapsController extends BaseController
 	}
 }
 ```
+
+## Configuration
+
+To publish the configuration file for the sitemap package, simply run this Artisan command:
+
+    php artisan config:publish watson/sitemap
+
+Then take a look in `app/config/packages/watson/sitemap/config.php` to see what is available.
+
+### Caching
+
+By default, caching is disabled. If you would likd to enable caching, simply set `cache_enabled` in the configuration file to `true`. You can then specify how long you would like your views to be cached for. Keep in mind that when enabled, caching will affect each and every request made to the sitemap package.
