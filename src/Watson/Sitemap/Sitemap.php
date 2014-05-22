@@ -2,7 +2,7 @@
 
 use Carbon\Carbon;
 use Illuminate\Config\Repository as Config;
-use Illuminate\Cache\Repository as Cache;
+use Illuminate\Cache\CacheManager as Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
@@ -85,13 +85,13 @@ class Sitemap
 	 */
 	public function renderSitemapIndex()
 	{
-		if ($cachedView = $this->getCachedView()) return $cachedView;
+		if ($cachedView = $this->getCachedView()) return Response::make($cachedView, 200, array('Content-type' => 'text/xml'));
 
 		$sitemapIndex = Response::view('sitemap::sitemaps', array('sitemaps' => $this->sitemaps), 200, array('Content-type' => 'text/xml'));
 
 		$this->saveCachedView($sitemapIndex);
 
-		return $sitemap;
+		return $sitemapIndex;
 	}
 
 	/**
@@ -130,7 +130,7 @@ class Sitemap
 	 */
 	public function renderSitemap()
 	{
-		if ($cachedView = $this->getCachedView()) return $cachedView;
+		if ($cachedView = $this->getCachedView()) return Response::make($cachedView, 200, array('Content-type' => 'text/xml'));
 
 		$sitemap = Response::view('sitemap::sitemap', array('tags' => $this->tags), 200, array('Content-type' => 'text/xml'));
 
@@ -163,13 +163,15 @@ class Sitemap
 	 * @param  Response  $view
 	 * @return void
 	 */
-	protected function saveCachedView($view)
+	protected function saveCachedView($response)
 	{
 		if ($this->config->get('sitemap::cache_enabled'))
 		{
 			$key = $this->getCacheKey();
 
-			if ( ! $this->cache->get($key)) $this->cache->put($view, $this->config->get('cache_length'));
+			$content = $response->getOriginalContent()->render();
+
+			if ( ! $this->cache->get($key)) $this->cache->put($key, $content, $this->config->get('sitemap::cache_length'));
 		}
 	}
 
