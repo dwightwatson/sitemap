@@ -9,7 +9,7 @@ class SitemapTest extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->config = Mockery::mock('Illuminate\Config\Repository');
-        $this->cache = Mockery::mock('Illuminate\Cache\Repository');
+        $this->cache = Mockery::mock('Illuminate\Cache\CacheManager');
         $this->request = Mockery::mock('Illuminate\Http\Request');
 
         $this->sitemap = new Watson\Sitemap\Sitemap(
