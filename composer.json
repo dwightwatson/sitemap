@@ -11,8 +11,8 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "illuminate/http": "4.1.x",
-        "illuminate/support": "4.1.x",
+        "illuminate/http": "4.*",
+        "illuminate/support": "4.*",
         "nesbot/carbon": "1.*"
     },
     "require-dev": {
