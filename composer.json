@@ -1,6 +1,6 @@
 {
     "name": "watson/sitemap",
-    "description": "Generate Google Sitemaps in Laravel 4",
+    "description": "Generate Google Sitemaps in Laravel 4/5",
     "keywords": ["laravel", "sitemaps"],
     "license": "MIT",
     "authors": [

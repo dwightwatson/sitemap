@@ -1,5 +1,5 @@
-Sitemap for Laravel 4
-=====================
+Sitemap for Laravel 4/5
+=======================
 
 [![Build Status](https://travis-ci.org/dwightwatson/sitemap.png?branch=master)](https://travis-ci.org/dwightwatson/sitemap)
 
