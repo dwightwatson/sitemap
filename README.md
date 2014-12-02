@@ -21,7 +21,9 @@ Now, add the service provider to your `app/config/app.php` file.
 
     'Watson\Sitemap\SitemapServiceProvider'
 
+And finally add the alias to the facade.
 
+    'Sitemap' => 'Watson\Sitemap\Facades\Sitemap'
 
 ## Usage
 
