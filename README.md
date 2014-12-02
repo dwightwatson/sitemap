@@ -21,7 +21,7 @@ Now, add the service provider to your `app/config/app.php` file.
 
     'Watson\Sitemap\SitemapServiceProvider'
 
-And finally add the alias to the facade.
+And finally add the alias to the facade, also in `app/config/app.php`.
 
     'Sitemap' => 'Watson\Sitemap\Facades\Sitemap'
 
@@ -49,6 +49,8 @@ class SitemapsController extends BaseController
 	}
 }
 ```
+
+Simply route to this as you usually would, `Route::get('sitemap', 'SitemapsController@index')` for Laravel 4 or you can use the route helper methods in Laravel 5 like `get('sitemap', 'SitemapsController@index')`.
 
 ### Creating sitemaps
 Similarly to sitemap indexes, you just add tags for each item in your sitemap using `Sitemap::addTag($loc, $lastmod, $changefreq, $priority)`. You can return the sitemap with `Sitemap::renderSitemap()`. Again, the `$lastmod` variable will be parsed by [Carbon](https://github.com/briannesbitt/Carbon) and convered to the right format for the sitemap.
