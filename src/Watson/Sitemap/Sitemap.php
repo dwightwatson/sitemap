@@ -124,6 +124,16 @@ class Sitemap
 	}
 
 	/**
+	 * Get the formatted sitemap.
+	 *
+	 * @return string
+	 */
+	public function xml()
+	{
+		return $this->renderSitemap()->getOriginalContent();
+	}
+
+	/**
 	 * Render a sitemap.
 	 *
 	 * @return Illuminate\Support\Facades\Response;

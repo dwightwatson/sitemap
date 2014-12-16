@@ -55,6 +55,8 @@ Simply route to this as you usually would, `Route::get('sitemap', 'SitemapsContr
 ### Creating sitemaps
 Similarly to sitemap indexes, you just add tags for each item in your sitemap using `Sitemap::addTag($loc, $lastmod, $changefreq, $priority)`. You can return the sitemap with `Sitemap::renderSitemap()`. Again, the `$lastmod` variable will be parsed by [Carbon](https://github.com/briannesbitt/Carbon) and convered to the right format for the sitemap.
 
+If you'd like to just get the raw XML, simply call `Sitemap::xml()`.
+
 Here is an example controller that produces a sitemap for blog psots.
 
 ```
