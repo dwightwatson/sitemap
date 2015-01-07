@@ -76,6 +76,8 @@ class SitemapsController extends BaseController
 }
 ```
 
+**If you're pulling a lot of records from your database you might want to consider restricting the amount of data you're getting by using the `select()` method. You can also use the `chunk()` method to only load a certain number of records at any one time as to not run out of memory.**
+
 ## Configuration
 
 To publish the configuration file for the sitemap package, simply run this Artisan command:
