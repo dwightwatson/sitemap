@@ -31,19 +31,9 @@ class SitemapServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-	    /*
-		 * If the package method exists, we're using Laravel 4, if not then we're
-		 * definitely on laravel 5
-		 */
-		if (method_exists($this, 'package')) {
-			$this->package('watson/sitemap');
-		} else {
 			$this->publishes([
 				__DIR__ . '/../../config/config.php' => config_path('sitemap.php'),
 			], 'config');
-		}
-
-
 	}
 
 	/**
