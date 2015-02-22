@@ -31,7 +31,9 @@ class SitemapServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('watson/sitemap');
+			$this->publishes([
+				__DIR__ . '/../../config/config.php' => config_path('sitemap.php'),
+			], 'config');
 	}
 
 	/**

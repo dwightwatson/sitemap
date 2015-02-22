@@ -62,7 +62,7 @@ class Sitemap
 	{
 		if ($lastmod)
 		{
-			$lastmod = Carbon::parse($lastmod)->toDateTimeString();
+			$lastmod = Carbon::parse($lastmod, 'UTC')->toDateTimeString();
 		}
 
 		$this->sitemaps[] = compact('loc', 'lastmod');
