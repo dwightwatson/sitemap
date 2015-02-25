@@ -31,6 +31,7 @@ class SitemapServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+		$this->loadViewsFrom(__DIR__.'/../../views', 'sitemap');
 		$this->publishes([
 			__DIR__ . '/../../config/config.php' => config_path('sitemap.php'),
 		], 'config');
