@@ -1,9 +1,14 @@
-Sitemap for Laravel 4/5
-=======================
+Sitemap for Laravel
+===================
 
 [![Build Status](https://travis-ci.org/dwightwatson/sitemap.png?branch=master)](https://travis-ci.org/dwightwatson/sitemap)
+[![Total Downloads](https://poser.pugx.org/watson/sitemap/downloads.svg)](https://packagist.org/packages/watson/sitemap)
+[![Latest Stable Version](https://poser.pugx.org/watson/sitemap/v/stable.svg)](https://packagist.org/packages/watson/sitemap)
+[![Latest Unstable Version](https://poser.pugx.org/watson/sitemap/v/unstable.svg)](https://packagist.org/packages/watson/sitemap)
+[![License](https://poser.pugx.org/watson/sitemap/license.svg)](https://packagist.org/packages/watson/sitemap)
 
-Sitemap is a package built specifically for Laravel 4/5 that will help you generate XML sitemaps for Google. Based on [laravel-sitemap](https://github.com/RoumenDamianoff/laravel-sitemap) this package operates in a slightly different way to better fit the needs of our project. A facade is used to access the sitemap class and we have added the ability to produce sitemap indexes as well as sitemaps. Furthermore, it's tested.
+
+Sitemap is a package built specifically for Laravel that will help you generate XML sitemaps for Google. Based on [laravel-sitemap](https://github.com/RoumenDamianoff/laravel-sitemap) this package operates in a slightly different way to better fit the needs of our project. A facade is used to access the sitemap class and we have added the ability to produce sitemap indexes as well as sitemaps. Furthermore, it's tested.
 
 Read more about sitemaps and how to use them efficiently on [Google Webmaster Tools](https://support.google.com/webmasters/answer/156184?hl=en).
 
@@ -28,7 +33,7 @@ And finally add the alias to the facade, also in `app/config/app.php`.
 ## Usage
 
 ### Creating sitemap indexes
-If you have a large number of links (50,000+) you will want to break your sitemaps out into seperate sitemaps with a sitemap index linking them all. You add sitemap indexes using `Sitemap::addSitemap($loc, $lastmod)` and then you return the sitemap index with `Sitemap::renderSitemapIndex()`. The `$lastmod` variable will be parsed by [Carbon](https://github.com/briannesbitt/Carbon) and then converted to the right format for a sitemap.
+If you have a large number of links (50,000+) you will want to break your sitemaps out into seperate sitemaps with a sitemap index linking them all. You add sitemap indexes using `Sitemap::addSitemap($location, $lastModified)` and then you return the sitemap index with `Sitemap::renderSitemapIndex()`. The `$lastModified` variable will be parsed and converted to the right format for a sitemap.
 
 Here is an example controller that produces a sitemap index.
 
@@ -45,15 +50,15 @@ class SitemapsController extends BaseController
 		Sitemap::addSitemap(route('sitemaps.users'));
 
 		// Return the sitemap to the client.
-		return Sitemap::renderSitemapIndex();
+		return Sitemap::index();
 	}
 }
 ```
 
-Simply route to this as you usually would, `Route::get('sitemap', 'SitemapsController@index')` for Laravel 4 or you can use the route helper methods in Laravel 5 like `get('sitemap', 'SitemapsController@index')`.
+Simply route to this as you usually would, `Route::get('sitemap', 'SitemapsController@index')`.
 
 ### Creating sitemaps
-Similarly to sitemap indexes, you just add tags for each item in your sitemap using `Sitemap::addTag($loc, $lastmod, $changefreq, $priority)`. You can return the sitemap with `Sitemap::renderSitemap()`. Again, the `$lastmod` variable will be parsed by [Carbon](https://github.com/briannesbitt/Carbon) and convered to the right format for the sitemap.
+Similarly to sitemap indexes, you just add tags for each item in your sitemap using `Sitemap::addTag($location, $lastModified, $changeFrequency, $priority)`. You can return the sitemap with `Sitemap::renderSitemap()`. Again, the `$lastModified` variable will be parsed and convered to the right format for the sitemap.
 
 If you'd like to just get the raw XML, simply call `Sitemap::xml()`.
 
@@ -62,19 +67,20 @@ Here is an example controller that produces a sitemap for blog psots.
 ```
 class SitemapsController extends BaseController
 {
-	pulblic function posts()
+	public function posts()
 	{
 		$posts = Post::all();
 
-		foreach ($posts as $post)
-		{
-			Sitemap::addTag(route('posts.show', $post->id), $post->created_at, 'daily', '0.8');
+		foreach ($posts as $post) {
+			Sitemap::addTag(route('posts.show', $post), $post->updated_at, 'daily', '0.8');
 		}
 
-		return Sitemap::renderSitemap();
+		return Sitemap::render();
 	}
 }
 ```
+
+If you just want to pass a model's `updated_at` timestamp as the last modified parameter, you can simply pass the model as the second parameter and the sitemap will use that attribute automatically.
 
 **If you're pulling a lot of records from your database you might want to consider restricting the amount of data you're getting by using the `select()` method. You can also use the `chunk()` method to only load a certain number of records at any one time as to not run out of memory.**
 
@@ -84,7 +90,7 @@ To publish the configuration file for the sitemap package, simply run this Artis
 
     php artisan config:publish watson/sitemap
 
-Then take a look in `app/config/packages/watson/sitemap/config.php` to see what is available.
+Then take a look in `config/sitemap.php` to see what is available.
 
 ### Caching
 

@@ -7,15 +7,15 @@
     http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <?php foreach ($tags as $tag): ?>
     <url>
-      <loc><?= $tag['loc'] ?></loc>
-      <?php if ($tag['priority']): ?>
-        <priority><?= $tag['priority'] ?></priority>
+      <loc><?= $tag->getLocation() ?></loc>
+      <?php if ($tag->getPriority()): ?>
+        <priority><?= $tag->getPriority() ?></priority>
       <?php endif ?>
-      <?php if ($tag['lastmod']): ?>
-        <lastmod><?= date('Y-m-d\TH:i:sP', strtotime($tag['lastmod'])) ?></lastmod>
+      <?php if ($tag->getLastModified()): ?>
+        <lastmod><?= $tag->getLastModified()->format('Y-m-d\TH:i:sP') ?></lastmod>
       <?php endif ?>
-      <?php if ($tag['changefreq']): ?>
-        <changefreq><?= $tag['changefreq'] ?></changefreq>
+      <?php if ($tag->getChangeFrequency()): ?>
+        <changefreq><?= $tag->getChangeFrequency() ?></changefreq>
       <?php endif ?>
     </url>
   <?php endforeach ?>

@@ -1,198 +1,216 @@
 <?php namespace Watson\Sitemap;
 
-use Carbon\Carbon;
-use Illuminate\Config\Repository as Config;
-use Illuminate\Cache\CacheManager as Cache;
+use Watson\Sitemap\Tags\Tag;
+use Watson\Sitemap\Tags\Sitemap as SitemapTag;
+use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Str;
+use Illuminate\Contracts\Cache\Repository as Cache;
 
 class Sitemap
 {
-	/**
-	 * Collection of sitemaps being used.
-	 *
-	 * @var array
-	 */
-	protected $sitemaps = array();
+    /**
+     * Collection of sitemaps being used.
+     *
+     * @var array
+     */
+    protected $sitemaps = [];
 
-	/**
-	 * Collection of tags being used in a sitemap.
-	 *
-	 * @var array
-	 */
-	protected $tags = array();
+    /**
+     * Collection of tags being used in a sitemap.
+     *
+     * @var array
+     */
+    protected $tags = [];
 
-	/**
-	 * Laravel config repository.
-	 *
-	 * @var \Illuminate\Config\Repository
-	 */
-	protected $config;
+    /**
+     * Laravel cache repository.
+     *
+     * @var \Illuminate\Cache\Repository
+     */
+    protected $cache;
 
-	/**
-	 * Laravel cache repository.
-	 *
-	 * @var \Illuminate\Cache\Repository
-	 */
-	protected $cache;
+    /**
+     * Laravel request instance.
+     *
+     * @var \Illuminate\Http\Request
+     */
+    protected $request;
 
-	/**
-	 * Laravel request instance.
-	 *
-	 * @var \Illuminate\Http\Request
-	 */
-	protected $request;
+    /**
+     * Construct the sitemap manager.
+     *
+     * @param  \Illuminate\Contracts\Cache\Repository  $cache
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    public function __construct(Cache $cache, Request $request)
+    {
+        $this->cache = $cache;
+        $this->request = $request;
+    }
 
-	public function __construct(Config $config, Cache $cache, Request $request)
-	{
-		$this->config = $config;
-		$this->cache = $cache;
-		$this->request = $request;
-	}
+    /**
+     * Add new sitemap to the sitemaps index.
+     *
+     * @param  \Watson\Sitemap\Tags\Sitemap|string  $location
+     * @param  string  $lastModified
+     * @return void
+     */
+    public function addSitemap($location, $lastModified = null)
+    {
+        $sitemap = $location instanceof SitemapTag ? $location : new SitemapTag($location, $lastModified);
 
-	/**
-	 * Add new sitemap to the sitemaps index.
-	 *
-	 * @param  string  $loc
-	 * @param  string  $lastmod
-	 * @return void
-	 */
-	public function addSitemap($loc, $lastmod = null)
-	{
-		if ($lastmod)
-		{
-			$lastmod = Carbon::parse($lastmod, 'UTC')->toDateTimeString();
-		}
+        $this->sitemaps[] = $sitemap;
+    }
 
-		$this->sitemaps[] = compact('loc', 'lastmod');
-	}
+    /**
+     * Retrieve the array of sitemaps.
+     *
+     * @return array
+     */
+    public function getSitemaps()
+    {
+        return $this->sitemaps;
+    }
 
-	/**
-	 * Retrieve the array of sitemaps.
-	 *
-	 * @return array
-	 */
-	public function getSitemaps()
-	{
-		return $this->sitemaps;
-	}
+    /**
+     * Render an index of of sitemaps.
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function index()
+    {
+        if ($cachedView = $this->getCachedView()) {
+            return response()->make($cachedView, 200, ['Content-type' => 'text/xml']);
+        }
 
-	/**
-	 * Render an index of of sitemaps.
-	 *
-	 * @return Illuminate\Support\Facades\Response;
-	 */
-	public function renderSitemapIndex()
-	{
-		if ($cachedView = $this->getCachedView()) return Response::make($cachedView, 200, array('Content-type' => 'text/xml'));
+        $sitemapIndex = response()->view('sitemap::sitemaps', ['sitemaps' => $this->getSitemaps()], 200, ['Content-type' => 'text/xml']);
 
-		$sitemapIndex = Response::view('sitemap::sitemaps', array('sitemaps' => $this->sitemaps), 200, array('Content-type' => 'text/xml'));
+        $this->saveCachedView($sitemapIndex);
 
-		$this->saveCachedView($sitemapIndex);
+        return $sitemapIndex;
+    }
 
-		return $sitemapIndex;
-	}
+    /**
+     * Render an index of of sitemaps.
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function renderSitemapIndex()
+    {
+        return $this->index();
+    }
 
-	/**
-	 * Add a new sitemap tag to the sitemap.
-	 *
-	 * @param  string  $loc
-	 * @param  string  $lastmod
-	 * @param  string  $changefreq
-	 * @param  string  $priority
-	 * @return void
-	 */
-	public function addTag($loc, $lastmod = null, $changefreq = null, $priority = null)
-	{
-		if ($lastmod)
-		{
-			$lastmod = Carbon::parse($lastmod)->toDateTimeString(); 
-		}
+    /**
+     * Add a new sitemap tag to the sitemap.
+     *
+     * @param  \Watson\Sitemap\Tags\Tag|string  $location
+     * @param  string  $lastModified
+     * @param  string  $changeFrequency
+     * @param  string  $priority
+     * @return void
+     */
+    public function addTag($location, $lastModified = null, $changeFrequency = null, $priority = null)
+    {
+        $tag = $location instanceof Tag ? $location : new Tag($location, $lastModified, $changeFrequency, $priority);
 
-		$this->tags[] = compact('loc', 'lastmod', 'changefreq', 'priority');
-	}
+        $this->tags[] = $tag;
+    }
 
-	/**
-	 * Retrieve the array of tags.
-	 *
-	 * @return array
-	 */
-	public function getTags()
-	{
-		return $this->tags;
-	}
+    /**
+     * Retrieve the array of tags.
+     *
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
 
-	/**
-	 * Get the formatted sitemap.
-	 *
-	 * @return string
-	 */
-	public function xml()
-	{
-		return $this->renderSitemap()->getOriginalContent();
-	}
+    /**
+     * Get the formatted sitemap.
+     *
+     * @return string
+     */
+    public function xml()
+    {
+        return $this->renderSitemap()->getOriginalContent();
+    }
 
-	/**
-	 * Render a sitemap.
-	 *
-	 * @return Illuminate\Support\Facades\Response;
-	 */
-	public function renderSitemap()
-	{
-		if ($cachedView = $this->getCachedView()) return Response::make($cachedView, 200, array('Content-type' => 'text/xml'));
+    /**
+     * Render a sitemap.
+     *
+     * @erturn \Illuminate\Http\Response
+     */
+    public function render()
+    {
+        if ($cachedView = $this->getCachedView()) {
+            return response()->make($cachedView, 200, ['Content-type' => 'text/xml']);
+        }
 
-		$sitemap = Response::view('sitemap::sitemap', array('tags' => $this->tags), 200, array('Content-type' => 'text/xml'));
+        $sitemap = response()->view('sitemap::sitemap', ['tags' => $this->getTags()], 200, ['Content-type' => 'text/xml']);
 
-		$this->saveCachedView($sitemap);
+        $this->saveCachedView($sitemap);
 
-		return $sitemap;
-	}
+        return $sitemap;
+    }
 
-	/**
-	 * Check to see whether a view has already been cached for the current
-	 * route and if so, return it.
-	 *
-	 * @return mixed
-	 */
-	protected function getCachedView()
-	{
-		if ($this->config->get('sitemap::cache_enabled'))
-		{
-			$key = $this->getCacheKey();
+    /**
+     * Render a sitemap.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function renderSitemap()
+    {
+        return $this->render();
+    }
 
-			if ($this->cache->has($key)) return $this->cache->get($key);
-		}
+    /**
+     * Check to see whether a view has already been cached for the current
+     * route and if so, return it.
+     *
+     * @return mixed
+     */
+    protected function getCachedView()
+    {
+        if (config('sitemap.cache_enabled')) {
+            $key = $this->getCacheKey();
 
-		return false;
-	}
+            if ($this->cache->has($key)) {
+                return $this->cache->get($key);
+            }
+        }
 
-	/**
-	 * Save a cached view if caching is enabled.
-	 *
-	 * @param  Response  $view
-	 * @return void
-	 */
-	protected function saveCachedView($response)
-	{
-		if ($this->config->get('sitemap::cache_enabled'))
-		{
-			$key = $this->getCacheKey();
+        return false;
+    }
 
-			$content = $response->getOriginalContent()->render();
+    /**
+     * Save a cached view if caching is enabled.
+     *
+     * @param  \Illuminate\Http\Response  $response
+     * @return void
+     */
+    protected function saveCachedView(Response $response)
+    {
+        if (config('sitemap.cache_enabled')) {
+            $key = $this->getCacheKey();
 
-			if ( ! $this->cache->get($key)) $this->cache->put($key, $content, $this->config->get('sitemap::cache_length'));
-		}
-	}
+            $content = $response->getOriginalContent()->render();
 
-	/**
-	 * Get the cache key that will be used for saving cached sitemaps
-	 * to storage.
-	 *
-	 * @return string
-	 */
-	protected function getCacheKey()
-	{
-		return 'sitemap_' . Str::slug($this->request->url());
-	}
+            if (!$this->cache->get($key)) {
+                $this->cache->put($key, $content, config('sitemap.cache_length'));
+            }
+        }
+    }
+
+    /**
+     * Get the cache key that will be used for saving cached sitemaps
+     * to storage.
+     *
+     * @return string
+     */
+    protected function getCacheKey()
+    {
+        return 'sitemap_' . str_slug($this->request->url());
+    }
 }
