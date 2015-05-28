@@ -18,7 +18,7 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('sitemap', 'Watson\Sitemap\SitemapManager');
+        $this->app->bind('sitemap', 'Watson\Sitemap\Sitemap');
 
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/config.php', 'sitemap'
