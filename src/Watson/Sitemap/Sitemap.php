@@ -2,8 +2,10 @@
 
 use Watson\Sitemap\Tags\Tag;
 use Watson\Sitemap\Tags\Sitemap as SitemapTag;
+
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Contracts\Cache\Repository as Cache;
 
 class Sitemap
