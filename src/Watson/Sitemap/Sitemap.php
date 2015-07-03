@@ -136,7 +136,17 @@ class Sitemap
      */
     public function xml()
     {
-        return $this->renderSitemap()->getOriginalContent();
+        return $this->render()->getOriginalContent();
+    }
+
+    /**
+     * Get the formatted sitemap index.
+     *
+     * @return string
+     */
+    public function xmlIndex()
+    {
+        return $this->index()->getOriginalContent();
     }
 
     /**
