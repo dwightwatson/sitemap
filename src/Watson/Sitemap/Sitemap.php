@@ -178,6 +178,36 @@ class Sitemap
     }
 
     /**
+     * Clear all the existing sitemaps and tags.
+     *
+     * @return void
+     */
+    public function clear()
+    {
+        $this->sitemaps = $this->tags = [];
+    }
+
+    /**
+     * Remove all the existing sitemaps.
+     *
+     * @return void
+     */
+    public function clearSitemaps()
+    {
+        $this->sitemaps = [];
+    }
+
+    /**
+     * Remove all the existing tags.
+     *
+     * @return void
+     */
+    public function clearTags()
+    {
+        $this->tags = [];
+    }
+
+    /**
      * Check to see whether a view has already been cached for the current
      * route and if so, return it.
      *
