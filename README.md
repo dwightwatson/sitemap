@@ -12,15 +12,11 @@ Sitemap is a package built specifically for Laravel that will help you generate 
 
 Read more about sitemaps and how to use them efficiently on [Google Webmaster Tools](https://support.google.com/webmasters/answer/156184?hl=en).
 
-## Installation
+## Installation for Laravel 5.*
 
 Simply pop the correct version constraint in your `composer.json` file and run `composer update` (however your Composer is installed).
 
-	// Laravel 5.0
     "watson/sitemap": "2.0.*"
-
-    // Laravel 4.*
-    "watson/sitemap": "1.1.*"
 
 Now, add the service provider to your `app/config/app.php` file.
 
@@ -29,6 +25,14 @@ Now, add the service provider to your `app/config/app.php` file.
 And finally add the alias to the facade, also in `app/config/app.php`.
 
     'Sitemap' => 'Watson\Sitemap\Facades\Sitemap'
+
+## Installation for Laravel 4.*
+
+Simply pop the version constraint in your `composer.json` file and run `composer update` (hoever your Composer is installed).
+
+    "watson/sitemap": "1.1.*"
+
+For the documentation, have a look through [the 1.1 branch](https://github.com/dwightwatson/sitemap/tree/1.1).
 
 ## Usage
 
