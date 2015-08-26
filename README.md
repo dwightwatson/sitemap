@@ -17,6 +17,10 @@ Now, add the service provider to your `app/config/app.php` file.
 
     'Watson\Sitemap\SitemapServiceProvider'
 
+And the facade to the aliases array, if you intend to use it.
+
+    'Sitemap' => 'Watson\Sitemap\Facades\Sitemap'
+
 ## Usage
 
 ### Creating sitemap indexes
