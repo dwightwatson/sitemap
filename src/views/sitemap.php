@@ -17,6 +17,9 @@
       <?php if ($tag->getChangeFrequency()): ?>
         <changefreq><?= $tag->getChangeFrequency() ?></changefreq>
       <?php endif ?>
+      <?php if ($tag->getExpired()): ?>
+        <expires><?= $tag->getExpired()->format('Y-m-d\TH:i:sP') ?></expires>
+      <?php endif ?>
     </url>
   <?php endforeach ?>
 </urlset>

@@ -86,4 +86,12 @@ class Tag extends BaseTag
     {
         $this->priority = $priority;
     }
+
+    /**
+     * Null placeholder for priority
+     */    
+    public function getExpired()
+    {
+        return null;
+    }
 }

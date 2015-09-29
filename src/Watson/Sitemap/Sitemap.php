@@ -1,6 +1,7 @@
 <?php namespace Watson\Sitemap;
 
 use Watson\Sitemap\Tags\Tag;
+use Watson\Sitemap\Tags\Expired;
 use Watson\Sitemap\Tags\Sitemap as SitemapTag;
 
 use DateTime;
@@ -115,6 +116,20 @@ class Sitemap
     public function addTag($location, $lastModified = null, $changeFrequency = null, $priority = null)
     {
         $tag = $location instanceof Tag ? $location : new Tag($location, $lastModified, $changeFrequency, $priority);
+
+        $this->tags[] = $tag;
+    }
+
+    /**
+     * Add a new expired tag to the sitemap.
+     *
+     * @param  string  $location
+     * @param  string  $expired
+     * @return void
+     */    
+    public function addExpired($location, $expired)
+    {
+        $tag = new Expired($location, $expired);
 
         $this->tags[] = $tag;
     }
