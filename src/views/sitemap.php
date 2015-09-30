@@ -11,7 +11,7 @@
       <?php if ($tag->getLastModified()): ?>
         <lastmod><?= $tag->getLastModified()->format('Y-m-d\TH:i:sP') ?></lastmod>
       <?php endif ?>
-      <?php if ($tag instanceof \Watson\Tags\Tag): ?>
+      <?php if ($tag instanceof \Watson\Sitemap\Tags\Tag): ?>
         <?php if ($tag->getPriority()): ?>
           <priority><?= $tag->getPriority() ?></priority>
         <?php endif ?>
@@ -19,7 +19,7 @@
           <changefreq><?= $tag->getChangeFrequency() ?></changefreq>
         <?php endif ?>
       <?php endif; ?>
-      <?php if ($tag instanceof \Watson\Tags\ExpiredTag): ?>
+      <?php if ($tag instanceof \Watson\Sitemap\Tags\ExpiredTag): ?>
         <expires><?= $tag->getExpired()->format('Y-m-d\TH:i:sP') ?></expires>
       <?php endif; ?>
     </url>
