@@ -8,18 +8,20 @@
   <?php foreach ($tags as $tag): ?>
     <url>
       <loc><?= $tag->getLocation() ?></loc>
-      <?php if ($tag->getPriority()): ?>
-        <priority><?= $tag->getPriority() ?></priority>
-      <?php endif ?>
       <?php if ($tag->getLastModified()): ?>
         <lastmod><?= $tag->getLastModified()->format('Y-m-d\TH:i:sP') ?></lastmod>
       <?php endif ?>
-      <?php if ($tag->getChangeFrequency()): ?>
-        <changefreq><?= $tag->getChangeFrequency() ?></changefreq>
-      <?php endif ?>
-      <?php if ($tag->getExpired()): ?>
+      <?php if ($tag instanceof \Watson\Tags\Tag): ?>
+        <?php if ($tag->getPriority()): ?>
+          <priority><?= $tag->getPriority() ?></priority>
+        <?php endif ?>
+        <?php if ($tag->getChangeFrequency()): ?>
+          <changefreq><?= $tag->getChangeFrequency() ?></changefreq>
+        <?php endif ?>
+      <?php endif; ?>
+      <?php if ($tag instanceof \Watson\Tags\ExpiredTag): ?>
         <expires><?= $tag->getExpired()->format('Y-m-d\TH:i:sP') ?></expires>
-      <?php endif ?>
+      <?php endif; ?>
     </url>
   <?php endforeach ?>
 </urlset>

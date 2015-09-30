@@ -1,13 +1,14 @@
 <?php namespace Watson\Sitemap\Tags;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Model;
 
-class Expired extends BaseTag
+class ExpiredTag extends BaseTag
 {
     /**
      * The expiration date.
      *
-     * @var string
+     * @var \DateTime
      */
     protected $expired;
 
@@ -17,22 +18,32 @@ class Expired extends BaseTag
      * @var array
      */
     protected $xmlTags = [
-        'loc'        => 'location',
-        'expired'    => 'expired',
+        'loc'     => 'location',
+        'expired' => 'expired',
     ];
 
     /**
      * Construct the tag.
      *
      * @param  string  $location
-     * @param  string  $expired
+     * @param  \DateTime|string  $expired
      * @return void
      */
-    public function __construct($location, $expired=null)
+    public function __construct($location, $expired = null)
     {
         parent::__construct($location, null);
 
         $this->setExpired($expired);
+    }
+
+    /**
+     * Get the expired expired timestamp.
+     *
+     * @return \DateTime
+     */
+    public function getExpired()
+    {
+        return $this->expired;
     }
 
     /**
@@ -47,44 +58,10 @@ class Expired extends BaseTag
             $this->expired = $expired;
             return;
         } elseif ($expired instanceof Model) {
-            $this->expired = $expired->updated_at;
+            $this->expired = $expired->deleted_at ?: $expired->updated_at;
             return;
         }
 
         $this->expired = new DateTime($expired);
     }
-
-    /**
-     * Returns the expiration date
-     */
-    public function getExpired()
-    {
-        return $this->expired;
-    }
-
-    /**
-     * Null placeholder for priority
-     */
-    public function getPriority()
-    {
-        return null;
-    }
-
-    /**
-     * Null placeholder for last modified
-     */
-    public function getLastModified()
-    {
-        return null;
-    }
-
-    /**
-     * Null placeholder for change frequency
-     */
-    public function getChangeFrequency()
-    {
-        return null;
-    }
-
-
 }

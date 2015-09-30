@@ -16,7 +16,7 @@ abstract class BaseTag implements ArrayAccess
     /**
      * The last modified timestamp.
      *
-     * @var \Carbon\Carbon
+     * @var \DateTime
      */
     protected $lastModified;
 
