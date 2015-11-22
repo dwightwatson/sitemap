@@ -4,7 +4,7 @@
   <sitemap>
     <loc><?= $sitemap->getLocation() ?></loc>
     <?php if ($sitemap->getLastModified()): ?>
-      <lastmod><?= $sitemap->getLastModified() ?></lastmod>
+      <lastmod><?= $sitemap->getLastModified()->format('Y-m-d\TH:i:sP') ?></lastmod>
     <?php endif; ?>
   </sitemap>
   <?php endforeach ?>
