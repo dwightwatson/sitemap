@@ -2,6 +2,7 @@ language: php
 
 php: 
   - 5.5
+  - 7.0
   - hhvm
 
 before_script:
