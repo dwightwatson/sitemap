@@ -1,0 +1,21 @@
+<?php
+
+namespace DummyNamespace;
+
+use Watson\Sitemap\SitemapServiceProvider as ServiceProvider;
+
+class SitemapServiceProvider extends ServiceProvider
+{
+    /**
+     * Define your sitemap models and tags.
+     *
+     * @param  \Watson\Sitemap\Builder  $sitemap
+     * @return void
+     */
+    public function boot(Builder $sitemap)
+    {
+        parent::boot($sitemap);
+
+        //
+    }
+}

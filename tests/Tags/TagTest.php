@@ -1,7 +1,7 @@
 <?php
 
 use Watson\Sitemap\Tags\Tag;
-use Watson\Sitemap\Tags\ChangeFrequency;
+use Watson\Sitemap\ChangeFrequency;
 
 class TagTest extends PHPUnit_Framework_TestCase
 {

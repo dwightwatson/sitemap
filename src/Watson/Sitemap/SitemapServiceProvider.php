@@ -1,16 +1,11 @@
-<?php namespace Watson\Sitemap;
+<?php
+
+namespace Watson\Sitemap;
 
 use Illuminate\Support\ServiceProvider;
 
 class SitemapServiceProvider extends ServiceProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
-
     /**
      * Register the service provider.
      *
@@ -18,10 +13,11 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('sitemap', 'Watson\Sitemap\Sitemap');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'sitemap');
 
-        $this->mergeConfigFrom(
-            __DIR__ . '/../../config/config.php', 'sitemap'
+        $this->commands(
+            Commands\InstallCommand::class,
+            Commands\SubmitSitemapCommand::class
         );
     }
 
@@ -32,20 +28,14 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../../views', 'sitemap');
-        
-        $this->publishes([
-            __DIR__ . '/../../config/config.php' => config_path('sitemap.php'),
-        ], 'config');
-    }
+        $this->loadViewsFrom(__DIR__ . '/../../views', 'sitemap');
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['sitemap'];
+        $this->publishes([
+            __DIR__ . '/../../config/config.php' => config_path('sitemap.php')
+        ], 'config');
+
+        if ( ! $this->app->routesAreCached()) {
+            require __DIR__ . '/../../routes.php';
+        }    
     }
 }

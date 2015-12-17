@@ -1,4 +1,6 @@
-<?php namespace Watson\Sitemap\Tags;
+<?php 
+
+namespace Watson\Sitemap\Tags;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;

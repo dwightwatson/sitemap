@@ -7,80 +7,84 @@ Sitemap for Laravel
 [![Latest Unstable Version](https://poser.pugx.org/watson/sitemap/v/unstable.svg)](https://packagist.org/packages/watson/sitemap)
 [![License](https://poser.pugx.org/watson/sitemap/license.svg)](https://packagist.org/packages/watson/sitemap)
 
-
-Sitemap is a package built specifically for Laravel that will help you generate XML sitemaps for Google. Based on [laravel-sitemap](https://github.com/RoumenDamianoff/laravel-sitemap) this package operates in a slightly different way to better fit the needs of our project. A facade is used to access the sitemap class and we have added the ability to produce sitemap indexes as well as sitemaps. Furthermore, it's tested.
+Sitemap is a stupidly simple package for Laravel to make building sitemaps a cinch.
 
 Read more about sitemaps and how to use them efficiently on [Google Webmaster Tools](https://support.google.com/webmasters/answer/156184?hl=en).
 
-## Installation for Laravel 5.*
+## Installation
 
-Simply pop the correct version constraint in your `composer.json` file and run `composer update` (however your Composer is installed).
+First, require the package through Composer.
 
-    "watson/sitemap": "2.0.*"
+```sh
+composer require watson/sitemap
+```
 
-Now, add the service provider to your `app/config/app.php` file.
+### Laravel 4.*
 
-    'Watson\Sitemap\SitemapServiceProvider'
-
-And finally add the alias to the facade, also in `app/config/app.php`.
-
-    'Sitemap' => 'Watson\Sitemap\Facades\Sitemap'
-
-## Installation for Laravel 4.*
-
-Simply pop the version constraint in your `composer.json` file and run `composer update` (hoever your Composer is installed).
-
-    "watson/sitemap": "1.1.*"
-
-For the documentation, have a look through [the 1.1 branch](https://github.com/dwightwatson/sitemap/tree/1.1).
+For Laravel 4.2 support see [the 1.1 branch](https://github.com/dwightwatson/sitemap/tree/1.1).
 
 ## Usage
 
-### Creating sitemap indexes
-If you have a large number of links (50,000+) you will want to break your sitemaps out into seperate sitemaps with a sitemap index linking them all. You add sitemap indexes using `Sitemap::addSitemap($location, $lastModified)` and then you return the sitemap index with `Sitemap::renderSitemapIndex()`. The `$lastModified` variable will be parsed and converted to the right format for a sitemap.
+### Sitemap indexes
 
-Here is an example controller that produces a sitemap index.
+If you have a large number of links (50,000)+ you will want to break your sitemap out into separate sitemaps and then use a sitemap index to link them all.
 
-```
-class SitemapsController extends BaseController
+```php
+use App\Post;
+use Watson\Sitemap\Builder;
+
+class SitemapsController extends Controller
 {
-	public function index()
-	{
-		// Get a general sitemap.
-		Sitemap::addSitemap('/sitemaps/general');
+    /**
+     * GET /sitemaps
+     *
+     * @param  \Watson\Sitemap\Builder  $sitemap
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Builder $sitemap)
+    {
+        // Add a general sitemap using a URL.
+        $sitemap->add('sitemaps/general');
 
-		// You can use the route helpers too.
-		Sitemap::addSitemap(URL::route('sitemaps.posts'));
-		Sitemap::addSitemap(route('sitemaps.users'));
+        // You can use the route helpers too.
+        $sitemap->add(route('sitemaps.users'));
 
-		// Return the sitemap to the client.
-		return Sitemap::index();
-	}
+        // And you can provide the last modified timestamp.
+        $lastModified = Post::latest()->take(1)->get();
+        $sitemap->add(route('sitemaps.posts'), $lastModifieD);
+
+        // Render the sitemap.
+        return $sitemap;
+    }
 }
 ```
 
-Simply route to this as you usually would, `Route::get('sitemap', 'SitemapsController@index')`.
+### Sitemaps
 
-### Creating sitemaps
-Similarly to sitemap indexes, you just add tags for each item in your sitemap using `Sitemap::addTag($location, $lastModified, $changeFrequency, $priority)`. You can return the sitemap with `Sitemap::renderSitemap()`. Again, the `$lastModified` variable will be parsed and convered to the right format for the sitemap.
+Similar to creating indexes, you add tags using the tag method: `$sitemap->tag($location, $lastModified, $changeFrequency, $priority)`.
 
-If you'd like to just get the raw XML, simply call `Sitemap::xml()`.
+```php
+use App\Post;
+use Watson\Sitemap\Builder;
 
-Here is an example controller that produces a sitemap for blog psots.
-
-```
-class SitemapsController extends BaseController
+class SitemapsController extends Controller
 {
-	public function posts()
-	{
-		$posts = Post::all();
+    /**
+     * GET /sitemaps/posts
+     *
+     * @param  \Watson\Sitemap\Builder  $builder
+     * @return \Illuminate\Http\Response
+     */
+    public function posts(Builder $sitemap)
+    {
+        $posts = Post::all();
 
-		foreach ($posts as $post) {
-			Sitemap::addTag(route('posts.show', $post), $post->updated_at, 'daily', '0.8');
-		}
+        foreach ($posts as $post) {
+            $sitemap->add(route('posts.show', $post), $post->updated_at, ChangeFrequency::DAILY, 0.8);
+        }
 
-		return Sitemap::render();
-	}
+        return $sitemap;
+    }
 }
 ```
 
@@ -88,14 +92,45 @@ If you just want to pass a model's `updated_at` timestamp as the last modified p
 
 **If you're pulling a lot of records from your database you might want to consider restricting the amount of data you're getting by using the `select()` method. You can also use the `chunk()` method to only load a certain number of records at any one time as to not run out of memory.**
 
-## Configuration
+### Models
 
-To publish the configuration file for the sitemap package, simply run this Artisan command:
+Instead of manually looping around, you can easily create a sitemap for a model using the `model()` method. Simply pass the model class name and a callback which generates the correct route to the resource.
 
-    php artisan config:publish watson/sitemap
+```php
+use App\Post;
+use Watson\Sitemap\Builder;
 
-Then take a look in `config/sitemap.php` to see what is available.
+class SitemapsController extends Controller
+{
+    /**
+     * GET /sitemaps/posts
+     *
+     * @param  \Watson\Sitemap\Builder  $builder
+     * @return \Illuminate\Http\Response
+     */
+    public function posts(Builder $sitemap)
+    {
+        return $sitemap->model(Post::class, function ($model) {
+            return route('posts.show', $post);
+        });
+    }
+}
+```
 
-### Caching
+#### Options
 
-By default, caching is disabled. If you would likd to enable caching, simply set `cache_enabled` in the configuration file to `true`. You can then specify how long you would like your views to be cached for. Keep in mind that when enabled, caching will affect each and every request made to the sitemap package.
+The last modified attribute for each model will be set using the model's `updated_at` timestamp. You can set the change frequency and priority easily as well.
+
+```php
+return $sitemap->model(Post::class, ['change_frequency' => ChangeFrequency::DAILY, 'priority' => 0.8, 'per_page' => 1000, function ($model) {
+    return route('posts.show', $post); 
+}]);
+```
+
+#### Pagination
+
+By default, the sitemap will be restricted to 10,000 per page. If your resource has more than that number (or more than the number you have specified) then the `model()` method will handle this for you, 
+
+
+
+## Caching
