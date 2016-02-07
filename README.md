@@ -99,3 +99,20 @@ Then take a look in `config/sitemap.php` to see what is available.
 ### Caching
 
 By default, caching is disabled. If you would likd to enable caching, simply set `cache_enabled` in the configuration file to `true`. You can then specify how long you would like your views to be cached for. Keep in mind that when enabled, caching will affect each and every request made to the sitemap package.
+
+### Multilingual tags
+
+If you'd like to use a mutlilingual tag, simply pass an instance of one to the `addTag` method. Below is a crude example of how you would pass alternate tag locations for different languages.
+
+```
+    Sitemap::addTag(new \Watson\Sitemap\Tags\MultilingualTag(
+        $location,
+        $lastModified,
+        $changeFrequency,
+        $priority,
+        [
+            'en' => $location . '?lang=en',
+            'fr' => $location . '?lang=fr'
+        ]
+    ));
+```
