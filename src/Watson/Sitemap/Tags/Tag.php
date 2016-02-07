@@ -22,11 +22,10 @@ class Tag extends BaseTag
      * @var array
      */
     protected $xmlTags = [
-        'loc' => 'location',
-        'lastmod' => 'lastModified',
+        'loc'        => 'location',
+        'lastmod'    => 'lastModified',
         'changefreq' => 'changeFrequency',
-        'priority' => 'priority',
-        'xhtml:link' => 'Alternate',
+        'priority'   => 'priority'
     ];
 
     /**
@@ -38,13 +37,12 @@ class Tag extends BaseTag
      * @param  string  $priority
      * @return void
      */
-    public function __construct($location, $lastModified = null, $changeFrequency = null, $priority = null, $multiLangual = null)
+    public function __construct($location, $lastModified = null, $changeFrequency = null, $priority = null)
     {
         parent::__construct($location, $lastModified);
 
         $this->changeFrequency = $changeFrequency;
         $this->priority = $priority;
-        $this->multilang = $multiLangual;
     }
 
     /**

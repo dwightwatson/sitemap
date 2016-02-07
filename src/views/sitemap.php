@@ -11,23 +11,23 @@
       <loc><?php echo $tag->getLocation() ?></loc>
       <?php if ($tag->getLastModified()): ?>
         <lastmod><?php echo $tag->getLastModified()->format('Y-m-d\TH:i:sP') ?></lastmod>
-      <?php endif?>
+      <?php endif ?>
       <?php if ($tag instanceof \Watson\Sitemap\Tags\Tag): ?>
-        <?php if ($tag->getMultiLangual()): ?>
-          <?php foreach ($tag->getMultiLangual() as $key => $value): ?>
-              <xhtml:link rel="alternate" hreflang="<?php echo $key ?>" href="<?php echo $value ?>"  />
-          <?php endforeach;?>
-        <?php endif?>
         <?php if ($tag->getPriority()): ?>
           <priority><?php echo $tag->getPriority() ?></priority>
-        <?php endif?>
+        <?php endif ?>
         <?php if ($tag->getChangeFrequency()): ?>
           <changefreq><?php echo $tag->getChangeFrequency() ?></changefreq>
-        <?php endif?>
-      <?php endif;?>
+        <?php endif ?>
+      <?php endif ?>
+      <?php if ($tag instanceof \Watson\Sitemap\Tags\MultilingualTag): ?>
+        <?php foreach ($tag->getMultilingual() as $lang => $href): ?>
+          <xhtml:link rel="alternate" hreflang="<?php echo $lang ?>" href="<?php echo $value ?>" />
+        <?php endforeach;?>
+      <?php endif ?>
       <?php if ($tag instanceof \Watson\Sitemap\Tags\ExpiredTag): ?>
         <expires><?php echo $tag->getExpired()->format('Y-m-d\TH:i:sP') ?></expires>
-      <?php endif;?>
+      <?php endif ?>
     </url>
-  <?php endforeach?>
+  <?php endforeach ?>
 </urlset>
