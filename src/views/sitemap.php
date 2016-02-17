@@ -22,7 +22,7 @@
       <?php endif ?>
       <?php if ($tag instanceof \Watson\Sitemap\Tags\MultilingualTag): ?>
         <?php foreach ($tag->getMultilingual() as $lang => $href): ?>
-          <xhtml:link rel="alternate" hreflang="<?php echo $lang ?>" href="<?php echo $value ?>" />
+          <xhtml:link rel="alternate" hreflang="<?php echo $lang ?>" href="<?php echo $href ?>" />
         <?php endforeach;?>
       <?php endif ?>
       <?php if ($tag instanceof \Watson\Sitemap\Tags\ExpiredTag): ?>
