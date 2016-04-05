@@ -8,7 +8,7 @@
     http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <?php foreach ($tags as $tag): ?>
     <url>
-      <loc><?php echo $tag->getLocation() ?></loc>
+      <loc><?php echo htmlspecialchars($tag->getLocation(), ENT_XML1) ?></loc>
       <?php if ($tag->getLastModified()): ?>
         <lastmod><?php echo $tag->getLastModified()->format('Y-m-d\TH:i:sP') ?></lastmod>
       <?php endif ?>
