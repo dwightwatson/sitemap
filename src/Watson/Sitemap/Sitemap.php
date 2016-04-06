@@ -40,7 +40,7 @@ class Sitemap
     protected $request;
 
     /**
-     * Construct the sitemap manager.
+     * Create a new sitemap instance.
      *
      * @param  \Illuminate\Contracts\Cache\Repository  $cache
      * @param  \Illuminate\Http\Request  $request
@@ -77,9 +77,9 @@ class Sitemap
     }
 
     /**
-     * Render an index of of sitemaps.
+     * Render an index of sitemaps.
      *
-     * @return Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -95,9 +95,9 @@ class Sitemap
     }
 
     /**
-     * Render an index of of sitemaps.
+     * Render an index of sitemaps.
      *
-     * @return Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function renderSitemapIndex()
     {
