@@ -93,6 +93,8 @@ If you just want to pass a model's `updated_at` timestamp as the last modified p
 To publish the configuration file for the sitemap package, simply run this Artisan command:
 
     php artisan config:publish watson/sitemap
+    
+    php artisan vendor:publish --provider="Watson\Sitemap\SitemapServiceProvider"
 
 Then take a look in `config/sitemap.php` to see what is available.
 
