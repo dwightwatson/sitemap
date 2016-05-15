@@ -203,7 +203,7 @@ class Sitemap
         */
         public function clear()
         {
-                $this->sitemaps = $this->tags = [];
+                $this->sitemaps = $this->tags = array();
         }
         
 }
