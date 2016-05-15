@@ -144,4 +144,15 @@ class SitemapTest extends PHPUnit_Framework_TestCase
     {
         //
     }
+    
+    public function testClearEmptiesSitemapAndTags() 
+    {
+        $this->sitemap->addSitemap('foo', '2014-01-01 00:00:00');
+        $this->sitemap->addTag('foo', '2014-01-01 00:00:00', 'daily', '0.9');
+        
+        $this->sitemap->clear();
+        
+        $this->assertEmpty($this->sitemap->getSitemaps());
+        $this->assertEmpty($this->sitemap->getTags());
+    }
 }
