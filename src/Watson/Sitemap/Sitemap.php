@@ -195,4 +195,15 @@ class Sitemap
 	{
 		return 'sitemap_' . Str::slug($this->request->url());
 	}
+        
+        /**
+        * Clear all the existing sitemaps and tags.
+        *
+        * @return void
+        */
+        public function clear()
+        {
+                $this->sitemaps = $this->tags = array();
+        }
+        
 }
