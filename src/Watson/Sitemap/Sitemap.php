@@ -126,7 +126,7 @@ class Sitemap
      * @param  string  $location
      * @param  \DateTime|string  $expired
      * @return void
-     */    
+     */
     public function addExpiredTag($location, $expired = null)
     {
         $tag = $location instanceof ExpiredTag ? $location : new ExpiredTag($location, $expired);
@@ -223,6 +223,22 @@ class Sitemap
     }
 
     /**
+     * Check whether the sitemap has a cached view or not.
+     *
+     * @return bool
+     */
+    public function hasCachedView()
+    {
+        if (config('sitemap.cache_enabled')) {
+            $key = $this->getCacheKey();
+
+            return $this->cache->has($key);
+        }
+
+        return false;
+    }
+
+    /**
      * Check to see whether a view has already been cached for the current
      * route and if so, return it.
      *
@@ -230,12 +246,10 @@ class Sitemap
      */
     protected function getCachedView()
     {
-        if (config('sitemap.cache_enabled')) {
+        if ($this->hasCachedView()) {
             $key = $this->getCacheKey();
 
-            if ($this->cache->has($key)) {
-                return $this->cache->get($key);
-            }
+            return $this->cache->get($key);
         }
 
         return false;
