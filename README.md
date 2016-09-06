@@ -41,7 +41,7 @@ If you have a large number of links (50,000+) you will want to break your sitema
 
 Here is an example controller that produces a sitemap index.
 
-```
+```php
 class SitemapsController extends BaseController
 {
 	public function index()
@@ -68,7 +68,7 @@ If you'd like to just get the raw XML, simply call `Sitemap::xml()`.
 
 Here is an example controller that produces a sitemap for blog psots.
 
-```
+```php
 class SitemapsController extends BaseController
 {
 	public function posts()
@@ -106,7 +106,7 @@ By default, caching is disabled. If you would likd to enable caching, simply set
 
 If you'd like to use a mutlilingual tag, simply pass an instance of one to the `addTag` method. Below is a crude example of how you would pass alternate tag locations for different languages.
 
-```
+```php
     Sitemap::addTag(new \Watson\Sitemap\Tags\MultilingualTag(
         $location,
         $lastModified,
