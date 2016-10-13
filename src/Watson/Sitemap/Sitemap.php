@@ -87,7 +87,7 @@ class Sitemap
             return response()->make($cachedView, 200, ['Content-type' => 'text/xml']);
         }
 
-        $sitemapIndex = response()->view('sitemap::sitemaps', ['sitemaps' => $this->getSitemaps()], 200, ['Content-type' => 'text/xml']);
+        $sitemapIndex = response()->view('sitemap::sitemaps', ['__sitemaps' => $this->getSitemaps()], 200, ['Content-type' => 'text/xml']);
 
         $this->saveCachedView($sitemapIndex);
 
@@ -175,7 +175,7 @@ class Sitemap
             return response()->make($cachedView, 200, ['Content-type' => 'text/xml']);
         }
 
-        $sitemap = response()->view('sitemap::sitemap', ['tags' => $this->getTags()], 200, ['Content-type' => 'text/xml']);
+        $sitemap = response()->view('sitemap::sitemap', ['__tags' => $this->getTags()], 200, ['Content-type' => 'text/xml']);
 
         $this->saveCachedView($sitemap);
 
