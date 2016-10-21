@@ -8,14 +8,14 @@
   <?php foreach ($tags as $tag): ?>
     <url>
       <loc><?= $tag['loc'] ?></loc>
-      <?php if ($tag['priority']): ?>
-        <priority><?= $tag['priority'] ?></priority>
-      <?php endif ?>
       <?php if ($tag['lastmod']): ?>
         <lastmod><?= date('Y-m-d\TH:i:sP', strtotime($tag['lastmod'])) ?></lastmod>
       <?php endif ?>
       <?php if ($tag['changefreq']): ?>
         <changefreq><?= $tag['changefreq'] ?></changefreq>
+      <?php endif ?>
+      <?php if ($tag['priority']): ?>
+        <priority><?= $tag['priority'] ?></priority>
       <?php endif ?>
     </url>
   <?php endforeach ?>
