@@ -14,6 +14,6 @@ return [
     */
 
     'cache_enabled' => false,
-    
+
     'cache_length' => 1440
 ];
