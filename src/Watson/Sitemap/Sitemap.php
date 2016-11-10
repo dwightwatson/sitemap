@@ -167,7 +167,7 @@ class Sitemap
     /**
      * Render a sitemap.
      *
-     * @erturn \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function render()
     {
