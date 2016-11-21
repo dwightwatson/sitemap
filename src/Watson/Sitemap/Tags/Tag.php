@@ -1,5 +1,7 @@
 <?php namespace Watson\Sitemap\Tags;
 
+use Watson\Sitemap\Tags\ImageTag;
+
 class Tag extends BaseTag
 {
     /**
@@ -15,6 +17,13 @@ class Tag extends BaseTag
      * @var string
      */
     protected $priority;
+
+    /**
+     * Image Tags belonging to this Tags
+     *
+     * @var array
+     */
+    protected $images = [];
 
     /**
      * Map the sitemap XML tags to class properties.
@@ -95,5 +104,42 @@ class Tag extends BaseTag
     public function setPriority($priority)
     {
         $this->priority = $priority;
+    }
+
+    /**
+     * Add an image tag
+     * @param  string  $location
+     * @param  string  $caption
+     * @param  string  $geo_location
+     * @param  string  $title
+     * @param  string  $license
+     * @return void
+     */
+    public function addImage($location, $caption = null, $geoLocation = null, $title = null, $license = null)
+    {
+        $image = $location instanceof ImageTag ? $location : new ImageTag($location, $caption, $geoLocation, $title, $license);
+
+        $this->images[] = $image;
+    }
+
+    /**
+     * Get associated image tags
+     * Google Image Sitemap specifiction allows only up to 1000 images per each page
+     *
+     * @return array
+     */
+    public function getImages()
+    {
+        return array_slice($this->images, 0, 1000);
+    }
+
+    /**
+     * Tell if the tag has associate image tags
+     *
+     * @return boolean
+     */
+    public function hasImages()
+    {
+        return count($this->images) > 0;
     }
 }

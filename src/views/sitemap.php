@@ -1,5 +1,5 @@
 <?php echo '<?xml version="1.0" encoding="UTF-8"?>' ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" <?php if ($__hasImages): ?> xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" <?php endif; ?>>
   <?php foreach ($__tags as $__tag): ?>
   <url>
     <loc><?php echo htmlspecialchars($__tag->getLocation(), ENT_XML1) ?></loc>
@@ -17,10 +17,29 @@
     <?php if ($__tag instanceof \Watson\Sitemap\Tags\MultilingualTag): ?>
     <?php foreach ($__tag->getMultilingual() as $lang => $href): ?>
     <xhtml:link rel="alternate" hreflang="<?php echo $lang ?>" href="<?php echo $href ?>" />
-    <?php endforeach;?>
+    <?php endforeach ?>
     <?php endif ?>
     <?php if ($__tag instanceof \Watson\Sitemap\Tags\ExpiredTag): ?>
     <expires><?php echo $__tag->getExpired()->format('Y-m-d\TH:i:sP') ?></expires>
+    <?php endif ?>
+    <?php if ($__tag->hasImages): ?>
+      <?php foreach ($tag->getImages() as $__image): ?>
+        <image:image>
+          <image:loc><?php echo $__image->getLocation(); ?></image:loc>
+          <?php if ($__image->getCaption()): ?>
+          <image:caption><?php echo $__tag->getCaption(); ?></image:caption>
+          <?php endif ?>
+          <?php if ($__image->getGeoLocation()): ?>
+          <image:geo_location><?php echo $__tag->getGeoLocation(); ?></image:geo_location>
+          <?php endif ?>
+          <?php if ($__image->getTitle()): ?>
+          <image:title><?php echo $__tag->getTitle(); ?></image:title>
+          <?php endif ?>
+          <?php if ($__image->getLicense()): ?>
+          <image:license><?php echo $__tag->getLicense(); ?></image:license>
+          <?php endif ?>
+        </image:image>
+      <?php endforeach ?>
     <?php endif ?>
   </url>
   <?php endforeach ?>

@@ -111,13 +111,14 @@ class Sitemap
      * @param  \DateTime|string  $lastModified
      * @param  string  $changeFrequency
      * @param  string  $priority
-     * @return void
+     * @return Tag
      */
     public function addTag($location, $lastModified = null, $changeFrequency = null, $priority = null)
     {
         $tag = $location instanceof Tag ? $location : new Tag($location, $lastModified, $changeFrequency, $priority);
 
         $this->tags[] = $tag;
+        return $tag;
     }
 
     /**
@@ -175,7 +176,15 @@ class Sitemap
             return response()->make($cachedView, 200, ['Content-type' => 'text/xml']);
         }
 
-        $sitemap = response()->view('sitemap::sitemap', ['__tags' => $this->getTags()], 200, ['Content-type' => 'text/xml']);
+        $hasImages = false;
+        foreach ($this->tags as $tag) {
+            if ($tag->hasImages()) {
+                $this->hasImages = true;
+                break;
+            }
+        }
+
+        $sitemap = response()->view('sitemap::sitemap', ['__tags' => $this->getTags(), '__hasImages' => $this->hasImages], 200, ['Content-type' => 'text/xml']);
 
         $this->saveCachedView($sitemap);
 

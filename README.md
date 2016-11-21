@@ -66,7 +66,7 @@ Similarly to sitemap indexes, you just add tags for each item in your sitemap us
 
 If you'd like to just get the raw XML, simply call `Sitemap::xml()`.
 
-Here is an example controller that produces a sitemap for blog psots.
+Here is an example controller that produces a sitemap for blog posts.
 
 ```php
 class SitemapsController extends BaseController
@@ -88,12 +88,46 @@ If you just want to pass a model's `updated_at` timestamp as the last modified p
 
 **If you're pulling a lot of records from your database you might want to consider restricting the amount of data you're getting by using the `select()` method. You can also use the `chunk()` method to only load a certain number of records at any one time as to not run out of memory.**
 
+### Image sitemaps
+You can use Google image extensions for sitemaps to give Google more information about the images available on your pages. [Read the specification](https://support.google.com/webmasters/answer/178636?hl=en)
+
+Images are associated with page and you can use up to 1000 images per page.
+
+Here is an example of adding image tag to usual page tag.
+
+```php
+class SitemapsController extends BaseController
+{
+	public function pages()
+	{
+		$pages = Page::all();
+
+		foreach ($pages as $page) {
+			$tag = Sitemap::addTag(route('pages.show', $page), $page->updated_at, 'daily', '0.8');
+
+			foreach ($page->images as $image) {
+				$tag->addImage($image->url, $image->caption);
+			}
+		}
+
+		return Sitemap::render();
+	}
+}
+```
+
+Full list of arguments:
+* location
+* caption
+* geolocation
+* title
+* license url
+
 ## Configuration
 
 To publish the configuration file for the sitemap package, simply run this Artisan command:
 
     php artisan config:publish watson/sitemap
-    
+
     php artisan vendor:publish --provider="Watson\Sitemap\SitemapServiceProvider"
 
 Then take a look in `config/sitemap.php` to see what is available.
