@@ -2,6 +2,7 @@
 
 use DateTime;
 use ArrayAccess;
+use Watson\Sitemap\Tags\ImageTag;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseTag implements ArrayAccess
@@ -19,6 +20,13 @@ abstract class BaseTag implements ArrayAccess
      * @var \DateTime
      */
     protected $lastModified;
+
+    /**
+     * Image tags belonging to this tag.
+     *
+     * @var array
+     */
+    protected $images = [];
 
     /**
      * Map the sitemap XML tags to class properties.
@@ -94,6 +102,44 @@ abstract class BaseTag implements ArrayAccess
         }
 
         $this->lastModified = new DateTime($lastModified);
+    }
+
+    /**
+     * Add an image tag to the tag.
+     *
+     * @param  string  $location
+     * @param  string  $caption
+     * @param  string  $geo_location
+     * @param  string  $title
+     * @param  string  $license
+     * @return void
+     */
+    public function addImage($location, $caption = null, $geoLocation = null, $title = null, $license = null)
+    {
+        $image = $location instanceof ImageTag ? $location : new ImageTag($location, $caption, $geoLocation, $title, $license);
+
+        $this->images[] = $image;
+    }
+
+    /**
+     * Get associated image tags. Google image sitemaps only allow up to
+     * 1,000 images per page.
+     *
+     * @return array
+     */
+    public function getImages()
+    {
+        return array_slice($this->images, 0, 1000);
+    }
+
+    /**
+     * Tell if the tag has associate image tags
+     *
+     * @return boolean
+     */
+    public function hasImages()
+    {
+        return count($this->images) > 0;
     }
 
     public function offsetExists($offset)

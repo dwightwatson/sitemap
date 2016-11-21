@@ -14,7 +14,7 @@ class ImageTag extends BaseTag
      *
      * @var string
      */
-    protected $geo_location;
+    protected $geoLocation;
 
     /**
      * The title of the image.

@@ -44,18 +44,18 @@ Here is an example controller that produces a sitemap index.
 ```php
 class SitemapsController extends BaseController
 {
-	public function index()
-	{
-		// Get a general sitemap.
-		Sitemap::addSitemap('/sitemaps/general');
+    public function index()
+    {
+        // Get a general sitemap.
+        Sitemap::addSitemap('/sitemaps/general');
 
-		// You can use the route helpers too.
-		Sitemap::addSitemap(URL::route('sitemaps.posts'));
-		Sitemap::addSitemap(route('sitemaps.users'));
+        // You can use the route helpers too.
+        Sitemap::addSitemap(URL::route('sitemaps.posts'));
+        Sitemap::addSitemap(route('sitemaps.users'));
 
-		// Return the sitemap to the client.
-		return Sitemap::index();
-	}
+        // Return the sitemap to the client.
+        return Sitemap::index();
+    }
 }
 ```
 
@@ -71,16 +71,16 @@ Here is an example controller that produces a sitemap for blog posts.
 ```php
 class SitemapsController extends BaseController
 {
-	public function posts()
-	{
-		$posts = Post::all();
+    public function posts()
+    {
+        $posts = Post::all();
 
-		foreach ($posts as $post) {
-			Sitemap::addTag(route('posts.show', $post), $post->updated_at, 'daily', '0.8');
-		}
+        foreach ($posts as $post) {
+            Sitemap::addTag(route('posts.show', $post), $post->updated_at, 'daily', '0.8');
+        }
 
-		return Sitemap::render();
-	}
+        return Sitemap::render();
+    }
 }
 ```
 
@@ -98,29 +98,28 @@ Here is an example of adding image tag to usual page tag.
 ```php
 class SitemapsController extends BaseController
 {
-	public function pages()
-	{
-		$pages = Page::all();
+    public function pages()
+    {
+        $pages = Page::all();
 
-		foreach ($pages as $page) {
-			$tag = Sitemap::addTag(route('pages.show', $page), $page->updated_at, 'daily', '0.8');
+        foreach ($pages as $page) {
+            $tag = Sitemap::addTag(route('pages.show', $page), $page->updated_at, 'daily', '0.8');
 
-			foreach ($page->images as $image) {
-				$tag->addImage($image->url, $image->caption);
-			}
-		}
+            foreach ($page->images as $image) {
+                $tag->addImage($image->url, $image->caption);
+            }
+        }
 
-		return Sitemap::render();
-	}
+        return Sitemap::render();
+    }
 }
 ```
 
-Full list of arguments:
-* location
-* caption
-* geolocation
-* title
-* license url
+Here is the full list of arguments to add an image to a tag.
+
+```php
+$tag->addImage($location, $caption, $geoLocation, $title, $licenceUrl);
+```
 
 ## Configuration
 
