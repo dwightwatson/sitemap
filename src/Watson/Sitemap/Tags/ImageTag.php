@@ -1,6 +1,6 @@
 <?php namespace Watson\Sitemap\Tags;
 
-class Tag extends BaseTag
+class ImageTag extends BaseTag
 {
     /**
      * The caption of the image.
@@ -144,6 +144,6 @@ class Tag extends BaseTag
      */
     public function setLicense($license)
     {
-        $this->license = $priority;
+        $this->license = $license;
     }
 }

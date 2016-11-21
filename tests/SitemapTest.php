@@ -1,6 +1,7 @@
 <?php
 
 use Watson\Sitemap\Tags\Tag;
+use Watson\Sitemap\Tags\ImageTag;
 use Watson\Sitemap\Tags\Sitemap;
 
 class SitemapTest extends PHPUnit_Framework_TestCase
@@ -62,5 +63,25 @@ class SitemapTest extends PHPUnit_Framework_TestCase
     public function test_render_sitemap()
     {
         //
+    }
+
+    public function test_add_image_tag()
+    {
+        $tag = new Tag('foo');
+
+        $image = new ImageTag('foo', 'bar');
+        $tag->addImage($image);
+
+        $this->assertEquals([$image], $tag->getImages());
+    }
+
+    public function test_add_full_image_tag()
+    {
+        $tag = new Tag('bar');
+
+        $image = new ImageTag('foo', 'bar', 'baz', 'bat', 'foobar');
+        $tag->addImage($image);
+
+        $this->assertEquals([$image], $tag->getImages());
     }
 }
