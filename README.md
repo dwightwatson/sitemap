@@ -14,17 +14,17 @@ Read more about sitemaps and how to use them efficiently on [Google Webmaster To
 
 ## Installation for Laravel 5.*
 
-Simply pop the correct version constraint in your `composer.json` file and run `composer update` (however your Composer is installed).
+Simply require the package and let Composer get the latest compatible version for you.
 
-    "watson/sitemap": "2.0.*"
+    composer require watson/sitemap
 
-Now, add the service provider to your `app/config/app.php` file.
+Now, add the service provider to your `config/app.php` file.
 
-    'Watson\Sitemap\SitemapServiceProvider'
+    Watson\Sitemap\SitemapServiceProvider::class
 
-And finally add the alias to the facade, also in `app/config/app.php`.
+And finally add the alias to the facade, also in `config/app.php`.
 
-    'Sitemap' => 'Watson\Sitemap\Facades\Sitemap'
+    'Sitemap' => Watson\Sitemap\Facades\Sitemap::class
 
 ## Installation for Laravel 4.*
 
@@ -42,7 +42,11 @@ If you have a large number of links (50,000+) you will want to break your sitema
 Here is an example controller that produces a sitemap index.
 
 ```php
-class SitemapsController extends BaseController
+namespace App\Http\Controllers;
+
+use Sitemap;
+
+class SitemapsController extends Controller
 {
     public function index()
     {
@@ -50,8 +54,7 @@ class SitemapsController extends BaseController
         Sitemap::addSitemap('/sitemaps/general');
 
         // You can use the route helpers too.
-        Sitemap::addSitemap(URL::route('sitemaps.posts'));
-        Sitemap::addSitemap(route('sitemaps.users'));
+        Sitemap::addSitemap(route('sitemaps.posts'));
 
         // Return the sitemap to the client.
         return Sitemap::index();
@@ -59,7 +62,7 @@ class SitemapsController extends BaseController
 }
 ```
 
-Simply route to this as you usually would, `Route::get('sitemap', 'SitemapsController@index')`.
+Simply route to this as you usually would, `Route::get('sitemap', 'SitemapsController@index');`.
 
 ### Creating sitemaps
 Similarly to sitemap indexes, you just add tags for each item in your sitemap using `Sitemap::addTag($location, $lastModified, $changeFrequency, $priority)`. You can return the sitemap with `Sitemap::renderSitemap()`. Again, the `$lastModified` variable will be parsed and convered to the right format for the sitemap.
@@ -69,7 +72,12 @@ If you'd like to just get the raw XML, simply call `Sitemap::xml()`.
 Here is an example controller that produces a sitemap for blog posts.
 
 ```php
-class SitemapsController extends BaseController
+namespace App\Http\Controllers;
+
+use Post;
+use Sitemap;
+
+class SitemapsController extends Controller
 {
     public function posts()
     {
@@ -96,7 +104,12 @@ Images are associated with page and you can use up to 1000 images per page.
 Here is an example of adding image tag to usual page tag.
 
 ```php
-class SitemapsController extends BaseController
+namespace App\Http\Controllers;
+
+use Page;
+use Sitemap;
+
+class SitemapsController extends Controller
 {
     public function pages()
     {
