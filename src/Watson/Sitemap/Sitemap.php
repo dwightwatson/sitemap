@@ -1,12 +1,12 @@
 <?php namespace Watson\Sitemap;
 
-use Watson\Sitemap\Tags\Tag;
-use Watson\Sitemap\Tags\ExpiredTag;
-use Watson\Sitemap\Tags\Sitemap as SitemapTag;
-
 use DateTime;
 use Illuminate\Http\Request;
+use Watson\Sitemap\Tags\Tag;
 use Illuminate\Http\Response;
+use Watson\Sitemap\Tags\ExpiredTag;
+use Watson\Sitemap\Tags\MultilingualTag;
+use Watson\Sitemap\Tags\Sitemap as SitemapTag;
 use Illuminate\Contracts\Cache\Repository as Cache;
 
 class Sitemap
@@ -177,7 +177,11 @@ class Sitemap
             return response()->make($cachedView, 200, ['Content-type' => 'text/xml']);
         }
 
-        $sitemap = response()->view('sitemap::sitemap', ['__tags' => $this->getTags(), '__hasImages' => $this->imagesPresent()], 200, ['Content-type' => 'text/xml']);
+        $sitemap = response()->view('sitemap::sitemap', [
+            '__tags' => $this->getTags(),
+            '__hasImages' => $this->imagesPresent(),
+            '__isMultilingual' => $this->multilingualTagsPresent()
+        ], 200, ['Content-type' => 'text/xml']);
 
         $this->saveCachedView($sitemap);
 
@@ -249,6 +253,22 @@ class Sitemap
     {
         foreach ($this->tags as $tag) {
             if ($tag->hasImages()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Return whether there are any multilingual tags present in the sitemap.
+     *
+     * @return bool
+     */
+    protected function multilingualTagsPresent()
+    {
+        foreach ($this->tags as $tag) {
+            if ($tag instanceof MultilingualTag) {
                 return true;
             }
         }
