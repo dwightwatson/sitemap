@@ -22,25 +22,23 @@
     <?php if ($__tag instanceof \Watson\Sitemap\Tags\ExpiredTag): ?>
     <expires><?php echo $__tag->getExpired()->format('Y-m-d\TH:i:sP') ?></expires>
     <?php endif ?>
-    <?php if ($__tag->hasImages): ?>
-      <?php foreach ($tag->getImages() as $__image): ?>
-        <image:image>
-          <image:loc><?php echo $__image->getLocation() ?></image:loc>
-          <?php if ($__image->getCaption()): ?>
-          <image:caption><?php echo $__tag->getCaption() ?></image:caption>
-          <?php endif ?>
-          <?php if ($__image->getGeoLocation()): ?>
-          <image:geo_location><?php echo $__tag->getGeoLocation() ?></image:geo_location>
-          <?php endif ?>
-          <?php if ($__image->getTitle()): ?>
-          <image:title><?php echo $__tag->getTitle() ?></image:title>
-          <?php endif ?>
-          <?php if ($__image->getLicense()): ?>
-          <image:license><?php echo $__tag->getLicense() ?></image:license>
-          <?php endif ?>
-        </image:image>
-      <?php endforeach ?>
-    <?php endif ?>
+    <?php foreach ($__tag->getImages() as $__image): ?>
+      <image:image>
+        <image:loc><?php echo $__image->getLocation() ?></image:loc>
+        <?php if ($__image->getCaption()): ?>
+        <image:caption><?php echo htmlspecialchars($__image->getCaption()) ?></image:caption>
+        <?php endif ?>
+        <?php if ($__image->getGeoLocation()): ?>
+        <image:geo_location><?php echo htmlspecialchars($__image->getGeoLocation()) ?></image:geo_location>
+        <?php endif ?>
+        <?php if ($__image->getTitle()): ?>
+        <image:title><?php echo htmlspecialchars($__image->getTitle()) ?></image:title>
+        <?php endif ?>
+        <?php if ($__image->getLicense()): ?>
+        <image:license><?php echo htmlspecialchars($__image->getLicense()) ?></image:license>
+        <?php endif ?>
+      </image:image>
+    <?php endforeach ?>
   </url>
   <?php endforeach ?>
 </urlset>
