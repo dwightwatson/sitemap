@@ -51,19 +51,19 @@
 	        <?php endif ?>>
 	      </news:publication>
 	      <?php if (!empty($__tag->getGenres())) : ?>
-	      <news:genres><?php $__tag->getGenres() ?></news:genres>
+	      <news:genres><?php echo htmlspecialchars($__tag->getGenres()) ?></news:genres>
 	      <?php endif ?>
 	      <?php if ($__tag->getPublicationDate()) : ?>
-	      <news:publication_date><?php $__tag->getPublicationDate() ?></news:publication_date>
+	      <news:publication_date><?php echo htmlspecialchars($__tag->getPublicationDate()) ?></news:publication_date>
 	      <?php endif ?>
 	      <?php if ($__tag->getTitle()) : ?>
-	      <news:title><?php $__tag->getTitle() ?></news:title>
+	      <news:title><?php echo htmlspecialchars($__tag->getTitle()) ?></news:title>
 	      <?php endif ?>
 	      <?php if (!empty($__tag->getKeywords())) : ?>
-	      <news:keywords><?php $__tag->getKeywords() ?></news:keywords>
+	      <news:keywords><?php echo htmlspecialchars($__tag->getKeywords()) ?></news:keywords>
 	      <?php endif ?>
 	      <?php if (!empty($__tag->getStockTickers())) : ?>
-	      <news:stock_tickers><?php $__tag->getStockTickers() ?></news:stock_tickers>
+	      <news:stock_tickers><?php echo htmlspecialchars($__tag->getStockTickers()) ?></news:stock_tickers>
 	      <?php endif ?>
 	    </news:news>
     <?php endif ?>
