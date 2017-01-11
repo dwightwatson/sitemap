@@ -39,6 +39,34 @@
         <?php endif ?>
       </image:image>
     <?php endforeach ?>
+    <?php if ($__tag instanceof \Watson\Sitemap\Tags\NewsTag): ?>
+    <?php /** @var $__tag \Watson\Sitemap\Tags\NewsTag */ ?>
+	    <news:news>
+	      <news:publication>
+	      	<?php if ($__tag->getPublicationName()): ?>
+	        <news:name><?php echo htmlspecialchars($__tag->getPublicationName()) ?></news:name>
+	        <?php endif ?>
+	        <?php if ($__tag->getPublicationLanguage()): ?>
+	        <news:language><?php echo htmlspecialchars($__tag->getPublicationLanguage()) ?></news:language
+	        <?php endif ?>>
+	      </news:publication>
+	      <?php if (!empty($__tag->getGenres())) : ?>
+	      <news:genres><?php $__tag->getGenres() ?></news:genres>
+	      <?php endif ?>
+	      <?php if ($__tag->getPublicationDate()) : ?>
+	      <news:publication_date><?php $__tag->getPublicationDate() ?></news:publication_date>
+	      <?php endif ?>
+	      <?php if ($__tag->getTitle()) : ?>
+	      <news:title><?php $__tag->getTitle() ?></news:title>
+	      <?php endif ?>
+	      <?php if (!empty($__tag->getKeywords())) : ?>
+	      <news:keywords><?php $__tag->getKeywords() ?></news:keywords>
+	      <?php endif ?>
+	      <?php if (!empty($__tag->getStockTickers())) : ?>
+	      <news:stock_tickers><?php $__tag->getStockTickers() ?></news:stock_tickers>
+	      <?php endif ?>
+	    </news:news>
+    <?php endif ?>
   </url>
   <?php endforeach ?>
 </urlset>
