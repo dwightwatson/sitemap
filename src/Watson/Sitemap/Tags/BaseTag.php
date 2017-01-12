@@ -1,4 +1,5 @@
-<?php namespace Watson\Sitemap\Tags;
+<?php
+namespace Watson\Sitemap\Tags;
 
 use DateTime;
 use ArrayAccess;
@@ -7,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseTag implements ArrayAccess
 {
+
     /**
      * The sitemap location.
      *
@@ -22,6 +24,13 @@ abstract class BaseTag implements ArrayAccess
     protected $lastModified;
 
     /**
+     * News tag belonging to this tag.
+     *
+     * @var NewsTag
+     */
+    protected $news;
+
+    /**
      * Image tags belonging to this tag.
      *
      * @var array
@@ -34,21 +43,21 @@ abstract class BaseTag implements ArrayAccess
      * @var array
      */
     protected $xmlTags = [
-        'loc'     => 'location',
+        'loc' => 'location',
         'lastmod' => 'lastModified'
     ];
 
     /**
      * Construct the tag.
      *
-     * @param  string  $location
-     * @param  \DateTime|string  $lastModified
+     * @param string $location            
+     * @param \DateTime|string $lastModified            
      * @return void
      */
     public function __construct($location, $lastModified = null)
     {
         $this->location = $location;
-
+        
         if ($lastModified) {
             $this->setLastModified($lastModified);
         }
@@ -67,7 +76,7 @@ abstract class BaseTag implements ArrayAccess
     /**
      * Set the sitemap location.
      *
-     * @param  string  $location
+     * @param string $location            
      * @return void
      */
     public function setLocation($location)
@@ -88,7 +97,7 @@ abstract class BaseTag implements ArrayAccess
     /**
      * Set the last modified timestamp.
      *
-     * @param  \DateTime|string  $lastModified
+     * @param \DateTime|string $lastModified            
      * @return void
      */
     public function setLastModified($lastModified)
@@ -100,29 +109,30 @@ abstract class BaseTag implements ArrayAccess
             $this->lastModified = $lastModified->updated_at;
             return;
         }
-
+        
         $this->lastModified = new DateTime($lastModified);
     }
 
     /**
      * Add an image tag to the tag.
      *
-     * @param  string  $location
-     * @param  string  $caption
-     * @param  string  $geo_location
-     * @param  string  $title
-     * @param  string  $license
+     * @param string $location            
+     * @param string $caption            
+     * @param string $geo_location            
+     * @param string $title            
+     * @param string $license            
      * @return void
      */
     public function addImage($location, $caption = null, $geoLocation = null, $title = null, $license = null)
     {
         $image = $location instanceof ImageTag ? $location : new ImageTag($location, $caption, $geoLocation, $title, $license);
-
+        
         $this->images[] = $image;
     }
 
     /**
-     * Get associated image tags. Google image sitemaps only allow up to
+     * Get associated image tags.
+     * Google image sitemaps only allow up to
      * 1,000 images per page.
      *
      * @return array
@@ -142,14 +152,52 @@ abstract class BaseTag implements ArrayAccess
         return count($this->images) > 0;
     }
 
+    /**
+     * Get news tag.
+     *
+     * @return NewsTag
+     */
+    public function getNews()
+    {
+        return $this->news;
+    }
+
+    /**
+     * Set news tag
+     *
+     * @param $publicationName string|NewsTag
+     * @param $publicationLanguage string
+     * @param $genres array
+     * @param $publicationDate \DateTime
+     * @param $title string
+     * @param $keywords array
+     * @param $stockTickers array
+     * @return void
+     */
+    public function setNews($publicationNameOrNewsTag, $publicationLanguage = null, $genres = null, $publicationDate = null, $title = null, $keywords = null, $stockTickers = null)
+    {
+        $news = $publicationNameOrNewsTag instanceof NewsTag ? $publicationNameOrNewsTag : new NewsTag($publicationNameOrNewsTag, $publicationLanguage, $genres, $publicationDate, $title, $keywords, $stockTickers);
+        $this->news = $news;
+    }
+
+    /**
+     * Tell if the tag has Google news extension tags
+     *
+     * @return boolean
+     */
+    public function isNews()
+    {
+        return $this->news instanceof NewsTag;
+    }
+
     public function offsetExists($offset)
     {
         if (array_key_exists($offset, $this->xmlTags)) {
             $attribute = $this->xmlTags[$offset];
-
+            
             return isset($this->{$attribute});
         }
-
+        
         return null;
     }
 
@@ -157,10 +205,10 @@ abstract class BaseTag implements ArrayAccess
     {
         if ($this->offsetExists($offset)) {
             $attribute = $this->xmlTags[$offset];
-
+            
             return $this->{$attribute};
         }
-
+        
         return null;
     }
 
@@ -168,7 +216,7 @@ abstract class BaseTag implements ArrayAccess
     {
         if (array_key_exists($offset, $this->xmlTags)) {
             $attribute = $this->xmlTags[$offset];
-
+            
             $this->{$attribute} = $value;
         }
     }
@@ -178,7 +226,7 @@ abstract class BaseTag implements ArrayAccess
         if ($attribute = $this->getXmlTagAttribute($offset)) {
             unset($this->{$attribute});
         }
-
+        
         return null;
     }
 
@@ -187,7 +235,7 @@ abstract class BaseTag implements ArrayAccess
         if (array_key_exists($offset, $this->xmlTags)) {
             return $this->xmlTags[$offset];
         }
-
+        
         return null;
     }
 }
