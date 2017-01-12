@@ -165,15 +165,20 @@ abstract class BaseTag implements ArrayAccess
     }
 
     /**
-     * Get associated image tags.
-     * Google image sitemaps only allow up to
-     * 1,000 images per page.
+     * Set news tag
      *
-     * @return array
+     * @param $publicationName string
+     * @param $publicationLanguage string
+     * @param $genres array
+     * @param $publicationDate \DateTime
+     * @param $title string
+     * @param $keywords array
+     * @param $stockTickers array
+     * @return void
      */
-    public function setNews($location, $publicationName = null, $publicationLanguage = null, $genres = null, $publicationDate = null, $title = null, $keywords = null, $stockTickers = null)
+    public function setNews($publicationName, $publicationLanguage, $genres, $publicationDate, $title, $keywords = null, $stockTickers = null)
     {
-        $news = $location instanceof NewsTag ? $location : new NewsTag($location, $publicationName, $publicationLanguage, $genres, $publicationDate, $title, $keywords, $stockTickers);
+        $news = $location instanceof NewsTag ? $location : new NewsTag($publicationName, $publicationLanguage, $genres, $publicationDate, $title, $keywords, $stockTickers);
         $this->news;
     }
 
