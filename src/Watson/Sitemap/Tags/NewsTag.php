@@ -187,7 +187,9 @@ class NewsTag extends BaseTag
      */
     public function getGenres()
     {
-        return implode(', ', $this->genres);
+        if($this->genres && is_array($this->genres) && count($this->genres) > 0)
+            return implode(', ', $this->genres);
+        return null;
     }
 
     /**
@@ -208,7 +210,10 @@ class NewsTag extends BaseTag
      */
     public function getKeywords()
     {
-        return implode(', ', $this->keywords);
+        if($this->keywords && is_array($this->keywords) && count($this->keywords))
+            return implode(', ', $this->keywords);
+        
+            return null;
     }
 
     /**
@@ -229,7 +234,10 @@ class NewsTag extends BaseTag
      */
     public function getStockTickers()
     {
-        return implode(', ', $this->stockTickers);
+        if($this->stockTickers && is_array($this->stockTickers) && count($this->stockTickers) > 0)
+            return implode(', ', $this->stockTickers);
+        
+            return null;
     }
 
     /**
