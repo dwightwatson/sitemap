@@ -1,20 +1,22 @@
-<?php namespace Watson\Sitemap\Tags;
+<?php
+namespace Watson\Sitemap\Tags;
 
 class NewsTag extends BaseTag
 {
+
     /**
      * The name of the publisher.
      *
      * @var string
      */
-    protected $name;
+    protected $publicationName;
 
     /**
      * The language.
      *
      * @var string
      */
-    protected $language;
+    protected $publicationLanguage;
 
     /**
      * The title of the news.
@@ -29,15 +31,14 @@ class NewsTag extends BaseTag
      * @var array
      */
     protected $genres = [];
-    
+
     /**
      * Publication Date.
      *
      * @var \DateTime
      */
     protected $publicationDate;
-    
-    
+
     /**
      * Keywords.
      *
@@ -51,40 +52,45 @@ class NewsTag extends BaseTag
      * @var array
      */
     protected $stockTickers = [];
-    
-    
+
     /**
      * Map the sitemap XML tags to class properties.
      *
      * @var array
      */
     protected $xmlTags = [
-        'name' => 'name',
-    	'name' => 'name',
-    	'name' => 'name',
-    	'name' => 'name',
-    	'name' => 'name',
-    		 
+        'name' => 'publicationName',
+        'language' => 'publicationLanguage',
+        'genres' => 'genres',
+        'publication_date' => 'publicationDate',
+        'title' => 'title',
+        'keywords' => 'keywords',
+        'stock_tickers' => 'stockTickers'
     ];
 
     /**
      * Construct the tag.
      *
-     * @param  string  $location
-     * @param  string  $caption
-     * @param  string  $geo_location
-     * @param  string  $title
-     * @param  string  $license
+     * @param string $publicationName            
+     * @param string $publicationLanguage            
+     * @param array $genres            
+     * @param \DateTime $publicationDate            
+     * @param string $title            
+     * @param array $keywords            
+     * @param array $stockTickers            
      * @return void
      */
-    public function __construct($location, $caption = null, $geoLocation = null, $title = null, $license = null)
+    public function __construct($publicationName = null, $publicationLanguage = null, $genres = null, $publicationDate = null, $title = null, $keywords = null, $stockTickers = null)
     {
-        parent::__construct($location);
-
-        $this->caption = $caption;
-        $this->geoLocation = $geoLocation;
+        parent::__construct(null);
+        
+        $this->publicationName = $publicationName;
+        $this->publicationLanguage = $publicationLanguage;
+        $this->genres = $genres;
+        $this->publicationDate = $publicationDate;
         $this->title = $title;
-        $this->license = $license;
+        $this->keywords = $keywords;
+        $this->stockTickers = $stockTickers;
     }
 
     /**
@@ -94,18 +100,18 @@ class NewsTag extends BaseTag
      */
     public function getPublicationName()
     {
-        return $this->name;
+        return $this->publicationName;
     }
 
     /**
      * Set the title.
      *
-     * @param  string  $caption
+     * @param string $caption            
      * @return void
      */
     public function setPublicationName($name)
     {
-        $this->name = $name;
+        $this->publicationName = $name;
     }
 
     /**
@@ -115,18 +121,18 @@ class NewsTag extends BaseTag
      */
     public function getPublicationLanguage()
     {
-        return $this->language;
+        return $this->publicationLanguage;
     }
 
     /**
      * Set the publication language.
      *
-     * @param  string  $language
+     * @param string $language            
      * @return void
      */
     public function setPublicationLanguage($language)
     {
-        $this->language = $language;
+        $this->publicationLanguage = $language;
     }
 
     /**
@@ -142,7 +148,7 @@ class NewsTag extends BaseTag
     /**
      * Set the title.
      *
-     * @param  string  $title
+     * @param string $title            
      * @return void
      */
     public function setTitle($title)
@@ -157,23 +163,23 @@ class NewsTag extends BaseTag
      */
     public function getPublicationDate()
     {
-    	if($this->publicationDate)
-        	return $this->publicationDate->format('Y-m-d');
-    	
+        if ($this->publicationDate)
+            return $this->publicationDate->format('Y-m-d');
+        
         return null;
     }
 
     /**
      * Set the publication date.
      *
-     * @param  \DateTime  $date
+     * @param \DateTime $date            
      * @return void
      */
     public function setPublicationDate($date)
     {
         $this->publicationDate = $date;
     }
-    
+
     /**
      * Get the genres.
      *
@@ -181,20 +187,20 @@ class NewsTag extends BaseTag
      */
     public function getGenres()
     {
-    	return implode(', ', $this->genres);
+        return implode(', ', $this->genres);
     }
-    
+
     /**
      * Set the genres.
      *
-     * @param  array  $genres
+     * @param array $genres            
      * @return void
      */
     public function setGenres($genres)
     {
-    	$this->genres = $genres;
+        $this->genres = $genres;
     }
-    
+
     /**
      * Get the keywords.
      *
@@ -202,20 +208,20 @@ class NewsTag extends BaseTag
      */
     public function getKeywords()
     {
-    	return implode(', ', $this->keywords);
+        return implode(', ', $this->keywords);
     }
-    
+
     /**
      * Set the keywords.
      *
-     * @param  array  $keywords
+     * @param array $keywords            
      * @return void
      */
     public function setKeywords($keywords)
     {
-    	$this->keywords = $keywords;
+        $this->keywords = $keywords;
     }
-    
+
     /**
      * Get the stock tickers.
      *
@@ -223,17 +229,17 @@ class NewsTag extends BaseTag
      */
     public function getStockTickers()
     {
-    	return implode(', ', $this->stockTickers);
+        return implode(', ', $this->stockTickers);
     }
-    
+
     /**
      * Set the stock tickers.
      *
-     * @param  array  $tickers
+     * @param array $tickers            
      * @return void
      */
     public function setStockTickers($tickers)
     {
-    	$this->stockTickers = $tickers;
+        $this->stockTickers = $tickers;
     }
 }

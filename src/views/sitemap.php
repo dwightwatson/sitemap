@@ -23,6 +23,7 @@
     <expires><?php echo $__tag->getExpired()->format('Y-m-d\TH:i:sP') ?></expires>
     <?php endif ?>
     <?php foreach ($__tag->getImages() as $__image): ?>
+    <?php /** @var $__image \Watson\Sitemap\Tags\ImageTag */ ?>
       <image:image>
         <image:loc><?php echo $__image->getLocation() ?></image:loc>
         <?php if ($__image->getCaption()): ?>
@@ -39,7 +40,7 @@
         <?php endif ?>
       </image:image>
     <?php endforeach ?>
-    <?php if ($__tag instanceof \Watson\Sitemap\Tags\NewsTag): ?>
+    <?php if ($__tag->isNews()): ?>
     <?php /** @var $__tag \Watson\Sitemap\Tags\NewsTag */ ?>
 	    <news:news>
 	      <news:publication>
