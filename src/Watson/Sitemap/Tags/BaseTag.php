@@ -178,8 +178,8 @@ abstract class BaseTag implements ArrayAccess
      */
     public function setNews($publicationNameOrNewsTag, $publicationLanguage = null, $genres = null, $publicationDate = null, $title = null, $keywords = null, $stockTickers = null)
     {
-        $news = $publicationNameOrNewsTag instanceof NewsTag ? $location : new NewsTag($publicationNameOrNewsTag, $publicationLanguage, $genres, $publicationDate, $title, $keywords, $stockTickers);
-        $this->news;
+        $news = $publicationNameOrNewsTag instanceof NewsTag ? $publicationNameOrNewsTag : new NewsTag($publicationNameOrNewsTag, $publicationLanguage, $genres, $publicationDate, $title, $keywords, $stockTickers);
+        $this->news = $news;
     }
 
     /**
