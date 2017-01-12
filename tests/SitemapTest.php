@@ -2,6 +2,7 @@
 
 use Watson\Sitemap\Tags\Tag;
 use Watson\Sitemap\Tags\ImageTag;
+use Watson\Sitemap\Tags\NewsTag;
 use Watson\Sitemap\Tags\Sitemap;
 
 class SitemapTest extends PHPUnit_Framework_TestCase
@@ -83,5 +84,28 @@ class SitemapTest extends PHPUnit_Framework_TestCase
         $tag->addImage($image);
 
         $this->assertEquals([$image], $tag->getImages());
+    }
+    
+    public function test_add_news_tag()
+    {
+        $tag = new Tag('foo');
+    
+        $news = new NewsTag('foo', 'bar', [
+            'eenie',
+            'meenie',
+            'meinie'
+        ], new DateTime('1945/08/17', null), 'bat', [
+            'row',
+            'your',
+            'boat'
+        ], [
+            'gently',
+            'down',
+            'stream'
+        ]);
+        
+        $tag->setNews($news);
+    
+        $this->assertEquals($news, $tag->getNews());
     }
 }
