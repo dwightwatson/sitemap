@@ -1,5 +1,5 @@
 <?php echo '<?xml version="1.0" encoding="UTF-8"?>' ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"<?php if ($__hasImages): ?> xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"<?php endif ?><?php if ($__isMultilingual): ?> xmlns:xhtml="http://www.w3.org/1999/xhtml"<?php endif ?>>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"<?php if ($__hasImages): ?> xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"<?php endif ?><?php if ($__hasNews): ?> xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"<?php endif ?><?php if ($__isMultilingual): ?> xmlns:xhtml="http://www.w3.org/1999/xhtml"<?php endif ?>>
   <?php foreach ($__tags as $__tag): ?>
   <url>
     <loc><?php echo htmlspecialchars($__tag->getLocation(), ENT_XML1) ?></loc>
