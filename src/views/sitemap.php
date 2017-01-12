@@ -41,30 +41,33 @@
       </image:image>
     <?php endforeach ?>
     <?php if ($__tag->isNews()): ?>
-    <?php /** @var $__tag \Watson\Sitemap\Tags\NewsTag */ ?>
+    <?php 
+        /** @var $news \Watson\Sitemap\Tags\NewsTag */ 
+        $news = $__tag->getNews();
+    ?>
 	    <news:news>
 	      <news:publication>
-	      	<?php if ($__tag->getPublicationName()): ?>
-	        <news:name><?php echo htmlspecialchars($__tag->getPublicationName()) ?></news:name>
+	      	<?php if ($news->getPublicationName()): ?>
+	        <news:name><?php echo htmlspecialchars($news->getPublicationName()) ?></news:name>
 	        <?php endif ?>
-	        <?php if ($__tag->getPublicationLanguage()): ?>
-	        <news:language><?php echo htmlspecialchars($__tag->getPublicationLanguage()) ?></news:language
+	        <?php if ($news->getPublicationLanguage()): ?>
+	        <news:language><?php echo htmlspecialchars($news->getPublicationLanguage()) ?></news:language
 	        <?php endif ?>>
 	      </news:publication>
-	      <?php if (!empty($__tag->getGenres())) : ?>
-	      <news:genres><?php echo htmlspecialchars($__tag->getGenres()) ?></news:genres>
+	      <?php if (!empty($news->getGenres())) : ?>
+	      <news:genres><?php echo htmlspecialchars($news->getGenres()) ?></news:genres>
 	      <?php endif ?>
-	      <?php if ($__tag->getPublicationDate()) : ?>
-	      <news:publication_date><?php echo htmlspecialchars($__tag->getPublicationDate()) ?></news:publication_date>
+	      <?php if ($news->getPublicationDate()) : ?>
+	      <news:publication_date><?php echo htmlspecialchars($news->getPublicationDate()) ?></news:publication_date>
 	      <?php endif ?>
-	      <?php if ($__tag->getTitle()) : ?>
-	      <news:title><?php echo htmlspecialchars($__tag->getTitle()) ?></news:title>
+	      <?php if ($news->getTitle()) : ?>
+	      <news:title><?php echo htmlspecialchars($news->getTitle()) ?></news:title>
 	      <?php endif ?>
-	      <?php if (!empty($__tag->getKeywords())) : ?>
-	      <news:keywords><?php echo htmlspecialchars($__tag->getKeywords()) ?></news:keywords>
+	      <?php if (!empty($news->getKeywords())) : ?>
+	      <news:keywords><?php echo htmlspecialchars($news->getKeywords()) ?></news:keywords>
 	      <?php endif ?>
-	      <?php if (!empty($__tag->getStockTickers())) : ?>
-	      <news:stock_tickers><?php echo htmlspecialchars($__tag->getStockTickers()) ?></news:stock_tickers>
+	      <?php if (!empty($news->getStockTickers())) : ?>
+	      <news:stock_tickers><?php echo htmlspecialchars($news->getStockTickers()) ?></news:stock_tickers>
 	      <?php endif ?>
 	    </news:news>
     <?php endif ?>

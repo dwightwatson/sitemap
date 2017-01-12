@@ -153,15 +153,13 @@ abstract class BaseTag implements ArrayAccess
     }
 
     /**
-     * Get associated image tags.
-     * Google image sitemaps only allow up to
-     * 1,000 images per page.
+     * Get news tag.
      *
-     * @return array
+     * @return NewsTag
      */
     public function getNews()
     {
-        return array_slice($this->images, 0, 1000);
+        return $this->news;
     }
 
     /**
