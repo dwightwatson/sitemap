@@ -167,7 +167,7 @@ abstract class BaseTag implements ArrayAccess
     /**
      * Set news tag
      *
-     * @param $publicationName string
+     * @param $publicationName string|NewsTag
      * @param $publicationLanguage string
      * @param $genres array
      * @param $publicationDate \DateTime
@@ -176,9 +176,9 @@ abstract class BaseTag implements ArrayAccess
      * @param $stockTickers array
      * @return void
      */
-    public function setNews($publicationName, $publicationLanguage, $genres, $publicationDate, $title, $keywords = null, $stockTickers = null)
+    public function setNews($publicationNameOrNewsTag, $publicationLanguage = null, $genres = null, $publicationDate = null, $title = null, $keywords = null, $stockTickers = null)
     {
-        $news = $location instanceof NewsTag ? $location : new NewsTag($publicationName, $publicationLanguage, $genres, $publicationDate, $title, $keywords, $stockTickers);
+        $news = $publicationNameOrNewsTag instanceof NewsTag ? $location : new NewsTag($publicationNameOrNewsTag, $publicationLanguage, $genres, $publicationDate, $title, $keywords, $stockTickers);
         $this->news;
     }
 
