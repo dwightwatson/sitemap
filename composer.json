@@ -23,5 +23,15 @@
             "Watson\\": "src/Watson"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Watson\\Sitemap\\SitemapServiceProvider"
+			],
+			"aliases": {
+				"Sitemap": "Watson\\Sitemap\\Facades\\Sitemap"
+			}
+		}
+	}
 }
