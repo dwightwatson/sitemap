@@ -16,7 +16,9 @@ Read more about sitemaps and how to use them efficiently on [Google Webmaster To
 
 Simply require the package and let Composer get the latest compatible version for you.
 
-    composer require watson/sitemap
+```sh
+composer require watson/sitemap
+```
 
 Since Laravel 5.5 uses Package Auto-Discovery, you don't have to edit anything in `config/app.php`
 
@@ -24,21 +26,29 @@ Since Laravel 5.5 uses Package Auto-Discovery, you don't have to edit anything i
 
 Simply require the package and let Composer get the latest compatible version for you.
 
-    composer require watson/sitemap
+```sh
+composer require watson/sitemap
+```
 
 Now, add the service provider to your `config/app.php` file.
 
-    Watson\Sitemap\SitemapServiceProvider::class
+```php
+Watson\Sitemap\SitemapServiceProvider::class
+`
 
 And finally add the alias to the facade, also in `config/app.php`.
 
-    'Sitemap' => Watson\Sitemap\Facades\Sitemap::class
+```php
+'Sitemap' => Watson\Sitemap\Facades\Sitemap::class
+```
 
 ## Installation for Laravel 4.*
 
 Simply pop the version constraint in your `composer.json` file and run `composer update` (hoever your Composer is installed).
 
-    "watson/sitemap": "1.1.*"
+```
+"watson/sitemap": "1.1.*"
+```
 
 For the documentation, have a look through [the 1.1 branch](https://github.com/dwightwatson/sitemap/tree/1.1).
 
@@ -146,9 +156,11 @@ $tag->addImage($location, $caption, $geoLocation, $title, $licenceUrl);
 
 To publish the configuration file for the sitemap package, simply run this Artisan command:
 
-    php artisan config:publish watson/sitemap
+```sh
+php artisan config:publish watson/sitemap
 
-    php artisan vendor:publish --provider="Watson\Sitemap\SitemapServiceProvider"
+php artisan vendor:publish --provider="Watson\Sitemap\SitemapServiceProvider"
+```
 
 Then take a look in `config/sitemap.php` to see what is available.
 
@@ -161,14 +173,14 @@ By default, caching is disabled. If you would likd to enable caching, simply set
 If you'd like to use a mutlilingual tag, simply pass an instance of one to the `addTag` method. Below is a crude example of how you would pass alternate tag locations for different languages.
 
 ```php
-    Sitemap::addTag(new \Watson\Sitemap\Tags\MultilingualTag(
-        $location,
-        $lastModified,
-        $changeFrequency,
-        $priority,
-        [
-            'en' => $location . '?lang=en',
-            'fr' => $location . '?lang=fr'
-        ]
-    ));
+Sitemap::addTag(new \Watson\Sitemap\Tags\MultilingualTag(
+    $location,
+    $lastModified,
+    $changeFrequency,
+    $priority,
+    [
+        'en' => $location . '?lang=en',
+        'fr' => $location . '?lang=fr'
+    ]
+));
 ```
