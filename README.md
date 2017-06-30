@@ -34,7 +34,7 @@ Now, add the service provider to your `config/app.php` file.
 
 ```php
 Watson\Sitemap\SitemapServiceProvider::class
-`
+```
 
 And finally add the alias to the facade, also in `config/app.php`.
 
