@@ -166,7 +166,7 @@ Then take a look in `config/sitemap.php` to see what is available.
 
 ### Caching
 
-By default, caching is disabled. If you would likd to enable caching, simply set `cache_enabled` in the configuration file to `true`. You can then specify how long you would like your views to be cached for. Keep in mind that when enabled, caching will affect each and every request made to the sitemap package.
+By default, caching is disabled. If you would like to enable caching, simply set `cache_enabled` in the configuration file to `true`. You can then specify how long you would like your views to be cached for. Keep in mind that when enabled, caching will affect each and every request made to the sitemap package.
 
 ### Multilingual tags
 
