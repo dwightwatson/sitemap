@@ -7,25 +7,11 @@ use Illuminate\Contracts\Support\Renderable;
 class Renderer implements Renderable
 {
     /**
-     * Whether the rendered sitemap shoudl be cached.
-     *
-     * @var bool
-     */
-    protected $cacheEnabled;
-
-    /**
-     * Length in minutes to cache the sitemap.
+     * Google supports a maximum of 50,000 tags per page.
      *
      * @var int
      */
-    protected $cacheMinutes;
-
-    /**
-     * Laravel cache repository.
-     *
-     * @var \Illuminate\Contracts\Cache\Repository
-     */
-    protected $cache;
+    const PER_PAGE = 50000;
 
     /**
      * Laravel request instance.
@@ -43,11 +29,7 @@ class Renderer implements Renderable
      */
     public function __construct(Cache $cache, Request $request)
     {
-        $this->cache = $cache;
         $this->request = $request;
-
-        $this->cacheEnabled = config('sitemap.cache_enabled');
-        $this->cacheMinutes = config('sitemap.cache_minutes');
     }
 
     /**

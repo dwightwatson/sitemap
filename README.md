@@ -7,26 +7,32 @@ Sitemap for Laravel
 [![Latest Unstable Version](https://poser.pugx.org/watson/sitemap/v/unstable.svg)](https://packagist.org/packages/watson/sitemap)
 [![License](https://poser.pugx.org/watson/sitemap/license.svg)](https://packagist.org/packages/watson/sitemap)
 
-Sitemap is a stupidly simple package for Laravel to make building sitemaps a cinch.
+Sitemap is a stupidly simple package for Laravel to build your app's sitemap.
 
 Read more about sitemaps and how to use them efficiently on [Google Webmaster Tools](https://support.google.com/webmasters/answer/156184?hl=en).
 
 ## Installation
-
 First, require the package through Composer.
 
 ```sh
 composer require watson/sitemap
 ```
 
-### Laravel 4.*
+Then, install the sitemap service provider, where you will define your sitemap's routes.
 
+```sh
+php artisan sitemap:install
+```
+
+### Laravel 4.x
 For Laravel 4.2 support see [the 1.1 branch](https://github.com/dwightwatson/sitemap/tree/1.1).
+
+### PHP 5.x
+If you need support on PHP 5.x, or you're looking for the old manual-definitions version of this pacakge, see [the 2.0 branch](https://github.com/dwightwatson/sitemap/tree/2.0).
 
 ## Usage
 
 ### Sitemap indexes
-
 If you have a large number of links (50,000)+ you will want to break your sitemap out into separate sitemaps and then use a sitemap index to link them all.
 
 ```php
@@ -51,7 +57,7 @@ class SitemapsController extends Controller
 
         // And you can provide the last modified timestamp.
         $lastModified = Post::latest()->take(1)->get();
-        $sitemap->add(route('sitemaps.posts'), $lastModifieD);
+        $sitemap->add(route('sitemaps.posts'), $lastModified);
 
         // Render the sitemap.
         return $sitemap;
@@ -123,13 +129,13 @@ The last modified attribute for each model will be set using the model's `update
 
 ```php
 return $sitemap->model(Post::class, ['change_frequency' => ChangeFrequency::DAILY, 'priority' => 0.8, 'per_page' => 1000, function ($model) {
-    return route('posts.show', $post); 
+    return route('posts.show', $post);
 }]);
 ```
 
 #### Pagination
 
-By default, the sitemap will be restricted to 10,000 per page. If your resource has more than that number (or more than the number you have specified) then the `model()` method will handle this for you, 
+By default, the sitemap will be restricted to 10,000 per page. If your resource has more than that number (or more than the number you have specified) then the `model()` method will handle this for you,
 
 
 
