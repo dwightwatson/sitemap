@@ -3,8 +3,9 @@
 namespace Watson\Sitemap;
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\Support\Responsable;
 
-class Renderer implements Renderable
+class Renderer implements Renderable, Responsable
 {
     /**
      * Google supports a maximum of 50,000 tags per page.
@@ -47,12 +48,14 @@ class Renderer implements Renderable
     }
 
     /**
-     * Get the evaluated contents of the object.
+     * Create an HTTP response that represents the object.
      *
-     * @return string
+     * @return \Illuminate\Http\Response
      */
-    public function __toString()
+    public function toResponse()
     {
-        return $this->render();
+        return response(
+            $this->render()
+        );
     }
 }
