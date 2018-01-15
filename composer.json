@@ -29,7 +29,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Watson\\Sitemaps\\SitemapServiceProvider"
+                "Watson\\Sitemap\\SitemapServiceProvider"
             ]
         }
     }

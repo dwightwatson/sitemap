@@ -136,7 +136,3 @@ return $sitemap->model(Post::class, ['change_frequency' => ChangeFrequency::DAIL
 #### Pagination
 
 By default, the sitemap will be restricted to 10,000 per page. If your resource has more than that number (or more than the number you have specified) then the `model()` method will handle this for you,
-
-
-
-## Caching
