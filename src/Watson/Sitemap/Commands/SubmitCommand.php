@@ -33,7 +33,7 @@ class SubmitCommand extends Command
      *
      * @var string
      */
-    protected $pingUrl = "https://www.google.com/webmasters/tools/ping";
+    protected $pingUrl = 'https://www.google.com/webmasters/tools/ping';
 
     /**
      * Create a new command instance.
@@ -55,16 +55,20 @@ class SubmitCommand extends Command
      */
     public function handle()
     {
+        $this->line('Submitting the sitemap to Google...');
+
         $sitemapUrl = url('sitemap.xml');
 
         $response = $this->client->request(
-            'GET', 
+            'GET',
             $this->pingUrl,
             ['query' => ['sitemap' => $sitemapUrl]]
         );
 
-        if ($response->getStatusCode() === 200) {
-            //
+        if ($response->getStatusCode() !== 200) {
+            return $this->error('An unexpected response was received.');
         }
+
+        $this->info('A successful response was received.');
     }
 }

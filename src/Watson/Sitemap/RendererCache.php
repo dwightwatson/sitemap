@@ -46,7 +46,6 @@ class RendererCache implements Renderable
         return $this->cache(
             $this->renderer->render()
         );
-
     }
 
     /**
