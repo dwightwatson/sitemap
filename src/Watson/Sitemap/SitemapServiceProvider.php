@@ -37,6 +37,10 @@ class SitemapServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../config/config.php' => config_path('sitemap.php'),
         ], 'config');
+        
+        $this->publishes([
+            __DIR__.'/../../views' => base_path('resources/views/vendor/sitemap'),
+        ], 'views');
     }
 
     /**
