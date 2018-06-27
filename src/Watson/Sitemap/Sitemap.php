@@ -180,6 +180,7 @@ class Sitemap
         $sitemap = response()->view('sitemap::sitemap', [
             '__tags' => $this->getTags(),
             '__hasImages' => $this->imagesPresent(),
+            '__hasVideos' => $this->videosPresent(),
             '__isMultilingual' => $this->multilingualTagsPresent()
         ], 200, ['Content-type' => 'text/xml']);
 
@@ -253,6 +254,22 @@ class Sitemap
     {
         foreach ($this->tags as $tag) {
             if ($tag->hasImages()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Return whether there are any videos present in the sitemap.
+     *
+     * @return bool
+     */
+    protected function videosPresent()
+    {
+        foreach ($this->tags as $tag) {
+            if ($tag->hasVideos()) {
                 return true;
             }
         }
