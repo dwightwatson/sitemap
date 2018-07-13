@@ -4,6 +4,7 @@ use DateTime;
 use ArrayAccess;
 use Watson\Sitemap\Tags\ImageTag;
 use Illuminate\Database\Eloquent\Model;
+use Watson\Sitemap\Tags\Video\VideoTag;
 
 abstract class BaseTag implements ArrayAccess
 {
@@ -27,6 +28,13 @@ abstract class BaseTag implements ArrayAccess
      * @var array
      */
     protected $images = [];
+
+    /**
+     * Videos tags belonging to this tag.
+     *
+     * @var array
+     */
+    protected $videos = [];
 
     /**
      * Map the sitemap XML tags to class properties.
@@ -122,14 +130,40 @@ abstract class BaseTag implements ArrayAccess
     }
 
     /**
+     * Add a video tag to the tag.
+     *
+     * @param  string  $location
+     * @param  string  $title
+     * @param  string  $description
+     * @param  string  $thumbnailLocation
+     * @return void
+     */
+    public function addVideo($location, $title = null, $description = null, $thumbnailLocation = null)
+    {
+        $video = $location instanceof VideoTag ? $location : new VideoTag($location, $title, $description, $thumbnailLocation);
+
+        $this->videos[] = $video;
+    }
+
+    /**
      * Get associated image tags. Google image sitemaps only allow up to
      * 1,000 images per page.
      *
-     * @return array
+     * @return ImageTag[]
      */
     public function getImages()
     {
         return array_slice($this->images, 0, 1000);
+    }
+
+    /**
+     * Get associated video tags
+     *
+     * @return VideoTag[]
+     */
+    public function getVideos()
+    {
+        return $this->videos;
     }
 
     /**
@@ -140,6 +174,16 @@ abstract class BaseTag implements ArrayAccess
     public function hasImages()
     {
         return count($this->images) > 0;
+    }
+
+    /**
+     * Tell if the tag has associate image tags
+     *
+     * @return boolean
+     */
+    public function hasVideos()
+    {
+        return count($this->videos) > 0;
     }
 
     public function offsetExists($offset)

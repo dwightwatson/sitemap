@@ -3,6 +3,7 @@
 use Watson\Sitemap\Tags\Tag;
 use Watson\Sitemap\Tags\ImageTag;
 use Watson\Sitemap\Tags\Sitemap;
+use Watson\Sitemap\Tags\Video\VideoTag;
 
 class SitemapTest extends PHPUnit_Framework_TestCase
 {
@@ -74,6 +75,17 @@ class SitemapTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals([$image], $tag->getImages());
     }
+
+    public function test_add_video_tag()
+    {
+        $tag = new Tag('foo');
+
+        $video = new VideoTag('foo', 'bar', 'baz', 'bam');
+        $tag->addVideo($video);
+
+        $this->assertEquals([$video], $tag->getVideos());
+    }
+
 
     public function test_add_full_image_tag()
     {
