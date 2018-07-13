@@ -345,7 +345,7 @@ class VideoTag extends BaseTag
      *
      * @return bool
      */
-    public function isFamilyFriendly()
+    public function getFamilyFriendly()
     {
         return $this->familyFriendly;
     }
@@ -533,7 +533,7 @@ class VideoTag extends BaseTag
      *
      * @return bool
      */
-    public function isLive()
+    public function getLive()
     {
         return $this->live;
     }

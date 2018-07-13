@@ -74,7 +74,7 @@
               <?php if ($__video->getPublicationDate()): ?>
                   <video:publication_date><?php echo $__video->getPublicationDate() ?></video:publication_date>
               <?php endif ?>
-              <video:family_friendly><?php echo $__video->isFamilyFriendly() ? 'yes' : 'no' ?></video:family_friendly>
+              <video:family_friendly><?php echo $__video->getFamilyFriendly() ? 'yes' : 'no' ?></video:family_friendly>
               <?php if ($__video->getRestriction()): ?>
                   <video:restriction relationship="<?php echo $__video->getRestriction()->getRelationship() ?>"><?php echo $__video->getRestriction()->getCountries() ?></video:restriction>
               <?php endif ?>
@@ -87,11 +87,11 @@
                       <?php if ($__price->getResolution()): ?> resolution="<?php echo $__price->getResolution() ?>" <?php endif ?>
                       <?php if ($__price->getType()): ?> type="<?php echo $__price->getType() ?>" <?php endif ?>><?php echo $__price->getPrice() ?></video:price>
               <?php endforeach ?>
-              <video:requires_subscription><?php echo $__video->isRequiresSubscription() ? 'yes' : 'no' ?></video:requires_subscription>
+              <video:requires_subscription><?php echo $__video->getRequiresSubscription() ? 'yes' : 'no' ?></video:requires_subscription>
               <?php if ($__video->getUploader()): ?>
                   <video:uploader><?php echo htmlspecialchars($__video->getUploader()) ?></video:uploader>
               <?php endif ?>
-              <video:live><?php echo $__video->isLive() ? 'yes' : 'no' ?></video:live>
+              <video:live><?php echo $__video->getLive() ? 'yes' : 'no' ?></video:live>
           </video:video>
       <?php endforeach ?>
   </url>

@@ -47,7 +47,7 @@ class VideoTagTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($date, $this->tag->getPublicationDate());
 
         $this->tag->setFamilyFriendly(false);
-        $this->assertFalse($this->tag->isFamilyFriendly());
+        $this->assertFalse($this->tag->getFamilyFriendly());
 
         $this->tag->setTags(["tag", "tag"]);
         $this->assertEquals(["tag", "tag"], $this->tag->getTags());
@@ -65,7 +65,7 @@ class VideoTagTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Uploader', $this->tag->getUploader());
 
         $this->tag->setLive(false);
-        $this->assertFalse($this->tag->isLive());
+        $this->assertFalse($this->tag->getLive());
     }
 
     public function test_set_price_tag_required()
