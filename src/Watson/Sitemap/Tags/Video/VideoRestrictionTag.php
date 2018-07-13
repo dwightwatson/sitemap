@@ -1,40 +1,59 @@
 <?php namespace Watson\Sitemap\Tags\Video;
 
-/**
- * Class VideoRestrictionTag
- * @see https://developers.google.com/webmasters/videosearch/countryrestrictions
- */
 class VideoRestrictionTag
 {
     /**
-     * @var array Countries where the video is either available or not
+     * Supported tag relationships.
+     *
+     * @var array
+     */
+    private static $allowedRelationships = ['deny', 'allow'];
+
+    /**
+     * The tag countries.
+     *
+     * @var array
      */
     protected $countries;
 
     /**
-     * @var string pecifies whether the video is restricted or permitted for the specified countries
-     * Default: deny and if no countries are specified, the video will appear anywhere.
+     * The tag relationship.
+     *
+     * @var string
      */
     protected $relationship = 'deny';
 
-    private static $allowedRelationships = ['deny', 'allow'];
-
+    /**
+     * Create a new video restriction tag.
+     *
+     * @param  array  $countries
+     * @param  string  $relationship
+     * @return void
+     */
     public function __construct(array $countries = [], $relationship = 'deny')
     {
         $this->countries = $countries;
+
         if (in_array($relationship, $this::$allowedRelationships)) {
             $this->relationship = $relationship;
         }
     }
 
+    /**
+     * Get the tag countries.
+     *
+     * @return string
+     */
     public function getCountries()
     {
-        if (count($this->countries)) {
-            return implode(' ', $this->countries);
-        }
-        return;
+        return implode(' ', $this->countries);
     }
 
+    /**
+     * Get the tag relationship.
+     *
+     * @return string
+     */
     public function getRelationship()
     {
         return $this->relationship;

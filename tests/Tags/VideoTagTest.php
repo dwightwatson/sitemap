@@ -59,7 +59,7 @@ class VideoTagTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('link', $this->tag->getGalleryLocation());
 
         $this->tag->setRequiresSubscription(true);
-        $this->assertTrue($this->tag->isRequiresSubscription());
+        $this->assertTrue($this->tag->getRequiresSubscription());
 
         $this->tag->setUploader('Uploader');
         $this->assertEquals('Uploader', $this->tag->getUploader());

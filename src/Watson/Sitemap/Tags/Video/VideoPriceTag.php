@@ -1,33 +1,42 @@
 <?php namespace Watson\Sitemap\Tags\Video;
 
-/**
- * Class VideoPriceTag
- * @see https://developers.google.com/webmasters/videosearch/sitemaps
- */
 class VideoPriceTag
 {
-
     /**
-     * @var float price amount
+     * The tag price.
+     *
+     * @var float
      */
     protected $price;
 
     /**
-     * @var string the currency in ISO 4217 format
-     * REQUIRED
+     * The tag currency (ISO 4217 format).
+     *
+     * @var string
      */
     protected $currency;
 
     /**
-     * @var string Allowed values are rent and own.
+     * The tag price type.
+     *
+     * @var string
      */
     protected $type;
 
     /**
-     * @var string Allowed values are HD and SD
+     * The tag resolution.
+     *
+     * @var string
      */
     protected $resolution;
 
+    /**
+     * Create a new video price tag.
+     *
+     * @param  float  $price
+     * @param  string  $currency
+     * @return void
+     */
     public function __construct($price, $currency)
     {
         $this->price = $price;
@@ -35,6 +44,8 @@ class VideoPriceTag
     }
 
     /**
+     * Get the tag type.
+     *
      * @return string
      */
     public function getType()
@@ -43,7 +54,10 @@ class VideoPriceTag
     }
 
     /**
-     * @param string $type
+     * Set the tag type.
+     *
+     * @param  string  $type
+     * @return void
      */
     public function setType($type)
     {
@@ -51,6 +65,8 @@ class VideoPriceTag
     }
 
     /**
+     * Get the tag resolution.
+     *
      * @return string
      */
     public function getResolution()
@@ -59,7 +75,10 @@ class VideoPriceTag
     }
 
     /**
-     * @param string $resolution
+     * Set the tag resolution.
+     *
+     * @param  string  $resolution
+     * @return void
      */
     public function setResolution($resolution)
     {
@@ -67,6 +86,8 @@ class VideoPriceTag
     }
 
     /**
+     * Get the tag price.
+     *
      * @return float
      */
     public function getPrice()
@@ -75,7 +96,10 @@ class VideoPriceTag
     }
 
     /**
-     * @param float $price
+     * Set the tag price.
+     *
+     * @param  float  $price
+     * @return void
      */
     public function setPrice($price)
     {
@@ -83,6 +107,8 @@ class VideoPriceTag
     }
 
     /**
+     * Get the tag currency.
+     *
      * @return string
      */
     public function getCurrency()
@@ -91,12 +117,13 @@ class VideoPriceTag
     }
 
     /**
-     * @param string $currency
+     * Set the tag currency.
+     *
+     * @param  string  $currency
+     * @return void
      */
     public function setCurrency($currency)
     {
         $this->currency = $currency;
     }
-
-
 }

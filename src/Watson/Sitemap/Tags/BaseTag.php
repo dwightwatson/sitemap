@@ -130,12 +130,12 @@ abstract class BaseTag implements ArrayAccess
     }
 
     /**
-     * Add an Video tag to the tag.
+     * Add a video tag to the tag.
      *
-     * @param  string $location
-     * @param  string $title
-     * @param null    $description
-     * @param null    $thumbnailLocation
+     * @param  string  $location
+     * @param  string  $title
+     * @param  string  $description
+     * @param  string  $thumbnailLocation
      * @return void
      */
     public function addVideo($location, $title = null, $description = null, $thumbnailLocation = null)

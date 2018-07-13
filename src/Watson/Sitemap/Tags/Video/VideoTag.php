@@ -1,125 +1,158 @@
 <?php namespace Watson\Sitemap\Tags\Video;
 
+use DateTime;
 use Watson\Sitemap\Tags\BaseTag;
 
-/**
- * Class VideoTag
- *
- * @see https://developers.google.com/webmasters/videosearch/sitemaps
- */
 class VideoTag extends BaseTag
 {
     /**
-     * @var string Title
-     * REQUIRED
+     * The tag title.
+     *
+     * @var string
      */
     protected $title;
 
     /**
-     * @var string Description
-     * REQUIRED
+     * The tag description.
+     *
+     * @var string
      */
     protected $description;
 
     /**
-     * @var string Thumbnail image URL
-     * REQUIRED
+     * The tag thumbnail image URL.
+     *
+     * @var string
      */
     protected $thumbnailLocation;
 
     /**
-     * @var string A URL pointing to the actual video media file
+     * The tag content location URL.
      *
+     * @var string
      */
     protected $contentLocation;
 
     /**
-     * @var string A URL pointing to a player for a specific video.
+     * The tag player location URL.
+     *
+     * @var string
      */
     protected $playerLocation;
 
     /**
-     * @var int Duration in seconds
+     * The tag duration in seconds.
+     *
+     * @var int
      */
     protected $duration;
 
     /**
-     * @var \DateTime The date after which the video will no longer be available
+     * The tag expiration date.
+     *
+     * @var \DateTime
      */
     protected $expirationDate;
 
     /**
-     * @var float The rating of the video
+     * The tag rating.
+     *
+     * @var float
      */
     protected $rating;
 
     /**
-     * @var int The number of times the video has been viewed.
+     * The tag view count.
+     *
+     * @var int
      */
     protected $viewCount;
 
     /**
-     * @var \DateTime The date the video was first published
+     * The tag publication date.
+     *
+     * @var \DateTime
      */
     protected $publicationDate;
 
     /**
-     * @var bool if the video should be available only to users with SafeSearch turned off
+     * The tag family friendly status.
+     *
+     * @var bool
      */
     protected $familyFriendly = true;
 
     /**
-     * @var array Tags associated with the video
+     * The video tags.
+     *
+     * @var array
      */
     protected $tags;
 
     /**
-     * @var string The video's category.
+     * The video category.
+     *
+     * @var string
      */
     protected $category;
 
     /**
-     * @var VideoRestrictionTag A space-delimited list of countries where the video may or may not be played
+     * The tag restriction.
+     *
+     * @var VideoRestrictionTag
      */
     protected $restriction;
 
     /**
-     * @var string A link to the gallery (collection of videos) in which this video appears.
+     * The gallery location URL.
+     *
+     * @var string
      */
     protected $galleryLocation;
 
     /**
-     * @var VideoPriceTag[] The price or prices to download or view the video.
+     * The tag prices.
+     *
+     * @var VideoPriceTag[]
      */
     protected $prices = [];
 
     /**
-     * @var boolean Indicates whether a subscription (either paid or free) is required to view the video
+     * Whether a subscription is required for the video.
+     *
+     * @var bool
      */
     protected $requiresSubscription = false;
 
     /**
-     * @var string The video uploader's name
+     * The video uploader's name.
+     *
+     * @var string
      */
     protected $uploader;
 
     /**
-     * @var VideoPlatformTag A list of space-delimited platforms where the video may or may not be played.
+     * The platform where the video may be played.
+     *
+     * @var VideoPlatformTag
      */
     protected $platform;
 
     /**
-     * @var boolean Indicates whether the video is a live stream
+     * Whether the video is a live stream.
+     *
+     * @var bool
      */
     protected $live = false;
 
     /**
-     * VideoTag constructor.
+     * Create a new video tag.
      *
-     * @param $location
-     * @param $title
-     * @param $description
-     * @param $thumbnailLocation
+     * @param  string  $location
+     * @param  string  $title
+     * @param  string  $description
+     * @param  string  $thumbnailLocation
+     * @return void
      */
     public function __construct($location, $title, $description, $thumbnailLocation)
     {
@@ -131,6 +164,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the tag title.
+     *
      * @return string
      */
     public function getTitle()
@@ -139,6 +174,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the tag description.
+     *
      * @return string
      */
     public function getDescription()
@@ -147,6 +184,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the thumbnail location.
+     *
      * @return string
      */
     public function getThumbnailLocation()
@@ -155,6 +194,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the content location.
+     *
      * @return string
      */
     public function getContentLocation()
@@ -163,7 +204,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param string $contentLocation
+     * Set the content location.
+     *
+     * @param  string  $contentLocation
+     * @return void
      */
     public function setContentLocation($contentLocation)
     {
@@ -171,6 +215,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the player location.
+     *
      * @return string
      */
     public function getPlayerLocation()
@@ -179,7 +225,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param string $playerLocation
+     * Set the player location.
+     *
+     * @param  string  $playerLocation
+     * @return void
      */
     public function setPlayerLocation($playerLocation)
     {
@@ -187,7 +236,9 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @return int
+     * Get the video duration.
+     *
+     * @var int
      */
     public function getDuration()
     {
@@ -195,7 +246,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param int $duration
+     * Set the video duration.
+     *
+     * @param  int  $duration
+     * @return void
      */
     public function setDuration($duration)
     {
@@ -203,7 +257,9 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @return \DateTime
+     * Get the expiration date.
+     *
+     * @var \DateTime
      */
     public function getExpirationDate()
     {
@@ -211,14 +267,19 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param \DateTime $expirationDate
+     * Set the expiration date.
+     *
+     * @param  \DateTime  $expirationDate
+     * @return void
      */
-    public function setExpirationDate($expirationDate)
+    public function setExpirationDate(DateTime $expirationDate)
     {
         $this->expirationDate = $expirationDate;
     }
 
     /**
+     * Get the video rating.
+     *
      * @return float
      */
     public function getRating()
@@ -227,7 +288,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param float $rating
+     * Set the video rating.
+     *
+     * @param  float  $rating
+     * @return void
      */
     public function setRating($rating)
     {
@@ -235,6 +299,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the view count.
+     *
      * @return int
      */
     public function getViewCount()
@@ -243,7 +309,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param int $viewCount
+     * Set the view count.
+     *
+     * @param  int  $viewCount
+     * @return void
      */
     public function setViewCount($viewCount)
     {
@@ -251,6 +320,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the publication date.
+     *
      * @return \DateTime
      */
     public function getPublicationDate()
@@ -259,14 +330,19 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param \DateTime $publicationDate
+     * Set the publication date.
+     *
+     * @param  \DateTime  $publicationDate
+     * @return void
      */
-    public function setPublicationDate($publicationDate)
+    public function setPublicationDate(DateTime $publicationDate)
     {
         $this->publicationDate = $publicationDate;
     }
 
     /**
+     * Get the family friendly status.
+     *
      * @return bool
      */
     public function isFamilyFriendly()
@@ -275,7 +351,9 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param bool $familyFriendly
+     * Set the family friendly status.
+     *
+     * @param  bool  $familyFriendly
      */
     public function setFamilyFriendly(bool $familyFriendly)
     {
@@ -283,6 +361,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the tags.
+     *
      * @return array
      */
     public function getTags()
@@ -291,7 +371,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param array $tags
+     * Set the tags.
+     *
+     * @param  array  $tags
+     * @return void
      */
     public function setTags(array $tags)
     {
@@ -299,6 +382,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the category.
+     *
      * @return string
      */
     public function getCategory()
@@ -307,7 +392,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param string $category
+     * Set the category.
+     *
+     * @param  string  $category
+     * @return void
      */
     public function setCategory($category)
     {
@@ -315,6 +403,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the tag restriction.
+     *
      * @return VideoRestrictionTag
      */
     public function getRestriction()
@@ -323,7 +413,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param VideoRestrictionTag $restriction
+     * Set the tag restriction.
+     *
+     * @param  VideoRestrictionTag  $restriction
+     * @return void
      */
     public function setRestriction(VideoRestrictionTag $restriction)
     {
@@ -331,6 +424,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the gallery location.
+     *
      * @return string
      */
     public function getGalleryLocation()
@@ -339,7 +434,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param string $galleryLocation
+     * Set the gallery location.
+     *
+     * @param  string  $galleryLocation
+     * @return string
      */
     public function setGalleryLocation($galleryLocation)
     {
@@ -347,7 +445,9 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @return VideoPriceTag[]
+     * Get the tag prices.
+     *
+     * @return  VideoPriceTag[]
      */
     public function getPrices()
     {
@@ -355,7 +455,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param VideoPriceTag[] $prices
+     * Set the tag prices.
+     *
+     * @param  VideoPriceTag[]  $prices
+     * @return void
      */
     public function setPrices($prices)
     {
@@ -363,15 +466,20 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get whether a subscription is required.
+     *
      * @return bool
      */
-    public function isRequiresSubscription()
+    public function getRequiresSubscription()
     {
         return $this->requiresSubscription;
     }
 
     /**
-     * @param bool $requiresSubscription
+     * Set whether a subscription is required.
+     *
+     * @param  bool  $requiresSubscription
+     * @return void
      */
     public function setRequiresSubscription(bool $requiresSubscription)
     {
@@ -379,6 +487,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the uploader.
+     *
      * @return string
      */
     public function getUploader()
@@ -387,7 +497,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param string $uploader
+     * Set the uploader.
+     *
+     * @param  string  $uploader
+     * @return void
      */
     public function setUploader($uploader)
     {
@@ -395,6 +508,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the platform.
+     *
      * @return VideoPlatformTag
      */
     public function getPlatform()
@@ -403,7 +518,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param VideoPlatformTag $platform
+     * Set the platform.
+     *
+     * @param  VideoPlatformTag  $platform
+     * @return void
      */
     public function setPlatform(VideoPlatformTag $platform)
     {
@@ -411,6 +529,8 @@ class VideoTag extends BaseTag
     }
 
     /**
+     * Get the live status.
+     *
      * @return bool
      */
     public function isLive()
@@ -419,7 +539,10 @@ class VideoTag extends BaseTag
     }
 
     /**
-     * @param bool $live
+     * Set the live status.
+     *
+     * @param  bool  $live
+     * @return void
      */
     public function setLive(bool $live)
     {

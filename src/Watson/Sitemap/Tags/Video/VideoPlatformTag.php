@@ -1,45 +1,66 @@
 <?php namespace Watson\Sitemap\Tags\Video;
 
-/**
- * Class VideoPlatformTag
- * @see https://developers.google.com/webmasters/videosearch/platformrestrictions.html
- */
 class VideoPlatformTag
 {
     /**
-     * @var array Allowed values are web, mobile, and tv
-     */
-    protected $platforms;
-
-    /**
-     * @var array Allowed values according to google
+     * The supported tag platforms.
+     *
+     * @var array
      */
     private static $allowedPlatforms = ['web', 'mobile', 'tv'];
 
     /**
-     * @var string pecifies whether the video is restricted or permitted for the specified platforms
-     * Default: deny and if no platforms are specified, the video will appear on all devices.
+     * The supported tag relationships.
+     *
+     * @var array
+     */
+    private static $allowedRelationships = ['deny', 'allow'];
+
+    /**
+     * The tag platforms.
+     *
+     * @var array
+     */
+    protected $platforms;
+
+    /**
+     * The tag relationship.
+     *
+     * @var string
      */
     protected $relationship = 'deny';
 
-    private static $allowedRelationships = ['deny', 'allow'];
-
+    /**
+     * Create a new video platform tag.
+     *
+     * @param  array  $platforms
+     * @param  string  $relationship
+     * @return void
+     */
     public function __construct(array $platforms, $relationship = 'deny')
     {
         $this->platforms = array_intersect($platforms, $this::$allowedPlatforms);
+
         if (in_array($relationship, $this::$allowedRelationships)) {
             $this->relationship = $relationship;
         }
     }
 
+    /**
+     * Get the tag platforms.
+     *
+     * @return string
+     */
     public function getPlatforms()
     {
-        if (count($this->platforms)) {
-            return implode(' ', $this->platforms);
-        }
-        return;
+        return implode(' ', $this->platforms);
     }
 
+    /**
+     * Get the tag relationship.
+     *
+     * @return string
+     */
     public function getRelationship()
     {
         return $this->relationship;
