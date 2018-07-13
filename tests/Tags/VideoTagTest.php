@@ -124,29 +124,29 @@ class VideoTagTest extends PHPUnit_Framework_TestCase
     {
         $platform = new VideoPlatformTag(['web', 'mobile'], 'allow');
         $this->tag->setPlatform($platform);
-        $tagplatform = $this->tag->getPlatform();
-        $this->assertEquals($platform, $tagplatform);
-        $this->assertEquals('allow', $tagplatform->getRelationship());
-        $this->assertEquals('web mobile', $tagplatform->getPlatforms());
+        $tagPlatform = $this->tag->getPlatform();
+        $this->assertEquals($platform, $tagPlatform);
+        $this->assertEquals('allow', $tagPlatform->getRelationship());
+        $this->assertEquals('web mobile', $tagPlatform->getPlatforms());
     }
 
     public function test_set_platform_tag_with_platforms_deny()
     {
         $platform = new VideoPlatformTag(['web'], 'deny');
         $this->tag->setPlatform($platform);
-        $tagplatform = $this->tag->getPlatform();
-        $this->assertEquals($platform, $tagplatform);
-        $this->assertEquals('deny', $tagplatform->getRelationship());
-        $this->assertEquals('web', $tagplatform->getPlatforms());
+        $tagPlatform = $this->tag->getPlatform();
+        $this->assertEquals($platform, $tagPlatform);
+        $this->assertEquals('deny', $tagPlatform->getRelationship());
+        $this->assertEquals('web', $tagPlatform->getPlatforms());
     }
 
     public function test_set_platform_tag_with_filtering_valid_platforms()
     {
         $platform = new VideoPlatformTag(['web', 'tv', 'invalid', 'anotherinalid']);
         $this->tag->setPlatform($platform);
-        $tagplatform = $this->tag->getPlatform();
-        $this->assertEquals($platform, $tagplatform);
-        $this->assertEquals('deny', $tagplatform->getRelationship());
-        $this->assertEquals('web tv', $tagplatform->getPlatforms());
+        $tagPlatform = $this->tag->getPlatform();
+        $this->assertEquals($platform, $tagPlatform);
+        $this->assertEquals('deny', $tagPlatform->getRelationship());
+        $this->assertEquals('web tv', $tagPlatform->getPlatforms());
     }
 }
