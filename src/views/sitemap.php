@@ -63,7 +63,7 @@
                   <video:duration><?php echo $__video->getDuration() ?></video:duration>
               <?php endif ?>
               <?php if ($__video->getExpirationDate()): ?>
-                  <video:expiration_date><?php echo $__video->getExpirationDate() ?></video:expiration_date>
+                  <video:expiration_date><?php echo $__video->getExpirationDate()->format('Y-m-d\TH:i:sP') ?></video:expiration_date>
               <?php endif ?>
               <?php if ($__video->getRating()): ?>
                   <video:rating><?php echo $__video->getRating() ?></video:rating>
@@ -72,7 +72,7 @@
                   <video:view_count><?php echo $__video->getViewCount() ?></video:view_count>
               <?php endif ?>
               <?php if ($__video->getPublicationDate()): ?>
-                  <video:publication_date><?php echo $__video->getPublicationDate() ?></video:publication_date>
+                  <video:publication_date><?php echo $__video->getPublicationDate()->format('Y-m-d\TH:i:sP') ?></video:publication_date>
               <?php endif ?>
               <video:family_friendly><?php echo $__video->getFamilyFriendly() ? 'yes' : 'no' ?></video:family_friendly>
               <?php if ($__video->getRestriction()): ?>
