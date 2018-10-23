@@ -5,6 +5,7 @@ namespace Watson\Sitemap\Definitions;
 use Closure;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Watson\Sitemap\Exceptions\NoRouteCallbackException;
 
 class ModelDefinition extends Definition
@@ -33,13 +34,13 @@ class ModelDefinition extends Definition
     }
 
     /**
-     * Get an instance of the model class.
+     * Get an instance of the model query.
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function getClassInstance(): Model
+    public function getQuery(): Builder
     {
-        return new $this->getClass();
+        return $this->class instanceof Builder ? $this->class : (new $this->model)->newQuery();
     }
 
     /**

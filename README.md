@@ -60,7 +60,7 @@ class SitemapServiceProvider extends ServiceProvider
             ->modified(now()->subDays(2));
 
         // You can also pass in a model, it'll use updated_at for the lastModified attribute.
-        $sitemap->model(User::class)->withRoute(function ($user) {
+        $sitemap->model(User::class, function ($user) {
             return route('users.show', $user);
         });
 
