@@ -2,8 +2,8 @@
 
 namespace Watson\Tests\Definitions\Concerns;
 
-use DateTime;
 use Mockery;
+use DateTime;
 
 trait LocatableAndModifiableTest
 {

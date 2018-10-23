@@ -2,6 +2,7 @@
 
 namespace Watson\Sitemap\Definitions;
 
+use DateTime;
 use Watson\Sitemap\Definitions\Concerns\LocatableAndModifiable;
 
 abstract class Definition
@@ -21,6 +22,13 @@ abstract class Definition
      * @var string
      */
     protected $priority;
+
+    /**
+    * The expiration timestamp.
+    *
+    * @var \DateTime
+    */
+    protected $expired;
 
     /**
      * Get the change frequency.
@@ -84,5 +92,45 @@ abstract class Definition
     public function priority($priority)
     {
         $this->setPriority($priority);
+    }
+
+    /**
+     * Get the expired timestamp.
+     *
+     * @return string
+     */
+    public function getExpired(): DateTime
+    {
+        return $this->expired;
+    }
+
+    /**
+     * Set the expired timestamp.
+     *
+     * @param  mixed  $expired
+     * @return void
+     */
+    public function setExpired($expired = null)
+    {
+        if (is_null($expired)) {
+            $expired = new DateTime;
+        }
+
+        if ( ! $expired instanceof DateTime) {
+            $expired = new DateTime($expired);
+        }
+
+        $this->expired = $expired;
+    }
+
+    /**
+     * Alias to set the expired timestamp>
+     *
+     * @param  mixed  $expired
+     * @return void
+     */
+    public function expired($expired = null)
+    {
+        $this->setExpired($expired);
     }
 }

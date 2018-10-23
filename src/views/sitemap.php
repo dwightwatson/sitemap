@@ -5,22 +5,20 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
     http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  <?php foreach ($__tags as $__tag): ?>
+  <?php foreach ($tags as $tag): ?>
     <url>
-      <loc><?php echo $__tag->getLocation() ?></loc>
-      <?php if ($__tag->getLastModified()): ?>
-        <lastmod><?php echo $__tag->getLastModified()->format('Y-m-d\TH:i:sP') ?></lastmod>
+      <loc><?php echo $tag->getLocation() ?></loc>
+      <?php if ($lastModified = $tag->getLastModified()): ?>
+        <lastmod><?php echo $lastModified->format(DateTimeInterface::ATOM) ?></lastmod>
       <?php endif ?>
-      <?php if ($__tag instanceof \Watson\Sitemap\Tags\Tag): ?>
-        <?php if ($__tag->getPriority()): ?>
-          <priority><?php echo $__tag->getPriority() ?></priority>
-        <?php endif ?>
-        <?php if ($__tag->getChangeFrequency()): ?>
-          <changefreq><?php echo $__tag->getChangeFrequency() ?></changefreq>
-        <?php endif ?>
-      <?php endif; ?>
-      <?php if ($__tag instanceof \Watson\Sitemap\Tags\ExpiredTag): ?>
-        <expires><?php echo $__tag->getExpired()->format('Y-m-d\TH:i:sP') ?></expires>
+      <?php if ($priority = $tag->getPriority()): ?>
+        <priority><?php echo $priority ?></priority>
+      <?php endif ?>
+      <?php if ($changeFrequency = $tag->getChangeFrequency()): ?>
+        <changefreq><?php echo $changeFrequency ?></changefreq>
+      <?php endif ?>
+      <?php if ($expired = $tag->getExpired()): ?>
+        <expires><?php echo $expired->format(DateTimeInterface::ATOM) ?></expires>
       <?php endif; ?>
     </url>
   <?php endforeach ?>

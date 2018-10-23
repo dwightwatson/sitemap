@@ -2,6 +2,8 @@
 
 namespace Watson\Tests\Definitions;
 
+use Mockery;
+use DateTime;
 use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Definitions\Definition;
 
@@ -47,6 +49,33 @@ class DefinitionTest extends TestCase
         $this->definition->priority(1);
 
         $this->assertEquals(1, $this->definition->getPriority());
+    }
+
+    /** @test */
+    function it_gets_and_sets_expired_timestamp()
+    {
+        $this->definition->setExpired($mock = Mockery::mock(DateTime::class));
+
+        $this->assertEquals($mock, $this->definition->getExpired());
+    }
+
+    /** @test */
+    function it_sets_expired_timestamp_from_a_string()
+    {
+        $this->definition->setExpired('2000-01-01 00:00:00');
+
+        $this->assertEquals(
+            '2000-01-01 00:00:00',
+            $this->definition->getExpired()->format('Y-m-d H:i:s')
+        );
+    }
+
+    /** @test */
+    function it_sets_the_expired_timestamp_from_expired()
+    {
+        $this->definition->expired($mock = Mockery::mock(DateTime::class));
+
+        $this->assertEquals($mock, $this->definition->getExpired());
     }
 }
 
