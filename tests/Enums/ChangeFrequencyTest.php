@@ -1,9 +1,9 @@
 <?php
 
-namespace Watson\Tests;
+namespace Watson\Tests\Enums;
 
 use PHPUnit\Framework\TestCase;
-use Watson\Sitemap\ChangeFrequency;
+use Watson\Sitemap\Enums\ChangeFrequency;
 
 class ChangeFrequencyTest extends TestCase
 {

@@ -2,8 +2,7 @@
 
 namespace DummyNamespace;
 
-use Watson\Sitemap\Priority;
-use Watson\Sitemap\ChangeFrequency;
+use Watson\Sitemap\Enums\{ChangeFrequency, Priority};
 use Watson\Sitemap\SitemapServiceProvider as ServiceProvider;
 
 class SitemapServiceProvider extends ServiceProvider

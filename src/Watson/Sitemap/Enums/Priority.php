@@ -1,6 +1,6 @@
 <?php
 
-namespace Watson\Sitemap;
+namespace Watson\Sitemap\Enums;
 
 class Priority
 {
