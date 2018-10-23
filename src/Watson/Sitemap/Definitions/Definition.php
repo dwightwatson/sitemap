@@ -104,7 +104,7 @@ abstract class Definition
     /**
      * Set the change frequency.
      *
-     * @param  \Watson\Sitemap\Tags\ChangeFrequency|string  $changeFrequency
+     * @param  \Watson\Sitemap\ChangeFrequency|string  $changeFrequency
      * @return void
      */
     public function setChangeFrequency($changeFrequency)
@@ -115,7 +115,7 @@ abstract class Definition
     /**
      * Alias to set the change frequency.
      *
-     * @param  \Watson\Sitemap\Tags\ChangeFrequency|string  $changeFrequency
+     * @param  \Watson\Sitemap\ChangeFrequency|string  $changeFrequency
      * @return void
      */
     public function changes($changeFrequency)
@@ -136,7 +136,7 @@ abstract class Definition
     /**
      * Set the priority.
      *
-     * @param  \Watson\Sitemap\Tags\Priority|string  $priority
+     * @param  \Watson\Sitemap\Priority|string  $priority
      * @return void
      */
     public function setPriority($priority)
@@ -147,7 +147,7 @@ abstract class Definition
     /**
      * Alias to set the priority.
      *
-     * @param  \Watson\Sitemap\Tags\Priority|string  $priority
+     * @param  \Watson\Sitemap\Priority|string  $priority
      * @return void
      */
     public function priority($priority)

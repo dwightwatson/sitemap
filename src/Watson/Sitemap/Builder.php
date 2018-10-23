@@ -40,6 +40,17 @@ class Builder
     }
 
     /**
+     * Add a path definition to the sitemap.
+     *
+     * @param  string  $path
+     * @return \Watson\Sitemap\Definitions\TagDefinition
+     */
+    public function path(string $path): TagDefinition
+    {
+        return $this->add($path);
+    }
+
+    /**
      * Add a model definition to the sitemap.
      *
      * @param  string  $class
@@ -47,8 +58,6 @@ class Builder
      */
     public function model(string $class): ModelDefinition
     {
-        $this->hasModelDefinitions = true;
-
         return $this->addDefinition(new ModelDefinition($class));
     }
 
