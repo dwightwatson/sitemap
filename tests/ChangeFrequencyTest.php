@@ -1,8 +1,11 @@
 <?php
 
+namespace Watson\Tests;
+
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\ChangeFrequency;
 
-class ChangeFrequencyTest extends PHPUnit_Framework_TestCase
+class ChangeFrequencyTest extends TestCase
 {
     /** @test */
     function always_set_correctly()

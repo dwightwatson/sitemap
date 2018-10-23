@@ -1,9 +1,12 @@
 <?php
 
+namespace Watson\Tests;
+
 use Watson\Sitemap\Tags\Tag;
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Tags\ImageTag;
 
-class ImageTagTest extends PHPUnit_Framework_TestCase
+class ImageTagTest extends TestCase
 {
     public function setUp()
     {

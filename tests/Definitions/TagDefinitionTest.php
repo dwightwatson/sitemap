@@ -1,8 +1,11 @@
 <?php
 
+namespace Watson\Tests;
+
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Definitions\TagDefinition;
 
-class TagDefinitionTest extends PHPUnit_Framework_TestCase
+class TagDefinitionTest extends TestCase
 {
     public $tagDefinition;
 

@@ -1,10 +1,13 @@
 <?php
 
+namespace Watson\Tests;
+
 use Watson\Sitemap\Builder;
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Definitions\TagDefinition;
 use Watson\Sitemap\Definitions\ModelDefinition;
 
-class BuilderTest extends PHPUnit_Framework_TestCase
+class BuilderTest extends TestCase
 {
     public $builder;
 

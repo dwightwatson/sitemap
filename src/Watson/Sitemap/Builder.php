@@ -45,7 +45,7 @@ class Builder
      * @param  string  $class
      * @return \Watson\Sitemap\Definitions\ModelDefinition
      */
-    public function model(string $class): \Watson\Sitemap\Definitions\ModelDefinition
+    public function model(string $class): ModelDefinition
     {
         $this->hasModelDefinitions = true;
 
