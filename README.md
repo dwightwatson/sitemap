@@ -7,7 +7,7 @@ Sitemap for Laravel
 [![Latest Unstable Version](https://poser.pugx.org/watson/sitemap/v/unstable.svg)](https://packagist.org/packages/watson/sitemap)
 [![License](https://poser.pugx.org/watson/sitemap/license.svg)](https://packagist.org/packages/watson/sitemap)
 
-Sitemap is a stupidly simple package for Laravel to build your app's sitemap.
+Sitemap is a slightly smarter alternative for generating sitemaps for dynamic sites. As opposed to manually defining all your routes or letting a crawler run wild through your site, this package lets you pass in your Eloquent models/queries directly and generate sitemaps on-the-fly. In addition, if you have more than 50,000 routes (and you're hitting Google's sitemap limit) this package will automatically break your sitemaps with an index sitemap.
 
 Read more about sitemaps and how to use them efficiently on [Google Webmaster Tools](https://support.google.com/webmasters/answer/156184?hl=en).
 
@@ -24,115 +24,52 @@ Then, install the sitemap service provider, where you will define your sitemap's
 php artisan sitemap:install
 ```
 
-### Laravel 4.x
-For Laravel 4.2 support see [the 1.1 branch](https://github.com/dwightwatson/sitemap/tree/1.1).
-
-### PHP 5.x
-If you need support on PHP 5.x, or you're looking for the old manual-definitions version of this pacakge, see [the 2.0 branch](https://github.com/dwightwatson/sitemap/tree/2.0).
+### Older versions
+Please visit the other branches of this repo for Laravel 4.x or PHP 5.x support. Be aware that older versions of this package required manual route definitions.
 
 ## Usage
 
-### Sitemap indexes
-If you have a large number of links (50,000)+ you will want to break your sitemap out into separate sitemaps and then use a sitemap index to link them all.
+Open up your new service provider in `app\Providers\SitemapServiceProvider.php`;
 
 ```php
-use App\Post;
-use Watson\Sitemap\Builder;
+use Watson\Sitemap\{ChangeFrequency, Priority};
+use Watson\Sitemap\SitemapServiceProvider as ServiceProvider;
 
-class SitemapsController extends Controller
+class SitemapServiceProvider extends ServiceProvider
 {
     /**
-     * GET /sitemaps
+     * Define your sitemap models and tags.
      *
      * @param  \Watson\Sitemap\Builder  $sitemap
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function index(Builder $sitemap)
+    public function boot(Builder $sitemap)
     {
-        // Add a general sitemap using a URL.
-        $sitemap->add('sitemaps/general');
+        parent::boot($sitemap);
 
-        // You can use the route helpers too.
-        $sitemap->add(route('sitemaps.users'));
+        // Add a specific path.
+        $sitemap->add('/contact')
+            ->changes(ChangeFrequency::NEVER);
 
-        // And you can provide the last modified timestamp.
-        $lastModified = Post::latest()->take(1)->get();
-        $sitemap->add(route('sitemaps.posts'), $lastModified);
+        // Path is just an alias for add.
+        $sitemap->path('/contact')
+            ->priority(Priority::HIGHEST);
 
-        // Render the sitemap.
-        return $sitemap;
-    }
-}
-```
+        // Or use a named route.
+        $sitemap->path(route('users.show', 1))
+            ->modified(now()->subDays(2));
 
-### Sitemaps
-
-Similar to creating indexes, you add tags using the tag method: `$sitemap->tag($location, $lastModified, $changeFrequency, $priority)`.
-
-```php
-use App\Post;
-use Watson\Sitemap\Builder;
-
-class SitemapsController extends Controller
-{
-    /**
-     * GET /sitemaps/posts
-     *
-     * @param  \Watson\Sitemap\Builder  $builder
-     * @return \Illuminate\Http\Response
-     */
-    public function posts(Builder $sitemap)
-    {
-        $posts = Post::all();
-
-        foreach ($posts as $post) {
-            $sitemap->add(route('posts.show', $post), $post->updated_at, ChangeFrequency::DAILY, 0.8);
-        }
-
-        return $sitemap;
-    }
-}
-```
-
-If you just want to pass a model's `updated_at` timestamp as the last modified parameter, you can simply pass the model as the second parameter and the sitemap will use that attribute automatically.
-
-**If you're pulling a lot of records from your database you might want to consider restricting the amount of data you're getting by using the `select()` method. You can also use the `chunk()` method to only load a certain number of records at any one time as to not run out of memory.**
-
-### Models
-
-Instead of manually looping around, you can easily create a sitemap for a model using the `model()` method. Simply pass the model class name and a callback which generates the correct route to the resource.
-
-```php
-use App\Post;
-use Watson\Sitemap\Builder;
-
-class SitemapsController extends Controller
-{
-    /**
-     * GET /sitemaps/posts
-     *
-     * @param  \Watson\Sitemap\Builder  $builder
-     * @return \Illuminate\Http\Response
-     */
-    public function posts(Builder $sitemap)
-    {
-        return $sitemap->model(Post::class, function ($model) {
-            return route('posts.show', $post);
+        // You can also pass in a model, it'll use updated_at for the lastModified attribute.
+        $sitemap->model(User::class)->withRoute(function ($user) {
+            return route('users.show', $user);
         });
+
+        $sitemap->model(Post::whereNotNull('published_at'))
+            ->changes(ChangeFrequency::DAILY)
+            ->priority(Priority::HIGHEST)
+            ->withRoute(function ($post) {
+                return route('posts.show', $post);
+            });
     }
 }
 ```
-
-#### Options
-
-The last modified attribute for each model will be set using the model's `updated_at` timestamp. You can set the change frequency and priority easily as well.
-
-```php
-return $sitemap->model(Post::class, ['change_frequency' => ChangeFrequency::DAILY, 'priority' => 0.8, 'per_page' => 1000, function ($model) {
-    return route('posts.show', $post);
-}]);
-```
-
-#### Pagination
-
-By default, the sitemap will be restricted to 10,000 per page. If your resource has more than that number (or more than the number you have specified) then the `model()` method will handle this for you,
