@@ -1,6 +1,6 @@
 <?php
 
-namespace Watson\Tests;
+namespace Watson\Tests\Definitions;
 
 use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Definitions\TagDefinition;
