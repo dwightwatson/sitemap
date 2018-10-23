@@ -21,7 +21,7 @@ class SitemapServiceProvider extends ServiceProvider
         $sitemap->path('contact')->changes(ChangeFrequency::NEVER); // alias for add
         $sitemap->route('contact')->changes(ChangeFrequency::NEVER);
 
-        $sitemap->add('contact')->changes(ChangeFrequency::NEVER);
+        $sitemap->add('contact')->modified(now()->subDays(2));
 
         $sitemap->model(User::class)->withRoute(function ($user) {
             return route('users.show', $user);

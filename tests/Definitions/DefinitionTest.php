@@ -2,6 +2,8 @@
 
 namespace Watson\Tests;
 
+use Mockery;
+use DateTime;
 use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Definitions\Definition;
 
