@@ -1,7 +1,6 @@
 <?php
 
-use Watson\Sitemap\Renderer;
+use Watson\Sitemap\Controllers\SitemapController;
 
-$router->get(config('sitemap.routing.prefix') . '{parameters?}', function (Renderer $renderer) {
-    return $renderer;
-})->where('parameters', '.+');
+$router->get('/sitemaps{parameters?}', SitemapController::class)
+    ->where('parameters', '.+');

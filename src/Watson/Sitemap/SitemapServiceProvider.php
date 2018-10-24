@@ -13,11 +13,10 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'sitemap');
-
         $this->commands(
             Commands\InstallCommand::class,
-            Commands\SubmitSitemapCommand::class
+            Commands\GenerateCommand::class,
+            Commands\SubmitCommand::class
         );
     }
 
@@ -30,12 +29,8 @@ class SitemapServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../../views', 'sitemap');
 
-        $this->publishes([
-            __DIR__ . '/../../config/config.php' => config_path('sitemap.php')
-        ], 'config');
-
         if ( ! $this->app->routesAreCached()) {
             require __DIR__ . '/../../routes.php';
-        }    
+        }
     }
 }

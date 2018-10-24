@@ -2,57 +2,58 @@
 
 namespace Watson\Sitemap;
 
+use Watson\Sitemap\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Support\Responsable;
 
 class Renderer implements Renderable, Responsable
 {
     /**
-     * Google supports a maximum of 50,000 tags per page.
+     * The sitemap builder.
      *
-     * @var int
+     * @var \Watson\Sitemap\Builder
      */
-    const PER_PAGE = 50000;
+    protected $builder;
 
     /**
-     * Laravel request instance.
+     * The request instance.
      *
      * @var \Illuminate\Http\Request
      */
     protected $request;
 
     /**
-     * Construct the sitemap manager.
+     * Create a new renderer instance.
      *
-     * @param  \Illuminate\Contracts\Cache\Repository  $cache
+     * @param  \Watson\Sitemap\Builder  $builder
      * @param  \Illuminate\Http\Request  $request
      * @return void
      */
-    public function __construct(Cache $cache, Request $request)
+    public function __construct(Builder $builder, Request $request)
     {
+        $this->builder = $builder;
         $this->request = $request;
     }
 
     /**
      * Get the evaluated contents of the object.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return string
      */
     public function render()
     {
-        if (count($this->sitemaps)) {
-            return $this->renderSitemapIndex();
-        }
-
-        return $this->renderSitemap();
+        //
     }
 
     /**
      * Create an HTTP response that represents the object.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function toResponse()
+    public function toResponse(Request $request)
     {
         return response(
             $this->render()

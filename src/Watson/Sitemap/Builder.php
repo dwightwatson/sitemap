@@ -18,6 +18,13 @@ class Builder
     protected $definitions;
 
     /**
+     * The length of time to cache responses.
+     *
+     * @var int
+     */
+    protected $cacheMinutes;
+
+    /**
      * Instantiate a new sitemap builder.
      *
      * @param  \Illuminate\Support\Collection
@@ -26,6 +33,40 @@ class Builder
     public function __construct(Collection $definitions = null)
     {
         $this->definitions = $definitions ?: new Collection;
+    }
+
+    /**
+     * Get the length of time to cache responses.
+     *
+     * @return int|null
+     */
+    public function getCacheMinutes(): ?int
+    {
+        return $this->cacheMinutes;
+    }
+
+    /**
+     * Set the length of time to cache responses.
+     *
+     * @param  int  $minutes
+     * @return $this
+     */
+    public function setCacheMinutes(int $minutes)
+    {
+        $this->cacheMinutes = $minutes;
+
+        return $this;
+    }
+
+    /**
+     * Set the length of time to cache responses.
+     *
+     * @param  int  $minutes
+     * @return $this
+     */
+    public function cache(int $minutes)
+    {
+        return $this->setCacheMinutes($minutes);
     }
 
     /**
@@ -69,6 +110,18 @@ class Builder
     public function getDefinitions(): Collection
     {
         return $this->definitions;
+    }
+
+    /**
+     * Return a list of regular tag definitions.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getTagDefinitions(): Collection
+    {
+        return $this->definitions->filter(function ($definition) {
+            return $definition instanceof TagDefinition;
+        });
     }
 
     /**

@@ -18,17 +18,7 @@ class InstallCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $description = 'Install the sitemap definitions service provider';
-
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
-    {
-
-    }
+    protected $description = 'Install the sitemap service provider';
 
     /**
      * Get the stub file for the generator.
@@ -38,5 +28,16 @@ class InstallCommand extends GeneratorCommand
     protected function getStub()
     {
         return __DIR__.'../../stubs/SitemapServiceProvider.stub';
+    }
+
+    /**
+     * Get the default namespace for the class.
+     *
+     * @param  string  $rootNamespace
+     * @return string
+     */
+    protected function getDefaultNamespace($rootNamespace)
+    {
+        return $rootNamespace.'\Providers';
     }
 }
