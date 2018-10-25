@@ -22,7 +22,7 @@ class BuilderTest extends TestCase
         $definition = $this->builder->add('/faq');
 
         $this->assertInstanceOf(TagDefinition::class, $definition);
-        $this->assertCount(1, $this->builder->getDefinitions());
+        $this->assertCount(1, $this->builder->getTagDefinitions());
     }
 
     /** @test */
@@ -31,19 +31,19 @@ class BuilderTest extends TestCase
         $definition = $this->builder->model('User');
 
         $this->assertInstanceOf(ModelDefinition::class, $definition);
-        $this->assertCount(1, $this->builder->getDefinitions());
+        $this->assertCount(1, $this->builder->getModelDefinitions());
     }
 
     /** @test */
     function it_gets_definitions()
     {
-        $this->assertEquals([], $this->builder->getDefinitions()->toArray());
+        $this->assertEquals([], $this->builder->getTagDefinitions()->toArray());
 
         $definition = $this->builder->add('/faq');
 
         $this->assertEquals(
             [$definition],
-            $this->builder->getDefinitions()->toArray()
+            $this->builder->getTagDefinitions()->toArray()
         );
     }
 
