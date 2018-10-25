@@ -12,21 +12,21 @@ class Compiler
     const PER_PAGE = 50000;
 
     /**
-     * The builder instance.
+     * The registrar instance.
      *
-     * @var \Watson\Sitemap\Builder
+     * @var \Watson\Sitemap\Registrar
      */
-    protected $builder;
+    protected $registrar;
 
     /**
      * Create a new compiler instance.
      *
-     * @param  \Watson\Sitemap\Builder  $builder
+     * @param  \Watson\Sitemap\Registrar  $registrar
      * @return void
      */
-    public function __construct(Builder $builder)
+    public function __construct(Registrar $registrar)
     {
-        $this->builder = $builder;
+        $this->registrar = $registrar;
     }
 
     /**

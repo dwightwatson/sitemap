@@ -8,17 +8,17 @@ use Watson\Sitemap\Definitions\Definition;
 use Watson\Sitemap\Definitions\TagDefinition;
 use Watson\Sitemap\Definitions\ModelDefinition;
 
-class Builder
+class Registrar
 {
     /**
-     * Tag definitions added to the builder.
+     * Tag definitions added to the registrar.
      *
      * @var \Illuminate\Support\Collection
      */
     protected $tagDefinitions;
 
     /**
-     * Model definitions added to the builder.
+     * Model definitions added to the registrar.
      *
      * @var \Illuminate\Support\Collection
      */
@@ -32,7 +32,7 @@ class Builder
     protected $cacheMinutes;
 
     /**
-     * Instantiate a new sitemap builder.
+     * Instantiate a new sitemap registrar.
      *
      * @param  \Illuminate\Support\Collection  $tagDefinitions
      * @param  \Illuminate\Support\Collection  $modelDefinitions
@@ -104,15 +104,18 @@ class Builder
      * Add a model definition to the sitemap.
      *
      * @param  string  $class
+     * @param  \Closure  $routeCallback
      * @return \Watson\Sitemap\Definitions\ModelDefinition
      */
-    public function model(string $class): ModelDefinition
+    public function model(string $class, Closure $routeCallback = null): ModelDefinition
     {
-        return $this->addModelDefinition(new ModelDefinition($class));
+        return $this->addModelDefinition(
+            new ModelDefinition($class, $routeCallback)
+        );
     }
 
     /**
-     * Get the tag definitions from the sitemap builder.
+     * Get the tag definitions from the sitemap registrar.
      *
      * @return \Illuminate\Support\Collection
      */
@@ -122,7 +125,7 @@ class Builder
     }
 
     /**
-     * Get the model definitions from the sitemap builder.
+     * Get the model definitions from the sitemap registrar.
      *
      * @return \Illuminate\Support\Collection
      */
