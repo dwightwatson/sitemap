@@ -3,8 +3,8 @@
 namespace DummyNamespace;
 
 use Watson\Sitemap\Registrar;
+use Illuminate\Support\ServiceProvider;
 use Watson\Sitemap\Enums\{ChangeFrequency, Priority};
-use Watson\Sitemap\SitemapServiceProvider as ServiceProvider;
 
 class SitemapServiceProvider extends ServiceProvider
 {
@@ -16,8 +16,6 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function boot(Registrar $sitemap)
     {
-        parent::boot($sitemap);
-
         //
     }
 }

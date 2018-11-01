@@ -17,13 +17,11 @@ class Cache implements Renderable
     /**
      * Construct the renderer cache.
      *
-     * @param  \Watson\Sitemap\Renderer                $renderer
      * @param  \Illuminate\Contracts\Cache\Repository  $cache
      * @return void
      */
-    public function __construct(Renderer $renderer, Repository $cache)
+    public function __construct(Repository $cache)
     {
-        $this->renderer = $renderer;
         $this->cache = $cache;
 
         $this->cacheMinutes = config('sitemap.cache.minutes');

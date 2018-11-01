@@ -2,9 +2,10 @@
 
 namespace Watson\Sitemap\Controllers;
 
+use Watson\Sitemap\Compiler;
 use Illuminate\Http\Request;
-use Watson\Sitemap\{Compiler, Renderer};
 use Illuminate\Contracts\Support\Renderable;
+use Watson\Sitemap\Renderers\{Index, Sitemap};
 
 class SitemapController
 {
@@ -34,6 +35,34 @@ class SitemapController
      */
     public function __invoke(Request $request): Renderable
     {
-        return new \Watson\Sitemap\Renderers\Sitemap(collect());
+        if ($this->wantsIndex($request)) {
+
+            return new Index($this->compiler->getIndexTags());
+        }
+
+        if ($this->wantsTags($request)) {
+            $definitions = $this->compiler->getIndexTags($request->page);
+
+            // return new Sitemap($this->compiler->getTags());
+        }
+
+        if ($model = $this->wantsModel($request)) {
+            $definitions = $this->compiler->getModelTags($model, $request->page);
+
+            return new Sitemap($definitions);
+        }
+
+        return abort(404);
+    }
+
+    /**
+     * Whether the request is for the sitemap index.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public function wantsIndex(Request $request): bool
+    {
+        return $request->is('sitemaps');
     }
 }

@@ -13,7 +13,7 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(Registrar::class);
     }
 
     /**
@@ -25,9 +25,7 @@ class SitemapServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../../views', 'sitemap');
 
-        if ( ! $this->app->routesAreCached()) {
-            require __DIR__ . '/../../routes.php';
-        }
+        $this->loadRoutesFrom(__DIR__ . '/../../routes.php');
 
         if ($this->app->runningInConsole()) {
             $this->commands(
