@@ -4,6 +4,7 @@ namespace Watson\Sitemap\Controllers;
 
 use Illuminate\Http\Request;
 use Watson\Sitemap\{Compiler, Renderer};
+use Illuminate\Contracts\Support\Renderable;
 
 class SitemapController
 {
@@ -31,8 +32,8 @@ class SitemapController
      * @param  \Illuminate\Http\Request  $request
      * @return \Watson\Sitemap\Renderer
      */
-    public function __invoke(Request $request): Renderer
+    public function __invoke(Request $request): Renderable
     {
-        //
+        return new \Watson\Sitemap\Renderers\Sitemap(collect());
     }
 }
