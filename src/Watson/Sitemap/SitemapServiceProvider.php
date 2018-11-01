@@ -13,11 +13,7 @@ class SitemapServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->commands(
-            Commands\InstallCommand::class,
-            Commands\GenerateCommand::class,
-            Commands\SubmitCommand::class
-        );
+        //
     }
 
     /**
@@ -31,6 +27,14 @@ class SitemapServiceProvider extends ServiceProvider
 
         if ( ! $this->app->routesAreCached()) {
             require __DIR__ . '/../../routes.php';
+        }
+
+        if ($this->app->runningInConsole()) {
+            $this->commands(
+                Commands\InstallCommand::class,
+                Commands\GenerateCommand::class,
+                Commands\SubmitCommand::class
+            );
         }
     }
 }

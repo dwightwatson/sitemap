@@ -4,6 +4,7 @@ namespace Watson\Sitemap\Commands;
 
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use GuzzleHttp\Exception\ClientException;
 
 class SubmitCommand extends Command
 {
@@ -12,7 +13,7 @@ class SubmitCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'sitemap:submit';
+    protected $signature = 'sitemap:submit {url?}';
 
     /**
      * The console command description.
@@ -57,18 +58,28 @@ class SubmitCommand extends Command
     {
         $this->line('Submitting the sitemap to Google...');
 
-        $sitemapUrl = url('sitemap.xml');
+        $sitemapUrl = $this->getSitemapUrl();
 
-        $response = $this->client->request(
-            'GET',
-            $this->pingUrl,
-            ['query' => ['sitemap' => $sitemapUrl]]
-        );
-
-        if ($response->getStatusCode() !== 200) {
-            return $this->error('An unexpected response was received.');
+        try {
+            $response = $this->client->request(
+                'GET',
+                $this->pingUrl,
+                ['query' => ['sitemap' => $sitemapUrl]]
+            );
+        } catch (ClientException $e) {
+            return $this->error('The sitemap ['.$sitemapUrl.'] was rejected.');
         }
 
-        $this->info('A successful response was received.');
+        $this->info('The sitemap ['.$sitemapUrl.'] was successfully submitted.');
+    }
+
+    /**
+     * Get the sitemap URL to submit.
+     *
+     * @return string
+     */
+    protected function getSitemapUrl(): string
+    {
+        return $this->argument('url') ?: url('sitemaps');
     }
 }
