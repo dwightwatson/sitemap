@@ -2,19 +2,19 @@
 
 namespace Watson\Sitemap;
 
-use Watson\Sitemap\Builder;
 use Illuminate\Http\Request;
+use Watson\Sitemap\Registrar;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Support\Responsable;
 
 class Renderer implements Renderable, Responsable
 {
     /**
-     * The sitemap builder.
+     * The sitemap registrar.
      *
-     * @var \Watson\Sitemap\Builder
+     * @var \Watson\Sitemap\Registrar
      */
-    protected $builder;
+    protected $registrar;
 
     /**
      * The request instance.
@@ -26,13 +26,13 @@ class Renderer implements Renderable, Responsable
     /**
      * Create a new renderer instance.
      *
-     * @param  \Watson\Sitemap\Builder  $builder
+     * @param  \Watson\Sitemap\Registrar  $registrar
      * @param  \Illuminate\Http\Request  $request
      * @return void
      */
-    public function __construct(Builder $builder, Request $request)
+    public function __construct(Registrar $registrar, Request $request)
     {
-        $this->builder = $builder;
+        $this->registrar = $registrar;
         $this->request = $request;
     }
 
@@ -53,7 +53,7 @@ class Renderer implements Renderable, Responsable
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function toResponse(Request $request)
+    public function toResponse($request)
     {
         return response(
             $this->render()

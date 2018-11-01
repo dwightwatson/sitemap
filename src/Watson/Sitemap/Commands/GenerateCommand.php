@@ -2,7 +2,9 @@
 
 namespace Watson\Sitemap\Commands;
 
+use Watson\Sitemap\Cache;
 use Illuminate\Console\Command;
+use Watson\Sitemap\RendererCache;
 
 class GenerateCommand extends Command
 {
@@ -21,23 +23,23 @@ class GenerateCommand extends Command
     protected $description = 'Pre-generate the sitemap.';
 
     /**
-     * The renderer.
+     * The sitemap cache.
      *
-     * @var \Watson\Sitemap\RendererCache
+     * @var \Watson\Sitemap\Cache
      */
-    protected $renderer;
+    protected $cache;
 
     /**
      * Create a new command instance.
      *
-     * @param  \Watson\Sitemap\RendererCache  $renderer
+     * @param  \Watson\Sitemap\Cache  $cache
      * @return void
      */
-    public function __construct(RendererCache $renderer)
+    public function __construct(Cache $cache)
     {
         parent::__construct();
 
-        $this->renderer = $renderer;
+        $this->cache = $cache;
     }
 
     /**

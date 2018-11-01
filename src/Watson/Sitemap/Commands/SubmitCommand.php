@@ -2,7 +2,7 @@
 
 namespace Watson\Sitemap\Commands;
 
-use GuzzleHttp\Guzzle;
+use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
 class SubmitCommand extends Command

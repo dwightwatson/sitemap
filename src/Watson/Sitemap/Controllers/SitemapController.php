@@ -3,26 +3,26 @@
 namespace Watson\Sitemap\Controllers;
 
 use Illuminate\Http\Request;
-use Watson\Sitemap\{Registrar, Renderer};
+use Watson\Sitemap\{Compiler, Renderer};
 
 class SitemapController
 {
     /**
-     * The sitemap tags registrar.
+     * The sitemap compiler.
      *
-     * @var \Watson\Sitemap\Registrar
+     * @var \Watson\Sitemap\Compiler
      */
-    protected $registrar;
+    protected $compiler;
 
     /**
      * Create a new controller instance.
      *
-     * @param  \Watson\Sitemap\Registrar  $registrar
+     * @param  \Watson\Sitemap\Compiler  $compiler
      * @return void
      */
-    public function __construct(Registrar $registrar)
+    public function __construct(Compiler $compiler)
     {
-        $this->registrar = $registrar;
+        $this->compiler = $compiler;
     }
 
     /**

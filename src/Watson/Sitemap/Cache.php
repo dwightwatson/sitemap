@@ -2,9 +2,10 @@
 
 namespace Watson\Sitemap;
 
+use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Support\Renderable;
 
-class RendererCache implements Renderable
+class Cache implements Renderable
 {
     /**
      * Laravel cache repository.
@@ -20,7 +21,7 @@ class RendererCache implements Renderable
      * @param  \Illuminate\Contracts\Cache\Repository  $cache
      * @return void
      */
-    public function __construct(Renderer $renderer, Cache $cache)
+    public function __construct(Renderer $renderer, Repository $cache)
     {
         $this->renderer = $renderer;
         $this->cache = $cache;
@@ -49,13 +50,13 @@ class RendererCache implements Renderable
     }
 
     /**
-     * Determine whether the cache is enabled.
+     * Get the evaluated contents of the object.
      *
-     * @return bool
+     * @return string
      */
-    protected function cacheEnabled()
+    public function render()
     {
-        return config('sitemap.cache.enabled');
+        //
     }
 
     protected function cache(Renderable $render)
