@@ -21,13 +21,20 @@ class InstallCommand extends GeneratorCommand
     protected $description = 'Install the sitemap service provider';
 
     /**
+     * The type of class being generated.
+     *
+     * @var string
+     */
+    protected $type = 'Sitemap service provider';
+
+    /**
      * Get the stub file for the generator.
      *
      * @return string
      */
     protected function getStub()
     {
-        return __DIR__.'../../stubs/SitemapServiceProvider.stub';
+        return __DIR__.'/../../../stubs/SitemapServiceProvider.stub';
     }
 
     /**
@@ -39,5 +46,25 @@ class InstallCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace.'\Providers';
+    }
+
+    /**
+     * Get the desired class name from the input.
+     *
+     * @return string
+     */
+    protected function getNameInput()
+    {
+        return 'SitemapServiceProvider';
+    }
+
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return [];
     }
 }
