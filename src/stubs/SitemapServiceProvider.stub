@@ -1,6 +1,6 @@
 <?php
 
-namespace DummyNamespace;
+namespace App\Providers;
 
 use Watson\Sitemap\Registrar;
 use Illuminate\Support\ServiceProvider;

@@ -2,10 +2,14 @@
 
 namespace Watson\Sitemap\Commands;
 
-use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Str;
+use Illuminate\Console\Command;
+use Illuminate\Console\DetectsApplicationNamespace;
 
-class InstallCommand extends GeneratorCommand
+class InstallCommand extends Command
 {
+    use DetectsApplicationNamespace;
+
     /**
      * The console command name.
      *
@@ -21,50 +25,45 @@ class InstallCommand extends GeneratorCommand
     protected $description = 'Install the sitemap service provider';
 
     /**
-     * The type of class being generated.
+     * Execute the console command.
      *
-     * @var string
+     * @return void
      */
-    protected $type = 'Sitemap service provider';
-
-    /**
-     * Get the stub file for the generator.
-     *
-     * @return string
-     */
-    protected function getStub()
+    public function handle()
     {
-        return __DIR__.'/../../../stubs/SitemapServiceProvider.stub';
+        $this->comment('Publishing sitemap service provider...');
+        $this->callSilent('vendor:publish', ['--tag' => 'sitemap']);
+
+        $this->registerSitemapServiceProvider();
+
+        $this->info('Sitemap scaffolding installed successfully.');
     }
 
     /**
-     * Get the default namespace for the class.
+     * Register the Sitemap service provider in the application configuration file.
      *
-     * @param  string  $rootNamespace
-     * @return string
+     * @return void
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function registerSitemapServiceProvider()
     {
-        return $rootNamespace.'\Providers';
-    }
+        $namespace = str_replace_last('\\', '', $this->getAppNamespace());
 
-    /**
-     * Get the desired class name from the input.
-     *
-     * @return string
-     */
-    protected function getNameInput()
-    {
-        return 'SitemapServiceProvider';
-    }
+        $appConfig = file_get_contents(config_path('app.php'));
 
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return [];
+        if (Str::contains($appConfig, $namespace."\\Providers\\SitemapServiceProvider::class")) {
+            return;
+        }
+
+        file_put_contents(config_path('app.php'), str_replace(
+            "{$namespace}\\Providers\RouteServiceProvider::class,".PHP_EOL,
+            "{$namespace}\\Providers\RouteServiceProvider::class,".PHP_EOL."        {$namespace}\Providers\SitemapServiceProvider::class,".PHP_EOL,
+            $appConfig
+        ));
+
+        file_put_contents(app_path('Providers/SitemapServiceProvider.php'), str_replace(
+            "namespace App\Providers;",
+            "namespace {$namespace}\Providers;",
+            file_get_contents(app_path('Providers/SitemapServiceProvider.php'))
+        ));
     }
 }
