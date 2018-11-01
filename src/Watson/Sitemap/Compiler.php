@@ -31,6 +31,8 @@ class Compiler
 
     /**
      *
+     *
+     */
     public function requiesIndex()
     {
         $count = $this->builder->getTagDefinitions()->count();
