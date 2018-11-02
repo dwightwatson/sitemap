@@ -32,21 +32,20 @@ Please visit the other branches of this repo for Laravel 4.x or PHP 5.x support.
 Open up your new service provider in `app\Providers\SitemapServiceProvider.php`;
 
 ```php
-use Watson\Sitemap\{ChangeFrequency, Priority};
-use Watson\Sitemap\SitemapServiceProvider as ServiceProvider;
+use Watson\Sitemap\Registrar;
+use Illuminate\Support\ServiceProvider;
+use Watson\Sitemap\Enums\{ChangeFrequency, Priority};
 
 class SitemapServiceProvider extends ServiceProvider
 {
     /**
      * Define your sitemap models and tags.
      *
-     * @param  \Watson\Sitemap\Builder  $sitemap
+     * @param  \Watson\Sitemap\Registrar  $sitemap
      * @return void
      */
-    public function boot(Builder $sitemap)
+    public function boot(Registrar $sitemap)
     {
-        parent::boot($sitemap);
-
         // Add a specific path.
         $sitemap->add('/contact')
             ->changes(ChangeFrequency::NEVER);
