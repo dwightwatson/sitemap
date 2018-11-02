@@ -1,6 +1,6 @@
 <?php
 
-namespace Watson\Sitemap\Http;
+namespace Watson\Sitemap;
 
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request as BaseRequest;
