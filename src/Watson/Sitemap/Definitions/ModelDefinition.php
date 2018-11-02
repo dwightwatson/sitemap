@@ -33,6 +33,11 @@ class ModelDefinition extends Definition
         return $this->class;
     }
 
+    public function getClassInstance()
+    {
+        return new $this->class;
+    }
+
     /**
      * Get an instance of the model query.
      *

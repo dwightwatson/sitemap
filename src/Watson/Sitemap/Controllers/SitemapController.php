@@ -2,66 +2,61 @@
 
 namespace Watson\Sitemap\Controllers;
 
-use Watson\Sitemap\Compiler;
-use Illuminate\Http\Request;
+use Watson\Sitemap\Registrar;
+use Watson\Sitemap\Http\Request;
 use Illuminate\Contracts\Support\Renderable;
 use Watson\Sitemap\Renderers\{Index, Sitemap};
+use Watson\Sitemap\Compilers\{ModelCompiler, TagCompiler};
 
 class SitemapController
 {
     /**
-     * The sitemap compiler.
+     * The sitemap registrar.
      *
-     * @var \Watson\Sitemap\Compiler
+     * @var \Watson\Sitemap\Registrar
      */
-    protected $compiler;
+    protected $registrar;
 
     /**
      * Create a new controller instance.
      *
-     * @param  \Watson\Sitemap\Compiler  $compiler
+     * @param  \Watson\Sitemap\Registrar  $registrar
      * @return void
      */
-    public function __construct(Compiler $compiler)
+    public function __construct(Registrar $registrar)
     {
-        $this->compiler = $compiler;
+        $this->registrar = $registrar;
     }
 
     /**
      * Respond to the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Watson\Sitemap\Request  $request
      * @return \Watson\Sitemap\Renderer
      */
     public function __invoke(Request $request): Renderable
     {
-        if ($this->wantsIndex($request)) {
+        if ($request->wantsIndex()) {
             return new Index($this->compiler->getIndexTags());
         }
 
-        if ($this->wantsTags($request)) {
-            $definitions = $this->compiler->getIndexTags($request->page);
+        if ($request->wantsTags()) {
+            // $definitions = $this->compiler->getIndexTags($request->page);
 
             // return new Sitemap($this->compiler->getTags());
         }
 
-        if ($model = $this->wantsModel($request)) {
+        $supportedModels = $this->registrar->getModelDefinitions()->map(function ($definition) {
+            $class = $definition->getClass();
+            return (new $class)->getTable();
+        });
+
+        if ($model = $request->wantsModel($supportedModels)) {
             $definitions = $this->compiler->getModelTags($model, $request->page);
 
             return new Sitemap($definitions);
         }
 
         return abort(404);
-    }
-
-    /**
-     * Whether the request is for the sitemap index.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return bool
-     */
-    public function wantsIndex(Request $request): bool
-    {
-        return $request->is('sitemaps');
     }
 }
