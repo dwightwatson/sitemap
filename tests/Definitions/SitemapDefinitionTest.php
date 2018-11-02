@@ -7,12 +7,16 @@ use Watson\Sitemap\Definitions\SitemapDefinition;
 
 class SitemapDefinitionTest extends TestCase
 {
-    use Concerns\LocatableAndModifiableTest;
-
     public $definition;
 
     function setUp()
     {
-        $this->definition = new SitemapDefinition;
+        $this->definition = new SitemapDefinition('/foo');
+    }
+
+    /** @test */
+    function it_can_be_instantiated()
+    {
+        $this->assertInstanceOf(SitemapDefinition::class, $this->definition);
     }
 }

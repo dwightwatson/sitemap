@@ -36,7 +36,6 @@ class SitemapController
     public function __invoke(Request $request): Renderable
     {
         if ($this->wantsIndex($request)) {
-
             return new Index($this->compiler->getIndexTags());
         }
 

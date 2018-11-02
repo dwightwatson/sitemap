@@ -2,9 +2,7 @@
 
 namespace Watson\Sitemap\Definitions;
 
-use Watson\Sitemap\Definitions\Concerns\LocatableAndModifiable;
-
-class SitemapDefinition
+class SitemapDefinition extends Definition
 {
-    use LocatableAndModifiable;
+    //
 }

@@ -46,7 +46,7 @@ class Compiler
     {
         $tags = collect();
 
-        $tags->push(new SitemapDefinition('/foo'));
+        $tags->push(new \Watson\Sitemap\Definitions\SitemapDefinition('/foo', 'foo'));
 
         return $tags;
     }

@@ -9,73 +9,47 @@ use Watson\Sitemap\Definitions\Definition;
 
 class DefinitionTest extends TestCase
 {
-    use Concerns\LocatableAndModifiableTest;
-
     public $definition;
 
     function setUp()
     {
-        $this->definition = new DefinitionStub;
+        $this->definition = new DefinitionStub('/foo');
     }
 
     /** @test */
-    function it_gets_and_sets_change_frequency()
+    function it_gets_and_sets_location()
     {
-        $this->definition->setChangeFrequency('daily');
+        $this->definition->setLocation('/faq');
 
-        $this->assertEquals('daily', $this->definition->getChangeFrequency());
-    }
-
-    /** @test */
-    function it_sets_frequency_from_changes()
-    {
-        $this->definition->changes('daily');
-
-        $this->assertEquals('daily', $this->definition->getChangeFrequency());
+        $this->assertEquals('/faq', $this->definition->getLocation());
     }
 
 
     /** @test */
-    function it_gets_and_sets_priority()
+    function it_gets_and_sets_last_modified_timestamp()
     {
-        $this->definition->setPriority(1);
+        $this->definition->setLastModified($mock = Mockery::mock(DateTime::class));
 
-        $this->assertEquals(1, $this->definition->getPriority());
+        $this->assertEquals($mock, $this->definition->getLastModified());
     }
 
     /** @test */
-    function it_sets_priority_from_priority()
+    function it_sets_last_modified_timestamp_from_a_string()
     {
-        $this->definition->priority(1);
-
-        $this->assertEquals(1, $this->definition->getPriority());
-    }
-
-    /** @test */
-    function it_gets_and_sets_expired_timestamp()
-    {
-        $this->definition->setExpired($mock = Mockery::mock(DateTime::class));
-
-        $this->assertEquals($mock, $this->definition->getExpired());
-    }
-
-    /** @test */
-    function it_sets_expired_timestamp_from_a_string()
-    {
-        $this->definition->setExpired('2000-01-01 00:00:00');
+        $this->definition->setLastModified('2000-01-01 00:00:00');
 
         $this->assertEquals(
             '2000-01-01 00:00:00',
-            $this->definition->getExpired()->format('Y-m-d H:i:s')
+            $this->definition->getLastModified()->format('Y-m-d H:i:s')
         );
     }
 
     /** @test */
-    function it_sets_the_expired_timestamp_from_expired()
+    function it_sets_the_last_modified_timestamp_from_modified()
     {
-        $this->definition->expired($mock = Mockery::mock(DateTime::class));
+        $this->definition->modified($mock = Mockery::mock(DateTime::class));
 
-        $this->assertEquals($mock, $this->definition->getExpired());
+        $this->assertEquals($mock, $this->definition->getLastModified());
     }
 }
 

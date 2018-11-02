@@ -3,134 +3,88 @@
 namespace Watson\Sitemap\Definitions;
 
 use DateTime;
-use Watson\Sitemap\Definitions\Concerns\LocatableAndModifiable;
 
 abstract class Definition
 {
-    use LocatableAndModifiable;
-
     /**
-     * The change frequency.
+     * The sitemap location.
      *
      * @var string
      */
-    protected $changeFrequency;
+    protected $location;
 
     /**
-     * The priority.
+     * The last modified timestamp.
      *
-     * @var string
+     * @var \DateTime
      */
-    protected $priority;
+    protected $lastModified;
 
     /**
-    * The expiration timestamp.
-    *
-    * @var \DateTime
-    */
-    protected $expired;
+     * Instantiate a new tag definition.
+     *
+     * @param  string  $location
+     * @return void
+     */
+    public function __construct(string $location)
+    {
+        $this->setLocation($location);
+    }
 
     /**
-     * Get the change frequency.
+     * Get the sitemap location.
      *
      * @return string
      */
-    public function getChangeFrequency(): string
+    public function getLocation(): string
     {
-        return $this->changeFrequency;
+        return $this->location;
     }
 
     /**
-     * Set the change frequency.
+     * Set the sitemap location.
      *
-     * @param  \Watson\Sitemap\Enums\ChangeFrequency|string  $changeFrequency
+     * @param  string  $location
      * @return void
      */
-    public function setChangeFrequency($changeFrequency)
+    public function setLocation(string $location)
     {
-        $this->changeFrequency = $changeFrequency;
+        $this->location = $location;
     }
 
     /**
-     * Alias to set the change frequency.
+     * Get the last modified timestamp.
      *
-     * @param  \Watson\Sitemap\Enums\ChangeFrequency|string  $changeFrequency
+     * @return \DateTime
+     */
+    public function getLastModified(): ?DateTime
+    {
+        return $this->lastModified;
+    }
+
+    /**
+     * Set the lastModified timestamp.
+     *
+     * @param  mixed  $lastModified
      * @return void
      */
-    public function changes($changeFrequency)
+    public function setLastModified($lastModified)
     {
-        $this->setChangeFrequency($changeFrequency);
-    }
-
-    /**
-     * Get the priority.
-     *
-     * @return string
-     */
-    public function getPriority(): string
-    {
-        return $this->priority;
-    }
-
-    /**
-     * Set the priority.
-     *
-     * @param  \Watson\Sitemap\Enums\Priority|string  $priority
-     * @return void
-     */
-    public function setPriority($priority)
-    {
-        $this->priority = $priority;
-    }
-
-    /**
-     * Alias to set the priority.
-     *
-     * @param  \Watson\Sitemap\Enums\Priority|string  $priority
-     * @return void
-     */
-    public function priority($priority)
-    {
-        $this->setPriority($priority);
-    }
-
-    /**
-     * Get the expired timestamp.
-     *
-     * @return string
-     */
-    public function getExpired(): DateTime
-    {
-        return $this->expired;
-    }
-
-    /**
-     * Set the expired timestamp.
-     *
-     * @param  mixed  $expired
-     * @return void
-     */
-    public function setExpired($expired = null)
-    {
-        if (is_null($expired)) {
-            $expired = new DateTime;
+        if ( ! $lastModified instanceof DateTime) {
+            $lastModified = new DateTime($lastModified);
         }
 
-        if ( ! $expired instanceof DateTime) {
-            $expired = new DateTime($expired);
-        }
-
-        $this->expired = $expired;
+        $this->lastModified = $lastModified;
     }
 
     /**
-     * Alias to set the expired timestamp>
+     * Alias to set the last modified timestamp.
      *
-     * @param  mixed  $expired
+     * @param  mixed  $lastModified
      * @return void
      */
-    public function expired($expired = null)
+    public function modified($lastModified)
     {
-        $this->setExpired($expired);
+        $this->setLastModified($lastModified);
     }
 }
