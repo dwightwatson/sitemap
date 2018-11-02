@@ -72,3 +72,25 @@ class SitemapServiceProvider extends ServiceProvider
     }
 }
 ```
+
+### Change freqencies
+Constant values for change frequencies are provided by `Watson\Sitemap\Enums\ChangeFrequency`.
+
+* `ChangeFrequency::ALWAYS`
+* `ChangeFrequency::HOURLY`
+* `ChangeFrequency::DAILY`
+* `ChangeFrequency::WEEKLY`
+* `ChangeFrequency::MONTHLY`
+* `ChangeFrequency::YEARLY`
+* `ChangeFrequency::NEVER`
+
+### Priorities
+Constant values for change frequencies are provided by `Watson\Sitemap\Enums\Priority`.
+
+* `Priority::HIGHEST` - equivilant of 1
+* `Priority::HIGHER` - equivilant of 0.85
+* `Priority::HIGH` - equivilant of 0.7
+* `Priority::MEDIUM` - equivilant of 0.5
+* `Priority::LOW` - equivilant of 0.3
+* `Priority::LOWER` - equivilant of 0.15
+* `Priority::LOWEST` - equivilant of 0

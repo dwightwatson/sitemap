@@ -14,9 +14,15 @@ class PriorityTest extends TestCase
     }
 
     /** @test */
+    function higher_set_correctly()
+    {
+        $this->assertEquals(0.85, Priority::HIGHER);
+    }
+
+    /** @test */
     function high_set_correctly()
     {
-        $this->assertEquals(0.8, Priority::HIGH);
+        $this->assertEquals(0.7, Priority::HIGH);
     }
 
     /** @test */
@@ -28,7 +34,13 @@ class PriorityTest extends TestCase
     /** @test */
     function low_set_correctly()
     {
-        $this->assertEquals(0.2, Priority::LOW);
+        $this->assertEquals(0.3, Priority::LOW);
+    }
+
+    /** @test */
+    function lower_set_correctly()
+    {
+        $this->assertEquals(0.15, Priority::LOWER);
     }
 
     /** @test */
