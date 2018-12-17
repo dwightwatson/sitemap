@@ -56,7 +56,7 @@ class Sitemap
      * Add new sitemap to the sitemaps index.
      *
      * @param  \Watson\Sitemap\Tags\Sitemap|string  $location
-     * @param  string  $lastModified
+     * @param  \DateTime|string  $lastModified
      * @return void
      */
     public function addSitemap($location, $lastModified = null)
