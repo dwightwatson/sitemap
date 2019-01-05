@@ -2,7 +2,7 @@
 
 namespace Watson\Sitemap\Http;
 
-use Watson\Sitemap\{Registrar, Request};
+use Watson\Sitemap\Registrar;
 use Illuminate\Contracts\Support\Renderable;
 use Watson\Sitemap\Renderers\{Index, Sitemap};
 use Watson\Sitemap\Compilers\{ModelCompiler, TagCompiler};
@@ -30,7 +30,7 @@ class SitemapController
     /**
      * Respond to the incoming request.
      *
-     * @param  \Watson\Sitemap\Request  $request
+     * @param  \Watson\Sitemap\Http\Request  $request
      * @return \Watson\Sitemap\Renderer
      */
     public function __invoke(Request $request): Renderable
