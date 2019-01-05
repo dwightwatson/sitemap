@@ -1,12 +1,23 @@
 <?php
 
-namespace Watson\Sitemap;
+namespace Watson\Sitemap\Http;
 
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request as BaseRequest;
 
-class Request extends BaseRequest
+class Request
 {
+    /**
+     * Create a new instance of a sitemap request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    public function __construct(BaseRequest $request)
+    {
+        $this->request = $request;
+    }
+
     /**
      * Whether the request is for the sitemap index.
      *
@@ -14,7 +25,7 @@ class Request extends BaseRequest
      */
     public function wantsIndex(): bool
     {
-        return $this->is('sitemaps');
+        return $this->request->is('sitemaps');
     }
 
     /**
@@ -24,7 +35,7 @@ class Request extends BaseRequest
      */
     public function wantsTags(): bool
     {
-        return $this->is('sitemaps/general');
+        return $this->request->is('sitemaps/general');
     }
 
     /**
@@ -35,7 +46,7 @@ class Request extends BaseRequest
      */
     public function wantsModel(Collection $models): ?string
     {
-        return $this->is($models);
+        return $this->request->is($models);
     }
 
     /**
@@ -45,6 +56,6 @@ class Request extends BaseRequest
      */
     public function page(): int
     {
-        return $this->input('page', 1);
+        return $this->request->input('page', 1);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Watson\Sitemap\Http;
 
-use Watson\Sitemap\Registrar;
+use Watson\Sitemap\{Registrar, Request};
 use Illuminate\Contracts\Support\Renderable;
 use Watson\Sitemap\Renderers\{Index, Sitemap};
 use Watson\Sitemap\Compilers\{ModelCompiler, TagCompiler};

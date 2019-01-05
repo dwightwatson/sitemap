@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Watson\Sitemap\Controllers\SitemapController;
+use Watson\Sitemap\Http\SitemapController;
 
 Route::get('/sitemaps{parameters?}', SitemapController::class)
     ->where('parameters', '.+');
