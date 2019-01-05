@@ -33,7 +33,12 @@ class ModelDefinition extends Definition
         return $this->class;
     }
 
-    public function getClassInstance()
+    /**
+     * Get a new instance of the model class.
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function getClassInstance(): Model
     {
         return new $this->class;
     }
@@ -69,7 +74,7 @@ class ModelDefinition extends Definition
      * @param  \Closure  $routeCallback
      * @return void
      */
-    public function setRouteCallback(Closure $routeCallback)
+    public function setRouteCallback(Closure $routeCallback): void
     {
         $this->routeCallback = $routeCallback;
     }
@@ -80,7 +85,7 @@ class ModelDefinition extends Definition
      * @param  \Closure  $routeCallback
      * @return void
      */
-    public function withRoute(Closure $routeCallback)
+    public function withRoute(Closure $routeCallback): void
     {
         $this->setRouteCallback($routeCallback);
     }
