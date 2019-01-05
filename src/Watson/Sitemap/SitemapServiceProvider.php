@@ -7,6 +7,13 @@ use Illuminate\Support\ServiceProvider;
 class SitemapServiceProvider extends ServiceProvider
 {
     /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = true;
+
+    /**
      * Register the service provider.
      *
      * @return void
@@ -38,5 +45,17 @@ class SitemapServiceProvider extends ServiceProvider
                 Commands\SubmitCommand::class
             );
         }
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [
+            Registrar::class
+        ];
     }
 }
