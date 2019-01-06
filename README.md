@@ -18,7 +18,7 @@ First, require the package through Composer.
 composer require watson/sitemap
 ```
 
-Then, install the sitemap service provider, where you will define your sitemap's routes.
+Then, install the sitemap generator command, where you will define your sitemap's routes.
 
 ```sh
 php artisan sitemap:install
@@ -29,22 +29,25 @@ Please visit the other branches of this repo for Laravel 4.x or PHP 5.x support.
 
 ## Usage
 
-Open up your new service provider in `app\Providers\SitemapServiceProvider.php`;
+Open up your new service provider in `app\Console\Commands\GenerateSitemapCommand.php`;
+
+You're more than welcome to move or rename this as you like, as long as it continues to extend the base generate command provided by this package.
 
 ```php
+use App\{Post, User};
 use Watson\Sitemap\Registrar;
-use Illuminate\Support\ServiceProvider;
+use Watson\Sitemap\Commands\GenerateCommand;
 use Watson\Sitemap\Enums\{ChangeFrequency, Priority};
 
-class SitemapServiceProvider extends ServiceProvider
+class SitemapGenerateCommand extends GenerateCommand
 {
     /**
-     * Define your sitemap models and tags.
+     * Register the sitemaps tags.
      *
      * @param  \Watson\Sitemap\Registrar  $sitemap
      * @return void
      */
-    public function boot(Registrar $sitemap)
+    public function register(Registrar $sitemap): void
     {
         // Add a specific path.
         $sitemap->add('/contact')
@@ -70,6 +73,27 @@ class SitemapServiceProvider extends ServiceProvider
                 return route('posts.show', $post);
             });
     }
+}
+```
+
+To generate your sitemap(s) simply call the `generate:sitemap` command.
+
+```sh
+php artisan generate:sitemap
+```
+
+If you want to generate the sitemap dynamically on a schedule you can simply register the command with Laravel's scheduler.
+
+```php
+/**
+ * Define the application's command schedule.
+ *
+ * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+ * @return void
+ */
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command(Commands\GenerateSitemapCommand::class)->daily();
 }
 ```
 

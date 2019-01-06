@@ -25,13 +25,6 @@ class Registrar
     protected $modelDefinitions;
 
     /**
-     * The length of time to cache responses.
-     *
-     * @var int
-     */
-    protected $cacheMinutes;
-
-    /**
      * Instantiate a new sitemap registrar.
      *
      * @param  \Illuminate\Support\Collection  $tagDefinitions
@@ -42,40 +35,6 @@ class Registrar
     {
         $this->tagDefinitions = $tagDefinitions ?: new Collection;
         $this->modelDefinitions = $modelDefinitions ?: new Collection;
-    }
-
-    /**
-     * Get the length of time to cache responses.
-     *
-     * @return int|null
-     */
-    public function getCacheMinutes(): ?int
-    {
-        return $this->cacheMinutes;
-    }
-
-    /**
-     * Set the length of time to cache responses.
-     *
-     * @param  int  $minutes
-     * @return $this
-     */
-    public function setCacheMinutes(int $minutes)
-    {
-        $this->cacheMinutes = $minutes;
-
-        return $this;
-    }
-
-    /**
-     * Set the length of time to cache responses.
-     *
-     * @param  int  $minutes
-     * @return $this
-     */
-    public function cache(int $minutes = 60)
-    {
-        return $this->setCacheMinutes($minutes);
     }
 
     /**

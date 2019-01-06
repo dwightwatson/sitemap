@@ -2,11 +2,10 @@
 
 namespace Watson\Sitemap\Commands;
 
-use Watson\Sitemap\Cache;
+use Watson\Sitemap\Registrar;
 use Illuminate\Console\Command;
-use Watson\Sitemap\RendererCache;
 
-class GenerateCommand extends Command
+abstract class GenerateCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -20,27 +19,34 @@ class GenerateCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Pre-generate the sitemap.';
+    protected $description = 'Generate the sitemap(s)';
 
     /**
-     * The sitemap cache.
+     * The sitemap registrar.
      *
-     * @var \Watson\Sitemap\Cache
+     * @var \Watson\Sitemap\Registrar
      */
-    protected $cache;
+    protected $registrar;
 
     /**
      * Create a new command instance.
      *
-     * @param  \Watson\Sitemap\Cache  $cache
+     * @param  \Watson\Sitemap\Registar  $registrar
      * @return void
      */
-    public function __construct(Cache $cache)
+    public function __construct(Registrar $registrar)
     {
         parent::__construct();
 
-        $this->cache = $cache;
+        $this->registrar = $registrar;
     }
+
+    /**
+     * Register the sitemap tags.
+     *
+     * @return void
+     */
+    abstract public function register(Registrar $sitemap): void;
 
     /**
      * Execute the console command.
@@ -49,6 +55,24 @@ class GenerateCommand extends Command
      */
     public function handle()
     {
-        //
+        $this->register($this->registrar);
+
+        $totalTags = app(\Watson\Sitemap\Collator::class)->totalTags();
+
+        dd($totalTags);
+
+
+        $this->compiler->getIndex()
+            ->generate();
+
+        $this->compiler->getTagSitemaps()
+            ->each(function ($sitemap) {
+                $sitemap->generate();
+            });
+
+        $this->compiler->getModelSitemaps()
+            ->each(function ($sitemap) {
+                $sitemap->generate();
+            });
     }
 }

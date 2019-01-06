@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Console\Commands;
+
+use Watson\Sitemap\Registrar;
+use Watson\Sitemap\Enums\{ChangeFrequency, Priority};
+use Watson\Sitemap\Commands\GenerateSitemapCommand as BaseGenerateSitemapCommand;
+
+class GenerateSitemapCommand extends BaseGenerateSitemapCommand
+{
+    /**
+     * Register the sitemap tags.
+     *
+     * @param  \Watson\Sitemap\Registrar  $sitemap
+     * @return void
+     */
+    public function register(Registrar $sitemap): void
+    {
+        //
+    }
+}

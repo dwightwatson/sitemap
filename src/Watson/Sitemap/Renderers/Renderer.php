@@ -3,9 +3,9 @@
 namespace Watson\Sitemap\Renderers;
 
 use Illuminate\Support\Collection;
-use Illuminate\Contracts\Support\{Renderable, Responsable};
+use Illuminate\Contracts\Support\Renderable;
 
-abstract class Renderer implements Renderable, Responsable
+abstract class Renderer implements Renderable
 {
     /**
      * The tag definitions.
@@ -32,24 +32,6 @@ abstract class Renderer implements Renderable, Responsable
      */
     public function render()
     {
-        return view(
-            static::VIEW,
-            ['tags' => $this->tags]
-        );
-    }
-
-    /**
-     * Create an HTTP response that represents the object.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function toResponse($request)
-    {
-        return response()->make(
-            $this->render(),
-            200,
-            ['Content-Type' => 'text/xml']
-        );
+        return view(static::VIEW, ['tags' => $this->tags]);
     }
 }
