@@ -42,6 +42,13 @@ abstract class GenerateCommand extends Command
     }
 
     /**
+     * Register the sitemap tags.
+     *
+     * @return void
+     */
+    abstract public function register(Registrar $sitemap): void;
+
+    /**
      * Execute the console command.
      *
      * @return mixed
@@ -50,19 +57,22 @@ abstract class GenerateCommand extends Command
     {
         $this->register($this->registrar);
 
+        $totalTags = app(\Watson\Sitemap\Collator::class)->totalTags();
+
+        dd($totalTags);
+
+
         $this->compiler->getIndex()
             ->generate();
 
-        $this->compiler->getSitemaps()
+        $this->compiler->getTagSitemaps()
+            ->each(function ($sitemap) {
+                $sitemap->generate();
+            });
+
+        $this->compiler->getModelSitemaps()
             ->each(function ($sitemap) {
                 $sitemap->generate();
             });
     }
-
-    /**
-     * Register the sitemap tags.
-     *
-     * @return void
-     */
-    abstract public function register(Registrar $sitemap): void;
 }

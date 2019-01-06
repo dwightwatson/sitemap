@@ -50,7 +50,7 @@ class ModelDefinition extends Definition
      */
     public function getQuery(): Builder
     {
-        return $this->class instanceof Builder ? $this->class : (new $this->model)->newQuery();
+        return $this->class instanceof Builder ? $this->class : $this->getClassInstance()->newQuery();
     }
 
     /**
