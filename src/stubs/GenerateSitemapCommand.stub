@@ -11,6 +11,7 @@ class GenerateSitemapCommand extends BaseGenerateSitemapCommand
     /**
      * Register the sitemap tags.
      *
+     * @param  \Watson\Sitemap\Registrar  $sitemap
      * @return void
      */
     public function register(Registrar $sitemap): void
