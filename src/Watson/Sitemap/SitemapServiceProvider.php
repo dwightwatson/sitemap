@@ -32,16 +32,13 @@ class SitemapServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/../../views', 'sitemap');
 
-        $this->loadRoutesFrom(__DIR__.'/../../routes.php');
-
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../../stubs/SitemapServiceProvider.stub' => app_path('Providers/SitemapServiceProvider.php')
+                __DIR__.'/../../stubs/GenerateSitemapCommand.stub' => app_path('Console/Commands/GenerateSitemapCommand.php')
             ], 'sitemap');
 
             $this->commands(
                 Commands\InstallCommand::class,
-                Commands\GenerateCommand::class,
                 Commands\SubmitCommand::class
             );
         }

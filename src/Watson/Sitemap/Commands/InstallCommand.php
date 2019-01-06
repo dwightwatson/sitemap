@@ -22,7 +22,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Install the sitemap service provider';
+    protected $description = 'Install the sitemap generator command';
 
     /**
      * Execute the console command.
@@ -31,39 +31,6 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->comment('Publishing sitemap service provider...');
-        $this->callSilent('vendor:publish', ['--tag' => 'sitemap']);
-
-        $this->registerSitemapServiceProvider();
-
-        $this->info('Sitemap scaffolding installed successfully.');
-    }
-
-    /**
-     * Register the Sitemap service provider in the application configuration file.
-     *
-     * @return void
-     */
-    protected function registerSitemapServiceProvider()
-    {
-        $namespace = str_replace_last('\\', '', $this->getAppNamespace());
-
-        $appConfig = file_get_contents(config_path('app.php'));
-
-        if (Str::contains($appConfig, $namespace."\\Providers\\SitemapServiceProvider::class")) {
-            return;
-        }
-
-        file_put_contents(config_path('app.php'), str_replace(
-            "{$namespace}\\Providers\RouteServiceProvider::class,".PHP_EOL,
-            "{$namespace}\\Providers\RouteServiceProvider::class,".PHP_EOL."        {$namespace}\Providers\SitemapServiceProvider::class,".PHP_EOL,
-            $appConfig
-        ));
-
-        file_put_contents(app_path('Providers/SitemapServiceProvider.php'), str_replace(
-            "namespace App\Providers;",
-            "namespace {$namespace}\Providers;",
-            file_get_contents(app_path('Providers/SitemapServiceProvider.php'))
-        ));
+        $this->call('vendor:publish', ['--tag' => 'sitemap']);
     }
 }

@@ -6,6 +6,12 @@ use Illuminate\Support\Collection;
 
 class TagCompiler extends Compiler
 {
+    /**
+     * Create a new instance of the tag compiler.
+     *
+     * @param  \Illuminate\Support\Collection  $definitions
+     * @return void
+     */
     public function __construct(Collection $definitions)
     {
         $this->definitions = $definitions;

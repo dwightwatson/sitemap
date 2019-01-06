@@ -20,7 +20,7 @@ class SubmitCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Submit the sitemap to Google.';
+    protected $description = 'Submit the sitemap to Google';
 
     /**
      * The Guzzle client.
