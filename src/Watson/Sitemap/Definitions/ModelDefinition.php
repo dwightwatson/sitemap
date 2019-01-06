@@ -28,7 +28,7 @@ class ModelDefinition extends Definition
      *
      * @return string
      */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
