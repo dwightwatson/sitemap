@@ -1,6 +1,7 @@
 <?php namespace Watson\Sitemap;
 
 use DateTime;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Watson\Sitemap\Tags\Tag;
 use Illuminate\Http\Response;
@@ -337,6 +338,6 @@ class Sitemap
      */
     protected function getCacheKey()
     {
-        return 'sitemap_' . str_slug($this->request->url());
+        return 'sitemap_' . Str::slug($this->request->url());
     }
 }
