@@ -1,12 +1,13 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Tags\BaseTag;
 
-class BaseTagTest extends PHPUnit_Framework_TestCase
+class BaseTagTest extends TestCase
 {
     protected $sitemap;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

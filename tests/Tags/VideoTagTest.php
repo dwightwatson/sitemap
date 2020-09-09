@@ -1,17 +1,14 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Tags\Video\VideoPlatformTag;
 use Watson\Sitemap\Tags\Video\VideoPriceTag;
 use Watson\Sitemap\Tags\Video\VideoRestrictionTag;
 use Watson\Sitemap\Tags\Video\VideoTag;
 
-/**
- * @property VideoTag tag
- */
-class VideoTagTest extends PHPUnit_Framework_TestCase
+class VideoTagTest extends TestCase
 {
-
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

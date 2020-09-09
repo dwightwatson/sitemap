@@ -1,10 +1,11 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Tags\MultilingualTag;
 
-class MultilingualTagTest extends PHPUnit_Framework_TestCase
+class MultilingualTagTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -1,15 +1,16 @@
 <?php
 
-use Watson\Sitemap\Tags\Tag;
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Tags\ImageTag;
 use Watson\Sitemap\Tags\Sitemap;
+use Watson\Sitemap\Tags\Tag;
 use Watson\Sitemap\Tags\Video\VideoTag;
 
-class SitemapTest extends PHPUnit_Framework_TestCase
+class SitemapTest extends TestCase
 {
     protected $sitemap;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

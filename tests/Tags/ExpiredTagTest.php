@@ -1,11 +1,12 @@
 <?php
 
-use Watson\Sitemap\Tags\ExpiredTag;
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Tags\ChangeFrequency;
+use Watson\Sitemap\Tags\ExpiredTag;
 
-class ExpiredTagTest extends PHPUnit_Framework_TestCase
+class ExpiredTagTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

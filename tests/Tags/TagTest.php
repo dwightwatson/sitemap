@@ -1,11 +1,12 @@
 <?php
 
-use Watson\Sitemap\Tags\Tag;
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Tags\ChangeFrequency;
+use Watson\Sitemap\Tags\Tag;
 
-class TagTest extends PHPUnit_Framework_TestCase
+class TagTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
