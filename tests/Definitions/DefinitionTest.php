@@ -1,12 +1,13 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Definitions\Definition;
 
-class DefinitionTest extends PHPUnit_Framework_TestCase
+class DefinitionTest extends TestCase
 {
     public $definition;
 
-    function setUp()
+    function setUp(): void
     {
         $this->definition = new DefinitionStub;
     }

@@ -1,14 +1,15 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Builder;
-use Watson\Sitemap\Definitions\TagDefinition;
 use Watson\Sitemap\Definitions\ModelDefinition;
+use Watson\Sitemap\Definitions\TagDefinition;
 
-class BuilderTest extends PHPUnit_Framework_TestCase
+class BuilderTest extends TestCase
 {
     public $builder;
 
-    function setUp()
+    function setUp(): void
     {
         $this->builder = new Builder;
     }

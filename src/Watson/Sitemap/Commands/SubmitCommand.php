@@ -2,8 +2,8 @@
 
 namespace Watson\Sitemap\Commands;
 
-use GuzzleHttp\Guzzle;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 
 class SubmitCommand extends Command
 {
@@ -22,31 +22,11 @@ class SubmitCommand extends Command
     protected $description = 'Submit the sitemap to Google.';
 
     /**
-     * The Guzzle client.
-     *
-     * @var \GuzzleHttp\Client
-     */
-    protected $client;
-
-    /**
      * The URL to ping Google with the sitemap.
      *
      * @var string
      */
-    protected $pingUrl = "https://www.google.com/webmasters/tools/ping";
-
-    /**
-     * Create a new command instance.
-     *
-     * @param  \GuzzleHttp\Client  $client
-     * @return void
-     */
-    public function __construct(Client $client)
-    {
-        parent::__construct();
-
-        $this->client = $client;
-    }
+    const PING_URL = "https://www.google.com/webmasters/tools/ping";
 
     /**
      * Execute the console command.
@@ -55,15 +35,11 @@ class SubmitCommand extends Command
      */
     public function handle()
     {
-        $sitemapUrl = url('sitemap.xml');
+        $response = Http::get(static::PING_URL, [
+            'sitemap' => url('sitemap.xml')
+        ]);
 
-        $response = $this->client->request(
-            'GET', 
-            $this->pingUrl,
-            ['query' => ['sitemap' => $sitemapUrl]]
-        );
-
-        if ($response->getStatusCode() === 200) {
+        if ($response->ok()) {
             //
         }
     }

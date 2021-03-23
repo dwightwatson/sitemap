@@ -1,12 +1,13 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use Watson\Sitemap\Definitions\TagDefinition;
 
-class TagDefinitionTest extends PHPUnit_Framework_TestCase
+class TagDefinitionTest extends TestCase
 {
     public $tagDefinition;
 
-    function setUp()
+    function setUp(): void
     {
         $this->tagDefinition = new TagDefinition('/foo');
     }
