@@ -11,7 +11,7 @@ class TagDefinitionTest extends TestCase
 {
     public $definition;
 
-    function setUp()
+    function setUp(): void
     {
         $this->definition = new TagDefinition('/foo');
     }

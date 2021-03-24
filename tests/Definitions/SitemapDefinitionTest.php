@@ -9,7 +9,7 @@ class SitemapDefinitionTest extends TestCase
 {
     public $definition;
 
-    function setUp()
+    function setUp(): void
     {
         $this->definition = new SitemapDefinition('/foo');
     }

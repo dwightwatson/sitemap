@@ -11,7 +11,7 @@ class DefinitionTest extends TestCase
 {
     public $definition;
 
-    function setUp()
+    function setUp(): void
     {
         $this->definition = new DefinitionStub('/foo');
     }

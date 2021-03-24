@@ -11,7 +11,7 @@ class RegisterTest extends TestCase
 {
     public $registrar;
 
-    function setUp()
+    function setUp(): void
     {
         $this->registrar = new Registrar;
     }

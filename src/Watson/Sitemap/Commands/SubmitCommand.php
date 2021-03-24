@@ -2,12 +2,17 @@
 
 namespace Watson\Sitemap\Commands;
 
-use GuzzleHttp\Client;
 use Illuminate\Console\Command;
-use GuzzleHttp\Exception\ClientException;
 
 class SubmitCommand extends Command
 {
+    /**
+     * The URL to ping Google with the sitemap.
+     *
+     * @var string
+     */
+    const PING_URL = 'https://www.google.com/webmasters/tools/ping';
+
     /**
      * The name and signature of the console command.
      *
@@ -23,33 +28,6 @@ class SubmitCommand extends Command
     protected $description = 'Submit the sitemap to Google';
 
     /**
-     * The Guzzle client.
-     *
-     * @var \GuzzleHttp\Client
-     */
-    protected $client;
-
-    /**
-     * The URL to ping Google with the sitemap.
-     *
-     * @var string
-     */
-    protected $pingUrl = 'https://www.google.com/webmasters/tools/ping';
-
-    /**
-     * Create a new command instance.
-     *
-     * @param  \GuzzleHttp\Client  $client
-     * @return void
-     */
-    public function __construct(Client $client)
-    {
-        parent::__construct();
-
-        $this->client = $client;
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
@@ -60,17 +38,13 @@ class SubmitCommand extends Command
 
         $sitemapUrl = $this->getSitemapUrl();
 
-        try {
-            $response = $this->client->request(
-                'GET',
-                $this->pingUrl,
-                ['query' => ['sitemap' => $sitemapUrl]]
-            );
-        } catch (ClientException $e) {
-            return $this->error('The sitemap ['.$sitemapUrl.'] was rejected.');
-        }
+        $response = Http::get(static::PING_URL, [
+            'sitemap' => $sitemapUrl
+        ]);
 
-        $this->info('The sitemap ['.$sitemapUrl.'] was successfully submitted.');
+        $response->ok()
+            ? $this->info('The sitemap ['.$sitemapUrl.'] was successfully submitted.')
+            : $this->error('The sitemap ['.$sitemapUrl.'] was rejected.');
     }
 
     /**
