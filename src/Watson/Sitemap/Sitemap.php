@@ -156,6 +156,19 @@ class Sitemap
     {
         return $this->render()->getOriginalContent();
     }
+    
+    /**
+     * Get the formatted sitemap and save to file by disk name
+     * 
+     * @param string $disk
+     * @param string $path
+     * 
+     * @return string
+     */
+    public function saveToDisk(string $disk, string $path): string
+    {
+        return Storage::disk($disk)->put($path, $this->xml());
+    }
 
     /**
      * Get the formatted sitemap index.
