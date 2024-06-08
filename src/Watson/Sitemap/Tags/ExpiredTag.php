@@ -31,13 +31,13 @@ class ExpiredTag extends BaseTag
      */
     public function __construct($location, $expired = null)
     {
-        parent::__construct($location, null);
+        parent::__construct($location);
 
         $this->setExpired($expired);
     }
 
     /**
-     * Get the expired expired timestamp.
+     * Get the expired timestamp.
      *
      * @return \DateTime
      */

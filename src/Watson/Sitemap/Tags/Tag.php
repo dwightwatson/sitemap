@@ -77,7 +77,7 @@ class Tag extends BaseTag
     }
 
     /**
-     * Get the multilangual urls if exist.
+     * Get the multilingual urls if existed.
      *
      * @return array
      */
