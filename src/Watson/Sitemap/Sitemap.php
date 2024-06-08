@@ -1,6 +1,7 @@
-<?php namespace Watson\Sitemap;
+<?php
 
-use DateTime;
+namespace Watson\Sitemap;
+
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Watson\Sitemap\Tags\Tag;
