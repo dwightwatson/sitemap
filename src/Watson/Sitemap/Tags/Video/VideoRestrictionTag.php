@@ -1,4 +1,6 @@
-<?php namespace Watson\Sitemap\Tags\Video;
+<?php
+
+namespace Watson\Sitemap\Tags\Video;
 
 class VideoRestrictionTag
 {
@@ -34,7 +36,7 @@ class VideoRestrictionTag
     {
         $this->countries = $countries;
 
-        if (in_array($relationship, $this::$allowedRelationships)) {
+        if (in_array($relationship, self::$allowedRelationships)) {
             $this->relationship = $relationship;
         }
     }

@@ -1,4 +1,6 @@
-<?php namespace Watson\Sitemap\Tags\Video;
+<?php
+
+namespace Watson\Sitemap\Tags\Video;
 
 use DateTime;
 use Watson\Sitemap\Tags\BaseTag;

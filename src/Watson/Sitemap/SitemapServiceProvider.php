@@ -1,4 +1,6 @@
-<?php namespace Watson\Sitemap;
+<?php
+
+namespace Watson\Sitemap;
 
 use Illuminate\Support\ServiceProvider;
 
