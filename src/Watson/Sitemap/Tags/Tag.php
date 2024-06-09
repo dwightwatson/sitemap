@@ -79,16 +79,6 @@ class Tag extends BaseTag
     }
 
     /**
-     * Get the multilingual urls if existed.
-     *
-     * @return array
-     */
-    public function getMultiLangual()
-    {
-        return $this->multilang;
-    }
-
-    /**
      * Set the priority.
      *
      * @param  string  $priority
