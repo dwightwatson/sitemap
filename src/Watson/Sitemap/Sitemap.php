@@ -129,7 +129,7 @@ class Sitemap
     /**
      * Add a new expired tag to the sitemap.
      *
-     * @param  string  $location
+     * @param  \Watson\Sitemap\Tags\ExpiredTag|string  $location
      * @param  \DateTimeInterface|string|null  $expired
      * @return void
      */
