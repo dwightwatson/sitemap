@@ -4,6 +4,7 @@ namespace Watson\Sitemap\Tags;
 
 use DateTime;
 use ArrayAccess;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Watson\Sitemap\Tags\Video\VideoTag;
 
@@ -19,7 +20,7 @@ abstract class BaseTag implements ArrayAccess
     /**
      * The last modified timestamp.
      *
-     * @var \DateTime
+     * @var \DateTimeInterface|null
      */
     protected $lastModified;
 
@@ -51,7 +52,7 @@ abstract class BaseTag implements ArrayAccess
      * Construct the tag.
      *
      * @param  string  $location
-     * @param  \DateTime|string  $lastModified
+     * @param  \DateTimeInterface|string|null  $lastModified
      * @return void
      */
     public function __construct($location, $lastModified = null)
@@ -87,7 +88,7 @@ abstract class BaseTag implements ArrayAccess
     /**
      * Get the last modified timestamp.
      *
-     * @return \DateTime
+     * @return \DateTimeInterface|null
      */
     public function getLastModified()
     {
@@ -97,12 +98,12 @@ abstract class BaseTag implements ArrayAccess
     /**
      * Set the last modified timestamp.
      *
-     * @param  \DateTime|string  $lastModified
+     * @param  \DateTimeInterface|\Illuminate\Database\Eloquent\Model|string  $lastModified
      * @return void
      */
     public function setLastModified($lastModified)
     {
-        if ($lastModified instanceof DateTime) {
+        if ($lastModified instanceof DateTimeInterface) {
             $this->lastModified = $lastModified;
             return;
         } elseif ($lastModified instanceof Model) {

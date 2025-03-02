@@ -28,9 +28,9 @@ class MultilingualTag extends Tag
      * Construct the tag.
      *
      * @param  string  $location
-     * @param  string  $lastModified
-     * @param  string  $changeFrequency
-     * @param  string  $priority
+     * @param  string|null  $lastModified
+     * @param  string|null  $changeFrequency
+     * @param  string|null  $priority
      * @param  array   $multilingual
      * @return void
      */

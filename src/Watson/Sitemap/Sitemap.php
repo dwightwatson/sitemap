@@ -2,8 +2,10 @@
 
 namespace Watson\Sitemap;
 
+use DateTimeInterface;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Watson\Sitemap\Tags\BaseTag;
 use Watson\Sitemap\Tags\Tag;
 use Illuminate\Http\Response;
 use Watson\Sitemap\Tags\ExpiredTag;
@@ -16,14 +18,14 @@ class Sitemap
     /**
      * Collection of sitemaps being used.
      *
-     * @var array
+     * @var SitemapTag[]
      */
     protected $sitemaps = [];
 
     /**
      * Collection of tags being used in a sitemap.
      *
-     * @var array
+     * @var (Tag|ExpiredTag)[]
      */
     protected $tags = [];
 
@@ -58,7 +60,7 @@ class Sitemap
      * Add new sitemap to the sitemaps index.
      *
      * @param  \Watson\Sitemap\Tags\Sitemap|string  $location
-     * @param  \DateTime|string  $lastModified
+     * @param  \DateTimeInterface|string|null  $lastModified
      * @return void
      */
     public function addSitemap($location, $lastModified = null)
@@ -71,7 +73,7 @@ class Sitemap
     /**
      * Retrieve the array of sitemaps.
      *
-     * @return array
+     * @return SitemapTag[]
      */
     public function getSitemaps()
     {
@@ -110,9 +112,9 @@ class Sitemap
      * Add a new sitemap tag to the sitemap.
      *
      * @param  \Watson\Sitemap\Tags\Tag|string  $location
-     * @param  \DateTime|string  $lastModified
-     * @param  string  $changeFrequency
-     * @param  string  $priority
+     * @param  \DateTimeInterface|string|null  $lastModified
+     * @param  string|null  $changeFrequency
+     * @param  string|null  $priority
      * @return \Watson\Sitemap\Tags\Tag
      */
     public function addTag($location, $lastModified = null, $changeFrequency = null, $priority = null)
@@ -128,7 +130,7 @@ class Sitemap
      * Add a new expired tag to the sitemap.
      *
      * @param  string  $location
-     * @param  \DateTime|string  $expired
+     * @param  \DateTimeInterface|string|null  $expired
      * @return void
      */
     public function addExpiredTag($location, $expired = null)
@@ -141,7 +143,7 @@ class Sitemap
     /**
      * Retrieve the array of tags.
      *
-     * @return array
+     * @return BaseTag[]
      */
     public function getTags()
     {

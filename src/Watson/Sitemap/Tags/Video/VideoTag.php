@@ -2,7 +2,7 @@
 
 namespace Watson\Sitemap\Tags\Video;
 
-use DateTime;
+use DateTimeInterface;
 use Watson\Sitemap\Tags\BaseTag;
 
 class VideoTag extends BaseTag
@@ -52,7 +52,7 @@ class VideoTag extends BaseTag
     /**
      * The tag expiration date.
      *
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     protected $expirationDate;
 
@@ -73,7 +73,7 @@ class VideoTag extends BaseTag
     /**
      * The tag publication date.
      *
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     protected $publicationDate;
 
@@ -240,7 +240,7 @@ class VideoTag extends BaseTag
     /**
      * Get the video duration.
      *
-     * @var int
+     * @return int
      */
     public function getDuration()
     {
@@ -261,7 +261,7 @@ class VideoTag extends BaseTag
     /**
      * Get the expiration date.
      *
-     * @var \DateTime
+     * @return \DateTimeInterface
      */
     public function getExpirationDate()
     {
@@ -271,10 +271,10 @@ class VideoTag extends BaseTag
     /**
      * Set the expiration date.
      *
-     * @param  \DateTime  $expirationDate
+     * @param  \DateTimeInterface  $expirationDate
      * @return void
      */
-    public function setExpirationDate(DateTime $expirationDate)
+    public function setExpirationDate(DateTimeInterface $expirationDate)
     {
         $this->expirationDate = $expirationDate;
     }
@@ -324,7 +324,7 @@ class VideoTag extends BaseTag
     /**
      * Get the publication date.
      *
-     * @return \DateTime
+     * @return \DateTimeInterface
      */
     public function getPublicationDate()
     {
@@ -334,10 +334,10 @@ class VideoTag extends BaseTag
     /**
      * Set the publication date.
      *
-     * @param  \DateTime  $publicationDate
+     * @param  \DateTimeInterface  $publicationDate
      * @return void
      */
-    public function setPublicationDate(DateTime $publicationDate)
+    public function setPublicationDate(DateTimeInterface $publicationDate)
     {
         $this->publicationDate = $publicationDate;
     }

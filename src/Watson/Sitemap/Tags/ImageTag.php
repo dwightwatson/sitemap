@@ -7,28 +7,28 @@ class ImageTag extends BaseTag
     /**
      * The caption of the image.
      *
-     * @var string
+     * @var string|null
      */
     protected $caption;
 
     /**
      * The geographic location of the image.
      *
-     * @var string
+     * @var string|null
      */
     protected $geoLocation;
 
     /**
      * The title of the image.
      *
-     * @var string
+     * @var string|null
      */
     protected $title;
 
     /**
      * A URL to the license of the image.
      *
-     * @var string
+     * @var string|null
      */
     protected $license;
 
@@ -49,10 +49,10 @@ class ImageTag extends BaseTag
      * Construct the tag.
      *
      * @param  string  $location
-     * @param  string  $caption
-     * @param  string  $geo_location
-     * @param  string  $title
-     * @param  string  $license
+     * @param  string|null  $caption
+     * @param  string|null  $geoLocation
+     * @param  string|null  $title
+     * @param  string|null  $license
      * @return void
      */
     public function __construct($location, $caption = null, $geoLocation = null, $title = null, $license = null)
@@ -68,7 +68,7 @@ class ImageTag extends BaseTag
     /**
      * Get the caption.
      *
-     * @return string
+     * @return string|null
      */
     public function getCaption()
     {
@@ -89,7 +89,7 @@ class ImageTag extends BaseTag
     /**
      * Get the geoLocation.
      *
-     * @return string
+     * @return string|null
      */
     public function getGeoLocation()
     {
@@ -110,7 +110,7 @@ class ImageTag extends BaseTag
     /**
      * Get the title.
      *
-     * @return string
+     * @return string|null
      */
     public function getTitle()
     {
@@ -131,7 +131,7 @@ class ImageTag extends BaseTag
     /**
      * Get the license.
      *
-     * @return string
+     * @return string|null
      */
     public function getLicense()
     {
