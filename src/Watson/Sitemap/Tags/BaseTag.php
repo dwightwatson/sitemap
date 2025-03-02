@@ -228,7 +228,7 @@ abstract class BaseTag implements ArrayAccess
         return null;
     }
 
-    protected function getXmlTagAttribute($tag)
+    protected function getXmlTagAttribute($offset)
     {
         if (array_key_exists($offset, $this->xmlTags)) {
             return $this->xmlTags[$offset];
