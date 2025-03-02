@@ -7,14 +7,14 @@ class Tag extends BaseTag
     /**
      * The change frequency.
      *
-     * @var string
+     * @var string|null
      */
     protected $changeFrequency;
 
     /**
      * The priority.
      *
-     * @var string
+     * @var string|null
      */
     protected $priority;
 
@@ -34,9 +34,9 @@ class Tag extends BaseTag
      * Construct the tag.
      *
      * @param  string  $location
-     * @param  string  $lastModified
-     * @param  string  $changeFrequency
-     * @param  string  $priority
+     * @param  \DateTimeInterface|string|null  $lastModified
+     * @param  string|null  $changeFrequency
+     * @param  string|null  $priority
      * @return void
      */
     public function __construct($location, $lastModified = null, $changeFrequency = null, $priority = null)
@@ -50,7 +50,7 @@ class Tag extends BaseTag
     /**
      * Get the change frequency.
      *
-     * @return string
+     * @return string|null
      */
     public function getChangeFrequency()
     {
@@ -71,7 +71,7 @@ class Tag extends BaseTag
     /**
      * Get the priority.
      *
-     * @return string
+     * @return string|null
      */
     public function getPriority()
     {

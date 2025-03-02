@@ -3,6 +3,7 @@
 namespace Watson\Sitemap\Tags;
 
 use DateTime;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class ExpiredTag extends BaseTag
@@ -10,7 +11,7 @@ class ExpiredTag extends BaseTag
     /**
      * The expiration date.
      *
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     protected $expired;
 
@@ -28,7 +29,7 @@ class ExpiredTag extends BaseTag
      * Construct the tag.
      *
      * @param  string  $location
-     * @param  \DateTime|string  $expired
+     * @param  \DateTimeInterface|string|null  $expired
      * @return void
      */
     public function __construct($location, $expired = null)
@@ -41,7 +42,7 @@ class ExpiredTag extends BaseTag
     /**
      * Get the expired timestamp.
      *
-     * @return \DateTime
+     * @return \DateTimeInterface
      */
     public function getExpired()
     {
@@ -51,12 +52,12 @@ class ExpiredTag extends BaseTag
     /**
      * Set the expiration date
      *
-     * @param  \DateTime|string  $expired
+     * @param  \DateTimeInterface|\Illuminate\Database\Eloquent\Model|string  $expired
      * @return void
      */
     public function setExpired($expired)
     {
-        if ($expired instanceof DateTime) {
+        if ($expired instanceof DateTimeInterface) {
             $this->expired = $expired;
             return;
         } elseif ($expired instanceof Model) {
