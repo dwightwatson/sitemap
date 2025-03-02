@@ -5,21 +5,21 @@ namespace Watson\Sitemap\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static addSitemap($location, $lastModified = null)
- * @method static getSitemaps()
- * @method static index()
- * @method static renderSitemapIndex()
- * @method static addTag($location, $lastModified = null, $changeFrequency = null, $priority = null)
- * @method static addExpiredTag($location, $expired = null)
- * @method static getTags()
- * @method static xml()
- * @method static xmlIndex()
- * @method static render()
- * @method static renderSitemap()
- * @method static clear()
- * @method static clearSitemaps()
- * @method static clearTags()
- * @method static hasCachedView()
+ * @method static void addSitemap(\Watson\Sitemap\Tags\Sitemap|string $location, \DateTimeInterface|string|null $lastModified = null)
+ * @method static \Watson\Sitemap\Tags\Sitemap[] getSitemaps()
+ * @method static \Illuminate\Http\Response index()
+ * @method static \Illuminate\Http\Response renderSitemapIndex()
+ * @method static \Watson\Sitemap\Tags\Tag addTag(\Watson\Sitemap\Tags\Tag|string $location, \DateTimeInterface|string|null $lastModified = null, string|null $changeFrequency = null, string|null $priority = null)
+ * @method static void addExpiredTag(\Watson\Sitemap\Tags\ExpiredTag|string $location, \DateTimeInterface|string|null $expired = null)
+ * @method static \Watson\Sitemap\Tags\BaseTag[] getTags()
+ * @method static string xml()
+ * @method static string xmlIndex()
+ * @method static \Illuminate\Http\Response render()
+ * @method static \Illuminate\Http\Response renderSitemap()
+ * @method static void clear()
+ * @method static void clearSitemaps()
+ * @method static void clearTags()
+ * @method static bool hasCachedView()
  */
 class Sitemap extends Facade
 {
