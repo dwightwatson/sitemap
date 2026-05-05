@@ -5,7 +5,7 @@ use Watson\Sitemap\Tags\BaseTag;
 
 class BaseTagTest extends TestCase
 {
-    protected $sitemap;
+    private $sitemap;
 
     public function setUp(): void
     {
@@ -88,6 +88,17 @@ class BaseTagTest extends TestCase
         $this->sitemap['loc'] = 'bar';
 
         $this->assertEquals('bar', $this->sitemap['loc']);
+    }
+
+    public function test_unknown_array_offsets_are_ignored()
+    {
+        $this->assertFalse(isset($this->sitemap['unknown']));
+        $this->assertNull($this->sitemap['unknown']);
+
+        $this->sitemap['unknown'] = 'bar';
+        unset($this->sitemap['unknown']);
+
+        $this->assertFalse(isset($this->sitemap['unknown']));
     }
 }
 
