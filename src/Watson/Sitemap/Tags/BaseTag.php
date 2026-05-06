@@ -188,7 +188,7 @@ abstract class BaseTag implements ArrayAccess
         return count($this->videos) > 0;
     }
 
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         if (array_key_exists($offset, $this->xmlTags)) {
             $attribute = $this->xmlTags[$offset];
@@ -196,10 +196,10 @@ abstract class BaseTag implements ArrayAccess
             return isset($this->{$attribute});
         }
 
-        return null;
+        return false;
     }
 
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         if ($this->offsetExists($offset)) {
             $attribute = $this->xmlTags[$offset];
@@ -210,7 +210,7 @@ abstract class BaseTag implements ArrayAccess
         return null;
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (array_key_exists($offset, $this->xmlTags)) {
             $attribute = $this->xmlTags[$offset];
@@ -219,13 +219,11 @@ abstract class BaseTag implements ArrayAccess
         }
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         if ($attribute = $this->getXmlTagAttribute($offset)) {
             unset($this->{$attribute});
         }
-
-        return null;
     }
 
     protected function getXmlTagAttribute($offset)

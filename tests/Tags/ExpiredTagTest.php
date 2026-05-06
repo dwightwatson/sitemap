@@ -6,6 +6,8 @@ use Watson\Sitemap\Tags\ExpiredTag;
 
 class ExpiredTagTest extends TestCase
 {
+    private $tag;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -20,6 +22,16 @@ class ExpiredTagTest extends TestCase
         $dateTime = new DateTime('2014-01-01 00:00:00');
 
         $this->assertEquals($dateTime, $this->tag->getExpired());
+    }
+
+    public function test_expired_defaults_to_current_time()
+    {
+        $before = new DateTime();
+        $tag = new ExpiredTag('foo');
+        $after = new DateTime();
+
+        $this->assertGreaterThanOrEqual($before, $tag->getExpired());
+        $this->assertLessThanOrEqual($after, $tag->getExpired());
     }
 
     public function test_set_expired()

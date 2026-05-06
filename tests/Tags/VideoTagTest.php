@@ -8,6 +8,8 @@ use Watson\Sitemap\Tags\Video\VideoTag;
 
 class VideoTagTest extends TestCase
 {
+    private $tag;
+
     public function setUp(): void
     {
         parent::setUp();

@@ -8,7 +8,11 @@ use Watson\Sitemap\Tags\Video\VideoTag;
 
 class SitemapTest extends TestCase
 {
-    protected $sitemap;
+    private $cache;
+
+    private $request;
+
+    private $sitemap;
 
     public function setUp(): void
     {
@@ -41,11 +45,6 @@ class SitemapTest extends TestCase
         $this->assertEquals([$sitemap], $this->sitemap->getSitemaps());
     }
 
-    public function test_renders_sitemaps()
-    {
-        //
-    }
-
     public function test_tag_is_created()
     {
         $this->sitemap->addTag('foo', '2014-01-01 00:00:00', 'daily', '0.9');
@@ -60,11 +59,6 @@ class SitemapTest extends TestCase
         $this->sitemap->addTag($tag);
 
         $this->assertEquals([$tag], $this->sitemap->getTags());
-    }
-
-    public function test_render_sitemap()
-    {
-        //
     }
 
     public function test_add_image_tag()

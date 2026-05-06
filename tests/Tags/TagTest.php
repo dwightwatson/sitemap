@@ -6,6 +6,8 @@ use Watson\Sitemap\Tags\Tag;
 
 class TagTest extends TestCase
 {
+    private $tag;
+
     public function setUp(): void
     {
         parent::setUp();

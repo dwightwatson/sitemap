@@ -63,6 +63,9 @@ class ExpiredTag extends BaseTag
         } elseif ($expired instanceof Model) {
             $this->expired = $expired->deleted_at ?: $expired->updated_at;
             return;
+        } elseif ($expired === null) {
+            $this->expired = new DateTime();
+            return;
         }
 
         $this->expired = new DateTime($expired);
