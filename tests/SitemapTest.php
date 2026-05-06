@@ -8,11 +8,11 @@ use Watson\Sitemap\Tags\Video\VideoTag;
 
 class SitemapTest extends TestCase
 {
-    private $cache;
+    protected $cache;
 
-    private $request;
+    protected $request;
 
-    private $sitemap;
+    protected $sitemap;
 
     public function setUp(): void
     {

@@ -5,7 +5,7 @@ use Watson\Sitemap\Tags\MultilingualTag;
 
 class MultilingualTagTest extends TestCase
 {
-    private $tag;
+    protected $tag;
 
     public function setUp(): void
     {

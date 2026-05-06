@@ -6,7 +6,7 @@ use Watson\Sitemap\Tags\ExpiredTag;
 
 class ExpiredTagTest extends TestCase
 {
-    private $tag;
+    protected $tag;
 
     public function setUp(): void
     {

@@ -6,7 +6,7 @@ use Watson\Sitemap\Tags\Tag;
 
 class ImageTagTest extends TestCase
 {
-    private $tag;
+    protected $tag;
 
     public function setUp(): void
     {

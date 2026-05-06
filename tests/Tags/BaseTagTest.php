@@ -5,7 +5,7 @@ use Watson\Sitemap\Tags\BaseTag;
 
 class BaseTagTest extends TestCase
 {
-    private $sitemap;
+    protected $sitemap;
 
     public function setUp(): void
     {
